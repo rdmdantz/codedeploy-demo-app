@@ -1,3 +1,0 @@
-# codedeploy-demo-app
-
-
