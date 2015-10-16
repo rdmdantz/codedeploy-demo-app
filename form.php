@@ -12,7 +12,7 @@ function submitForm() {
     }});
 
     return false;
-}
+
 </script>
 	<br>
 	<form id="testForm" onSubmit="return submitForm();">
