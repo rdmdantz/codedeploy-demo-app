@@ -4,6 +4,7 @@ error_reporting(E_ALL);
 		$servername = "localhost";
 		$username = "root";
 		$password = "pop.tarts";
+		
 		$conn = new mysqli($servername, $username, $password);
 		if ($conn->connect_error) {
 			die("Connection failed: " . $conn->connect_error);
