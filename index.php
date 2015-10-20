@@ -4,7 +4,7 @@ Class HTML{
 	public function text($name,$label,$value,$div_name){
 		
 		$label	=	'<label>'.$label.'</label>';
-		$output	=	$label.'<input type="text" name='.$name.' value="'.$value.'" id="'.$name.'">';
+		$output	=	$label.'<input type="text" name="'.$name.'" value="'.$value.'" id="'.$name.'">';
 			
 		return $output;
 		}
@@ -18,7 +18,7 @@ Class HTML{
 	public function password($name,$label,$value,$div_name){
 		
 		$label	=	'<label>'.$label.'</label>';
-		$output	=	$label.'<input type="password" name='.$name.' value="'.$value.'" id="'.$name.'">';
+		$output	=	$label.'<input type="password" name="'.$name.'" value="'.$value.'" id="'.$name.'">';
 		
 		return $output;
 		}
@@ -32,7 +32,7 @@ Class HTML{
 		
 		$label	=	'<label>'.$label.'</label>';
 		$output	=	$label.'<input type="radio" name="'.$name.'" value="'.$value[0].'" id="'.$name.'">'.$value[0];
-		$output.=	'<input type="radio" name='.$name.' value="'.$value[1].'" id="'.$name.'">'.$value[1];
+		$output.=	'<input type="radio" name="'.$name.'" value="'.$value[1].'" id="'.$name.'">'.$value[1];
 		
 		return $output;
 		}	
@@ -173,7 +173,7 @@ Class HTML{
 	}//end of class HTML
 Class CSS{
 	function styles($var_name,$color,$width,$height,$x_pos,$y_pos,$z_index,$font_size,$font_color){
-		$output	=	'#'.$var_name.'{'.'background-color:'.$color.';width:'.$width.'px;height:'.$height.'px;margin-top:'.$x_pos.'px;margin-bottom:'.$y_pos.'px;z-index:'.$z_index.';font-size:'.$font_size.';color:'.$font_color.';position:absolute;}';
+		$output	=	'#'.$var_name.'{'.'background-color:'.$color.';width:'.$width.'px;height:'.$height.'px;margin-top:'.$x_pos.'px;margin-bottom:'.$y_pos.'px;z-index:'.$z_index.';font-size:'.$font_size.';color:'.$font_color.';position:relative;}';
 		return $output;
 		#id{color:#FFF;width:23px;height:23px;}
 		}
@@ -196,14 +196,13 @@ Class CSS{
 	}
 	$obj		=	new HTML;
 	$obj_css	=	new CSS;
-	
-	
+
 	if(isset($_POST['submit'])){
 		
 		//create DB connection
 		$servername = "localhost";
 		$username = "root";
-		$password = "pop.tarts";
+		$password = "";
 		$conn = new mysqli($servername, $username, $password);
 		if ($conn->connect_error) {
 			die("Connection failed: " . $conn->connect_error);
@@ -281,12 +280,29 @@ Class CSS{
 					
 					$data_css 	=	$obj_css->styles($var_name,$color,$width,$height,$x_position,$y_position,$z_index,$font_size,$font_color);
 					$obj->write_to_file($data_html,$html_file_name,$css_file_name,$data_css);
-					$insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1');";
+					if($_POST['update']	==	"false")
+						$insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`, `NAME`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1', '$label');";
+					else
+						$insert	=	"update  `CMS`.`html_css`
+										set `HTML`='$data_html' ,
+											`CSS`='$data_css',											  
+											 `NAME`='$label'
+										WHERE `ID`=" .$_POST["update_id"]  ;
+					 
 					
 					$result	=	$conn->query($insert);
-					exit;
-					echo 'HTML & CSS Code created successfully<br/>';
 					$ID	=	mysqli_insert_id($conn);
+					if($_POST['update']	==	"false")
+						$insert_div_data	=	"INSERT INTO `CMS`.`divs` (`ID`, `ELEMENT`, `HTML_CSS_ID`) VALUES (NULL, '$data_html',$ID);";
+					else
+						$insert_div_data	=	"update
+									  `CMS`.`divs` 
+									  set `ELEMENT`='$data_html'
+									  WHERE `HTML_CSS_ID` = ".$_POST["update_id"];
+									   
+					$result	=	$conn->query($insert_div_data);
+					echo 'HTML & CSS Code created successfully<br/>';
+					
 					
 					
 					
@@ -297,10 +313,18 @@ Class CSS{
 					$data_html	=	$obj->text_area($var_name,$label,$value,$div_name);
 					$data_css 	=	$obj_css->styles($var_name,$color,$width,$height,$x_position,$y_position,$z_index,$font_size,$font_color);
 					$obj->write_to_file($data_html,$html_file_name,$css_file_name,$data_css);
-					$insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1');";
-					$result	=	$conn->query($insert);
-					echo 'HTML & CSS Code created successfully<br/>';
+					if($_POST['update']	==	"false")
+						$insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`, `NAME`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1', '$label');";
+					else
+						$insert	=	"update  `CMS`.`html_css`
+										set `HTML`='$data_html' ,
+											`CSS`='$data_css',											  
+											 `NAME`='$label'
+										WHERE `ID`=" .$_POST["update_id"]  ;$result	=	$conn->query($insert);
 					$ID	=	mysqli_insert_id($conn);
+					$insert_div_data	=	"INSERT INTO `CMS`.`divs` (`ID`, `ELEMENT`, `HTML_CSS_ID`) VALUES (NULL, '$data_html',$ID);";
+					$result	=	$conn->query($insert_div_data);
+					echo 'HTML & CSS Code created successfully<br/>';
 					
 					
 					
@@ -311,10 +335,18 @@ Class CSS{
 					$data_html	=	$obj->password($var_name,$label,$value,$div_name);
 					$data_css 	=	$obj_css->styles($var_name,$color,$width,$height,$x_position,$y_position,$z_index,$font_size,$font_color);
 					$obj->write_to_file($data_html,$html_file_name,$css_file_name,$data_css);
-					$insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1');";
-					$result	=	$conn->query($insert);
-					echo 'HTML & CSS Code created successfully<br/>';
+					if($_POST['update']	==	"false")
+						$insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`, `NAME`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1', '$label');";
+					else
+						$insert	=	"update  `CMS`.`html_css`
+										set `HTML`='$data_html' ,
+											`CSS`='$data_css',											  
+											 `NAME`='$label'
+										WHERE `ID`=" .$_POST["update_id"]  ;$result	=	$conn->query($insert);
 					$ID	=	mysqli_insert_id($conn);
+					$insert_div_data	=	"INSERT INTO `CMS`.`divs` (`ID`, `ELEMENT`, `HTML_CSS_ID`) VALUES (NULL, '$data_html',$ID);";
+					$result	=	$conn->query($insert_div_data);
+					echo 'HTML & CSS Code created successfully<br/>';
 					
 					
 					
@@ -325,10 +357,18 @@ Class CSS{
 					$data_html	=	$obj->submit($var_name,$label,$value,$div_name);
 					$data_css 	=	$obj_css->styles($var_name,$color,$width,$height,$x_position,$y_position,$z_index,$font_size,$font_color);
 					$obj->write_to_file($data_html,$html_file_name,$css_file_name,$data_css);
-					$insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1');";
-					$result	=	$conn->query($insert);
-					echo 'HTML & CSS Code created successfully<br/>';
+					if($_POST['update']	==	"false")
+						$insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`, `NAME`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1', '$label');";
+					else
+						$insert	=	"update  `CMS`.`html_css`
+										set `HTML`='$data_html' ,
+											`CSS`='$data_css',											  
+											 `NAME`='$label'
+										WHERE `ID`=" .$_POST["update_id"]  ;$result	=	$conn->query($insert);
 					$ID	=	mysqli_insert_id($conn);
+					$insert_div_data	=	"INSERT INTO `CMS`.`divs` (`ID`, `ELEMENT`, `HTML_CSS_ID`) VALUES (NULL, '$data_html',$ID);";
+					$result	=	$conn->query($insert_div_data);
+					echo 'HTML & CSS Code created successfully<br/>';
 					
 					
 					
@@ -341,10 +381,18 @@ Class CSS{
 					$data_html	=	$obj->radio($var_name,$label,$radio_values,$div_name);
 					$data_css 	=	$obj_css->styles($var_name,$color,$width,$height,$x_position,$y_position,$z_index,$font_size,$font_color);
 					$obj->write_to_file($data_html,$html_file_name,$css_file_name,$data_css);
-					$insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1');";
-					$result	=	$conn->query($insert);
-					echo 'HTML & CSS Code created successfully<br/>';
+					if($_POST['update']	==	"false")
+						$insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`, `NAME`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1', '$label');";
+					else
+						$insert	=	"update  `CMS`.`html_css`
+										set `HTML`='$data_html' ,
+											`CSS`='$data_css',											  
+											 `NAME`='$label'
+										WHERE `ID`=" .$_POST["update_id"]  ;$result	=	$conn->query($insert);
 					$ID	=	mysqli_insert_id($conn);
+					$insert_div_data	=	"INSERT INTO `CMS`.`divs` (`ID`, `ELEMENT`, `HTML_CSS_ID`) VALUES (NULL, '$data_html',$ID);";
+					$result	=	$conn->query($insert_div_data);
+					echo 'HTML & CSS Code created successfully<br/>';
 					
 					
 					
@@ -362,10 +410,18 @@ Class CSS{
 					 $data_html	= $obj->checkbox($var_name,$label,$checkbox,$div_name);
 					 $data_css 	=	$obj_css->styles($var_name,$color,$width,$height,$x_position,$y_position,$z_index,$font_size,$font_color);
 					$obj->write_to_file($data_html,$html_file_name,$css_file_name,$data_css);
-					$insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1');";
-					$result	=	$conn->query($insert);
-					echo 'HTML & CSS Code created successfully<br/>';
+					if($_POST['update']	==	"false")
+						$insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`, `NAME`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1', '$label');";
+					else
+						$insert	=	"update  `CMS`.`html_css`
+										set `HTML`='$data_html' ,
+											`CSS`='$data_css',											  
+											 `NAME`='$label'
+										WHERE `ID`=" .$_POST["update_id"]  ;$result	=	$conn->query($insert);
 					$ID	=	mysqli_insert_id($conn);
+					$insert_div_data	=	"INSERT INTO `CMS`.`divs` (`ID`, `ELEMENT`, `HTML_CSS_ID`) VALUES (NULL, '$data_html',$ID);";
+					$result	=	$conn->query($insert_div_data);
+					echo 'HTML & CSS Code created successfully<br/>';
 					
 					
 					
@@ -376,10 +432,18 @@ Class CSS{
 					 $data_html	= $obj->button($var_name,$label,$value,$div_name);
 					 $data_css 	=	$obj_css->styles($var_name,$color,$width,$height,$x_position,$y_position,$z_index,$font_size,$font_color);
 					$obj->write_to_file($data_html,$html_file_name,$css_file_name,$data_css);
-					$insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1');";
-					$result	=	$conn->query($insert);
-					echo 'HTML & CSS Code created successfully<br/>';
+					if($_POST['update']	==	"false")
+						$insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`, `NAME`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1', '$label');";
+					else
+						$insert	=	"update  `CMS`.`html_css`
+										set `HTML`='$data_html' ,
+											`CSS`='$data_css',											  
+											 `NAME`='$label'
+										WHERE `ID`=" .$_POST["update_id"]  ;$result	=	$conn->query($insert);
 					$ID	=	mysqli_insert_id($conn);
+					$insert_div_data	=	"INSERT INTO `CMS`.`divs` (`ID`, `ELEMENT`, `HTML_CSS_ID`) VALUES (NULL, '$data_html',$ID);";
+					$result	=	$conn->query($insert_div_data);
+					echo 'HTML & CSS Code created successfully<br/>';
 					
 					
 					
@@ -397,10 +461,18 @@ Class CSS{
 					 $data_html	= $obj->select($var_name,$label,$select,$div_name);
 					 $data_css 	=	$obj_css->styles($var_name,$color,$width,$height,$x_position,$y_position,$z_index,$font_size,$font_color);
 					$obj->write_to_file($data_html,$html_file_name,$css_file_name,$data_css);
-					$insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1');";
-					$result	=	$conn->query($insert);
-					echo 'HTML & CSS Code created successfully<br/>';
+					if($_POST['update']	==	"false")
+						$insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`, `NAME`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1', '$label');";
+					else
+						$insert	=	"update  `CMS`.`html_css`
+										set `HTML`='$data_html' ,
+											`CSS`='$data_css',											  
+											 `NAME`='$label'
+										WHERE `ID`=" .$_POST["update_id"]  ;$result	=	$conn->query($insert);
 					$ID	=	mysqli_insert_id($conn);
+					$insert_div_data	=	"INSERT INTO `CMS`.`divs` (`ID`, `ELEMENT`, `HTML_CSS_ID`) VALUES (NULL, '$data_html',$ID);";
+					$result	=	$conn->query($insert_div_data);
+					echo 'HTML & CSS Code created successfully<br/>';
 					
 					
 					
@@ -411,10 +483,18 @@ Class CSS{
 					 $data_html	= $obj->file_html($var_name,$label,$value,$div_name);
 					$data_css 	=	$obj_css->styles($var_name,$color,$width,$height,$x_position,$y_position,$z_index,$font_size,$font_color);
 					$obj->write_to_file($data_html,$html_file_name,$css_file_name,$data_css);
-					$insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1');";
-					$result	=	$conn->query($insert);
-					echo 'HTML & CSS Code created successfully<br/>';
+					if($_POST['update']	==	"false")
+						$insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`, `NAME`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1', '$label');";
+					else
+						$insert	=	"update  `CMS`.`html_css`
+										set `HTML`='$data_html' ,
+											`CSS`='$data_css',											  
+											 `NAME`='$label'
+										WHERE `ID`=" .$_POST["update_id"]  ;$result	=	$conn->query($insert);
 					$ID	=	mysqli_insert_id($conn);
+					$insert_div_data	=	"INSERT INTO `CMS`.`divs` (`ID`, `ELEMENT`, `HTML_CSS_ID`) VALUES (NULL, '$data_html',$ID);";
+					$result	=	$conn->query($insert_div_data);
+					echo 'HTML & CSS Code created successfully<br/>';
 					
 					
 					
@@ -425,10 +505,18 @@ Class CSS{
 					$data_html	= $obj->hidden($var_name,$label,$value,$div_name);
 					$data_css 	=	$obj_css->styles($var_name,$color,$width,$height,$x_position,$y_position,$z_index,$font_size,$font_color);
 					$obj->write_to_file($data_html,$html_file_name,$css_file_name,$data_css);
-					$insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1');";
-					$result	=	$conn->query($insert);
-					echo 'HTML & CSS Code created successfully<br/>';
+					if($_POST['update']	==	"false")
+						$insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`, `NAME`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1', '$label');";
+					else
+						$insert	=	"update  `CMS`.`html_css`
+										set `HTML`='$data_html' ,
+											`CSS`='$data_css',											  
+											 `NAME`='$label'
+										WHERE `ID`=" .$_POST["update_id"]  ;$result	=	$conn->query($insert);
 					$ID	=	mysqli_insert_id($conn);
+					$insert_div_data	=	"INSERT INTO `CMS`.`divs` (`ID`, `ELEMENT`, `HTML_CSS_ID`) VALUES (NULL, '$data_html',$ID);";
+					$result	=	$conn->query($insert_div_data);
+					echo 'HTML & CSS Code created successfully<br/>';
 					
 					
 					
@@ -439,10 +527,18 @@ Class CSS{
 					 $data_html	= $obj->label($var_name,$label,$value,$div_name);
 					$data_css 	=	$obj_css->styles($var_name,$color,$width,$height,$x_position,$y_position,$z_index,$font_size,$font_color);
 					$obj->write_to_file($data_html,$html_file_name,$css_file_name,$data_css);
-					$insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1');";
-					$result	=	$conn->query($insert);
-					echo 'HTML & CSS Code created successfully<br/>';
+					if($_POST['update']	==	"false")
+						$insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`, `NAME`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1', '$label');";
+					else
+						$insert	=	"update  `CMS`.`html_css`
+										set `HTML`='$data_html' ,
+											`CSS`='$data_css',											  
+											 `NAME`='$label'
+										WHERE `ID`=" .$_POST["update_id"]  ;$result	=	$conn->query($insert);
 					$ID	=	mysqli_insert_id($conn);
+					$insert_div_data	=	"INSERT INTO `CMS`.`divs` (`ID`, `ELEMENT`, `HTML_CSS_ID`) VALUES (NULL, '$data_html',$ID);";
+					$result	=	$conn->query($insert_div_data);
+					echo 'HTML & CSS Code created successfully<br/>';
 					
 					
 					
@@ -453,10 +549,18 @@ Class CSS{
 					 $data_html =	$obj->table($var_name,$label,$value,$div_name);
 					 $data_css 	=	$obj_css->styles($var_name,$color,$width,$height,$x_position,$y_position,$z_index,$font_size,$font_color);
 					$obj->write_to_file($data_html,$html_file_name,$css_file_name,$data_css);
-					$insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1');";
-					$result	=	$conn->query($insert);
-					echo 'HTML & CSS Code created successfully<br/>';
+					if($_POST['update']	==	"false")
+						$insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`, `NAME`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1', '$label');";
+					else
+						$insert	=	"update  `CMS`.`html_css`
+										set `HTML`='$data_html' ,
+											`CSS`='$data_css',											  
+											 `NAME`='$label'
+										WHERE `ID`=" .$_POST["update_id"]  ;$result	=	$conn->query($insert);
 					$ID	=	mysqli_insert_id($conn);
+					$insert_div_data	=	"INSERT INTO `CMS`.`divs` (`ID`, `ELEMENT`, `HTML_CSS_ID`) VALUES (NULL, '$data_html',$ID);";
+					$result	=	$conn->query($insert_div_data);
+					echo 'HTML & CSS Code created successfully<br/>';
 					
 					
 					
@@ -473,10 +577,18 @@ Class CSS{
 					 $data_html	= $obj->list_html($var_name,$label,$list,$div_name);
 					 $data_css 	=	$obj_css->styles($var_name,$color,$width,$height,$x_position,$y_position,$z_index,$font_size,$font_color);
 					$obj->write_to_file($data_html,$html_file_name,$css_file_name,$data_css);
-					$insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1');";
-					$result	=	$conn->query($insert);
-					echo 'HTML & CSS Code created successfully<br/>';
+					if($_POST['update']	==	"false")
+						$insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`, `NAME`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1', '$label');";
+					else
+						$insert	=	"update  `CMS`.`html_css`
+										set `HTML`='$data_html' ,
+											`CSS`='$data_css',											  
+											 `NAME`='$label'
+										WHERE `ID`=" .$_POST["update_id"]  ;$result	=	$conn->query($insert);
 					$ID	=	mysqli_insert_id($conn);
+					$insert_div_data	=	"INSERT INTO `CMS`.`divs` (`ID`, `ELEMENT`, `HTML_CSS_ID`) VALUES (NULL, '$data_html',$ID);";
+					$result	=	$conn->query($insert_div_data);
+					echo 'HTML & CSS Code created successfully<br/>';
 					
 					
 					
@@ -488,10 +600,18 @@ Class CSS{
 					 $data_html	= $obj->form($var_name,$label,$value,$div_name);
 					$data_css 	=	$obj_css->styles($var_name,$color,$width,$height,$x_position,$y_position,$z_index,$font_size,$font_color);
 					$obj->write_to_file($data_html,$html_file_name,$css_file_name,$data_css);
-					$insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1');";
-					$result	=	$conn->query($insert);
-					echo 'HTML & CSS Code created successfully<br/>';
+					if($_POST['update']	==	"false")
+						$insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`, `NAME`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1', '$label');";
+					else
+						$insert	=	"update  `CMS`.`html_css`
+										set `HTML`='$data_html' ,
+											`CSS`='$data_css',											  
+											 `NAME`='$label'
+										WHERE `ID`=" .$_POST["update_id"]  ;$result	=	$conn->query($insert);
 					$ID	=	mysqli_insert_id($conn);
+					$insert_div_data	=	"INSERT INTO `CMS`.`divs` (`ID`, `ELEMENT`, `HTML_CSS_ID`) VALUES (NULL, '$data_html',$ID);";
+					$result	=	$conn->query($insert_div_data);
+					echo 'HTML & CSS Code created successfully<br/>';
 					
 					
 					
@@ -502,10 +622,18 @@ Class CSS{
 					$data_html	= $obj->image($var_name,$label,$value,$div_name);
 					$data_css 	=	$obj_css->styles($var_name,$color,$width,$height,$x_position,$y_position,$z_index,$font_size,$font_color);
 					$obj->write_to_file($data_html,$html_file_name,$css_file_name,$data_css);
-					$insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1');";
-					$result	=	$conn->query($insert);
-					echo 'HTML & CSS Code created successfully<br/>';
+					if($_POST['update']	==	"false")
+						$insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`, `NAME`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1', '$label');";
+					else
+						$insert	=	"update  `CMS`.`html_css`
+										set `HTML`='$data_html' ,
+											`CSS`='$data_css',											  
+											 `NAME`='$label'
+										WHERE `ID`=" .$_POST["update_id"]  ;$result	=	$conn->query($insert);
 					$ID	=	mysqli_insert_id($conn);
+					$insert_div_data	=	"INSERT INTO `CMS`.`divs` (`ID`, `ELEMENT`, `HTML_CSS_ID`) VALUES (NULL, '$data_html',$ID);";
+					$result	=	$conn->query($insert_div_data);
+					echo 'HTML & CSS Code created successfully<br/>';
 					
 					
 					
@@ -516,10 +644,18 @@ Class CSS{
 					 $data_html	= $obj->fieldset($var_name,$label,$value,$div_name);
 					 $data_css 	=	$obj_css->styles($var_name,$color,$width,$height,$x_position,$y_position,$z_index,$font_size,$font_color);
 					$obj->write_to_file($data_html,$html_file_name,$css_file_name,$data_css);
-					$insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1');";
-					$result	=	$conn->query($insert);
-					echo 'HTML & CSS Code created successfully<br/>';
+					if($_POST['update']	==	"false")
+						$insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`, `NAME`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1', '$label');";
+					else
+						$insert	=	"update  `CMS`.`html_css`
+										set `HTML`='$data_html' ,
+											`CSS`='$data_css',											  
+											 `NAME`='$label'
+										WHERE `ID`=" .$_POST["update_id"]  ;$result	=	$conn->query($insert);
 					$ID	=	mysqli_insert_id($conn);
+					$insert_div_data	=	"INSERT INTO `CMS`.`divs` (`ID`, `ELEMENT`, `HTML_CSS_ID`) VALUES (NULL, '$data_html',$ID);";
+					$result	=	$conn->query($insert_div_data);
+					echo 'HTML & CSS Code created successfully<br/>';
 					
 					
 					
@@ -530,10 +666,18 @@ Class CSS{
 					 $data_html	= $obj->table_row($var_name,$label,$value,$div_name);
 					 $data_css 	=	$obj_css->styles($var_name,$color,$width,$height,$x_position,$y_position,$z_index,$font_size,$font_color);
 					$obj->write_to_file($data_html,$html_file_name,$css_file_name,$data_css);
-					$insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1');";
-					$result	=	$conn->query($insert);
-					echo 'HTML & CSS Code created successfully<br/>';
+					if($_POST['update']	==	"false")
+						$insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`, `NAME`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1', '$label');";
+					else
+						$insert	=	"update  `CMS`.`html_css`
+										set `HTML`='$data_html' ,
+											`CSS`='$data_css',											  
+											 `NAME`='$label'
+										WHERE `ID`=" .$_POST["update_id"]  ;$result	=	$conn->query($insert);
 					$ID	=	mysqli_insert_id($conn);
+					$insert_div_data	=	"INSERT INTO `CMS`.`divs` (`ID`, `ELEMENT`, `HTML_CSS_ID`) VALUES (NULL, '$data_html',$ID);";
+					$result	=	$conn->query($insert_div_data);
+					echo 'HTML & CSS Code created successfully<br/>';
 					
 					
 					
@@ -544,10 +688,18 @@ Class CSS{
 					 $data_html	= $obj->table_data($var_name,$label,$value,$div_name);
 					$data_css 	=	$obj_css->styles($var_name,$color,$width,$height,$x_position,$y_position,$z_index,$font_size,$font_color);
 					$obj->write_to_file($data_html,$html_file_name,$css_file_name,$data_css);
-					$insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1');";
-					$result	=	$conn->query($insert);
-					echo 'HTML & CSS Code created successfully<br/>';
+					if($_POST['update']	==	"false")
+						$insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`, `NAME`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1', '$label');";
+					else
+						$insert	=	"update  `CMS`.`html_css`
+										set `HTML`='$data_html' ,
+											`CSS`='$data_css',											  
+											 `NAME`='$label'
+										WHERE `ID`=" .$_POST["update_id"]  ;$result	=	$conn->query($insert);
 					$ID	=	mysqli_insert_id($conn);
+					$insert_div_data	=	"INSERT INTO `CMS`.`divs` (`ID`, `ELEMENT`, `HTML_CSS_ID`) VALUES (NULL, '$data_html',$ID);";
+					$result	=	$conn->query($insert_div_data);
+					echo 'HTML & CSS Code created successfully<br/>';
 					
 					
 					
@@ -558,10 +710,18 @@ Class CSS{
 					 $data_html	= $obj->href($var_name,$label,$value,$div_name);
 					 $data_css 	=	$obj_css->styles($var_name,$color,$width,$height,$x_position,$y_position,$z_index,$font_size,$font_color);
 					$obj->write_to_file($data_html,$html_file_name,$css_file_name,$data_css);
-					$insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1');";
-					$result	=	$conn->query($insert);
-					echo 'HTML & CSS Code created successfully<br/>';
+					if($_POST['update']	==	"false")
+						$insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`, `NAME`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1', '$label');";
+					else
+						$insert	=	"update  `CMS`.`html_css`
+										set `HTML`='$data_html' ,
+											`CSS`='$data_css',											  
+											 `NAME`='$label'
+										WHERE `ID`=" .$_POST["update_id"]  ;$result	=	$conn->query($insert);
 					$ID	=	mysqli_insert_id($conn);
+					$insert_div_data	=	"INSERT INTO `CMS`.`divs` (`ID`, `ELEMENT`, `HTML_CSS_ID`) VALUES (NULL, '$data_html',$ID);";
+					$result	=	$conn->query($insert_div_data);
+					echo 'HTML & CSS Code created successfully<br/>';
 					
 					
 					
@@ -588,10 +748,92 @@ Class CSS{
 			if(selected	==	'select'){$("#select").show('slow');}
 			if(selected	==	'list'){$("#list").show('slow');}	
 			});
+			
+		$( "#div_load" ).change(function() {
+		var e						= 		$('#div_load').val();
+		$.ajax({ 
+		
+	            type: "POST",  
+	            url: "load_element.php",  
+	            data: {REQUEST: "SEARCH_NAME", ID: e},  
+	            success: function(dataString) {    	// alert(dataString); 
+					  
+					 var json = jQuery.parseJSON(dataString);
+					 var HTML	=	json.data.HTML;//alert(HTML);
+					 var CSS	=	json.data.CSS; // alert(CSS); 
+					 var lableName	=	json.data.NAME;
+					 var update_id	=	json.data.ID;
+					 var variableName	=	HTML.substring(HTML.indexOf(' name="')+7, HTML.indexOf(' id="')-1);
+					 var elementName	=	HTML.substring(HTML.indexOf('</label><')+9, HTML.indexOf(' name="'));
+					 if(elementName	!=	'textarea'){
+					 	 elementName	=	HTML.substring(HTML.indexOf('type="')+6, HTML.indexOf(' name="')-1);
+					   variableName	=	HTML.substring(HTML.indexOf(' name="')+7, HTML.indexOf(' value="')-1);
+					 }
+					  $('#var_name').val(variableName);
+						$('#label').val(lableName);
+						 if(elementName	==	'textarea')
+						 	$('#html_element').val('text_area');
+						 else
+						 	$('#html_element').val(elementName);
+
+						var backgroundColor	=	CSS.substring(CSS.indexOf('background-color')+17, CSS.indexOf('width:')-1);
+						var fontColor	=	CSS.substring(CSS.indexOf(';color:')+7, CSS.indexOf(';position:')-1);
+						var fontSize	=	CSS.substring(CSS.indexOf(';font-size:')+11, CSS.indexOf(';color:'));
+						var height	=	CSS.substring(CSS.indexOf(';height:')+8, CSS.indexOf(';margin-top:')-2);
+						var width	=	CSS.substring(CSS.indexOf(';width:')+7, CSS.indexOf(';height:')-2);
+						var zIndex	=	CSS.substring(CSS.indexOf(';z-index:')+9, CSS.indexOf(';font-size:'));
+						var xPos	=	CSS.substring(CSS.indexOf(';margin-top:')+12, CSS.indexOf(';margin-bottom:')-2);
+						var yPos	=	CSS.substring(CSS.indexOf(';margin-bottom:')+15, CSS.indexOf(';z-index:')-2); 
+						$('#color').val(backgroundColor);
+						$('#font_color').val(fontColor);
+						$('#font_size').val(fontSize);
+						$('#height').val(height);
+						$('#width').val(width); 
+						$('#z_index').val(zIndex);
+						$('#x_position').val(xPos);
+						$('#y_position').val(yPos); 
+						$('#update_id').val(update_id); 
+						$('#update').val('true'); 
+
+	            }  
+	        });
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			 
+		
+		});	
 	});
+	
 	</script>
     </head>
     <body>
+    <?php
+	$servername = "localhost";
+		$username = "root";
+		$password = "";
+		$conn = new mysqli($servername, $username, $password);
+		if ($conn->connect_error) {
+			die("Connection failed: " . $conn->connect_error);
+		}
+		$select_div				=		'SELECT * FROM `CMS`.`divs`';
+		$result_div				=		$conn->query($select_div);
+		$dropdown=	'';
+		while($row=mysqli_fetch_assoc($result_div)){
+					$data	 		= 		$row['NAME'];
+					$ID				=		$row['HTML_CSS_ID'];
+					$dropdown.=		'<option value="'.$ID.'">'.$data.'</option>';
+					}
+	 ?>
         <form method="post" action="">
         
         	<!--<h2>Enter File Names</h2>
@@ -600,13 +842,19 @@ Class CSS{
             
             <label>CSS File Name:</label>
             <input type="text" name="css_file_name" />.css<br/>-->
+           
+             <label>Select DIV:</label>
+            <select name="div_load" id="div_load">
+                <?php echo $dropdown;?>
+            </select>
+            
         
         	<h2>HTML Attributes</h2>
             <label>Enter variable name:</label>
-            <input type="text" name="var_name" /><br/>
+            <input type="text" name="var_name" id="var_name"/><br/>
             
             <label>Enter Label:</label>
-            <input type="text" name="label" /><br/>
+            <input type="text" name="label" id="label"/><br/>
             
             <label>Select HTML Element:</label>
             <select name="html_element" id="html_element">
@@ -695,36 +943,37 @@ Class CSS{
             
             <h2>CSS Attributes</h2>
             <label>Background Color:</label>
-            <input type="color" name="color" /><br/>
+            <input type="color" name="color" value="#FFFFFF" id="color"/><br/>
             
             <label>Font Color:</label>
-            <input type="color" name="font_color" /><br/>
+            <input type="color" name="font_color" value="#FFFFFF" id="font_color"/><br/>
             
             <label>Font Size:</label>
-            <input type="text" name="font_size" /><br/>
+            <input type="text" name="font_size" id="font_size"/><br/>
             
             
             <!--<label>Position:</label>
             <input type="text" name="position" />px<br/>-->
             
             <label>Height:</label>
-            <input type="text" name="height" />px<br/>
+            <input type="text" name="height" id="height"/>px<br/>
             
             <label>Width:</label>
-            <input type="text" name="width" />px<br/>
+            <input type="text" name="width" id="width"/>px<br/>
             
             <label>X-position:</label>
-            <input type="text" name="x_position" />px<br/>
+            <input type="text" name="x_position" id="x_position"/>px<br/>
             
             <label>Y-position:</label>
-            <input type="text" name="y_position" />px<br/>
+            <input type="text" name="y_position" id="y_position"/>px<br/>
             
             <label>Z-index:</label>
-            <input type="text" name="z_index" /><br/>
+            <input type="text" name="z_index" id="z_index"/><br/>
             
             
             <input type="submit" name="submit" value="save element" />
-            
+            <input type="hidden" name="update" id="update" value="false">
+            <input type="hidden" name="update_id" id="update_id" value="0"> 
         </form>
         <?php /*if(isset($_POST['submit'])){
 			echo '<div class="iframe"><iframe src="dummy/output.html" width="600" height="300"></iframe></div>';

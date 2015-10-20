@@ -1,10 +1,9 @@
 <?php
-error_reporting(E_ALL);
+
 		//create DB connection
 		$servername = "localhost";
 		$username = "root";
-		$password = "pop.tarts";
-		
+		$password = "";
 		$conn = new mysqli($servername, $username, $password);
 		if ($conn->connect_error) {
 			die("Connection failed: " . $conn->connect_error);
@@ -16,17 +15,20 @@ error_reporting(E_ALL);
 					$row=mysqli_fetch_assoc($result);
 					$index	=	$row['ID'];
 					//echo $index;
-	$select_data	=	"SELECT * FROM `CMS`.`html_css` WHERE ID	= '".$index."'";
+	$select_data	=	"SELECT * FROM `CMS`.`html_css` WHERE ID	= $index";
 					$result	=	$conn->query($select_data);
-					if(!$conn->query($select_data))
-						 printf("Errormessage: %s\n", $conn->error);
 					
 					while($row=mysqli_fetch_assoc($result)){
 					$file	=	$row['CLASS'];
 					}
-
+					//print_r($file);
+			//$myfile = fopen($file, "w");
+			
+			/*$current = file_get_contents($file);*/
+			//file_put_contents($file, $current);					
+			//echo	$row['CLASS'];
 			$file = 'dummy/'.$file.'.html';
-
+			
 if (file_exists($file)) {
     header('Content-Description: File Transfer');
     header('Content-Type: application/octet-stream');

@@ -5,7 +5,7 @@ if(isset($_POST['submit']))
 		//create DB connection
 		$servername = "localhost";
 		$username = "root";
-		$password = "pop.tarts";
+		$password = "";
 		$conn = new mysqli($servername, $username, $password);
 		if ($conn->connect_error) {
 			die("Connection failed: " . $conn->connect_error);
@@ -18,9 +18,15 @@ if(isset($_POST['submit']))
 					$row=mysqli_fetch_assoc($result);
 					$index	=	$row['ID'];
 					
-		$update	=	"UPDATE `CMS`.`html_css` SET  `CLASS`	=	'$div_name'	WHERE `html_css`.`FORM_ID` = $index";
+		$update	=	"UPDATE `cms`.`html_css` SET  `CLASS`	=	'$div_name'	WHERE `html_css`.`FORM_ID` = $index";
 		$result	=	$conn->query($update);
-		
+		$select	=	'SELECT MAX(ID) AS ID FROM `CMS`.`html_css`';
+					$result	=	$conn->query($select);
+					$row=mysqli_fetch_assoc($result);
+					$index_div	=	$row['ID'];
+		$update_div	=	"UPDATE `cms`.`divs` SET  `NAME`	=	'$div_name'	WHERE `divs`.`HTML_CSS_ID` = $index_div";
+		$result_div	=	$conn->query($update_div);
+		echo $update_div;
 		
 		$select_data	=	"SELECT * FROM `CMS`.`html_css` WHERE FORM_ID	= $index AND `STATUS` = '1'";
 					$result	=	$conn->query($select_data);
@@ -30,6 +36,7 @@ if(isset($_POST['submit']))
 					$data .= $row['HTML'];
 					$data.=	'<br/>';
 					$css_data	.=	$row['CSS'];
+					$label_name	=	$row['NAME'];
 					}
 					
 		$html_file_name	=	$div_name;			
@@ -60,11 +67,12 @@ if(isset($_POST['submit']))
 			$current .= $css_data;
 			file_put_contents($file_css, $current);
 		
-	$update	=	"UPDATE `CMS`.`html_css` SET  `STATUS`	=	'SAVEDD'	WHERE `html_css`.`FORM_ID` = $index";
+	$update	=	"UPDATE `cms`.`html_css` SET  `STATUS`	=	'SAVEDD'	WHERE `html_css`.`FORM_ID` = $index";
 	$result	=	$conn->query($update);	
 	echo '<p style="margin-left:20px;">ALL THE ELEMENTS SAVED TO DATABASE</p>';
 	echo '<a href="download.php">Download HTML</a><br/>';
 	echo '<a href="download_css.php">Download CSS</a>';
+	echo $label_name;
 	}
 
 ?>
