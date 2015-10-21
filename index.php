@@ -875,12 +875,22 @@
             $ID				=		$row['HTML_CSS_ID'];
             $dropdown.=		'<option value="'.$ID.'">'.$data.'</option>';
         }
+        $select_div             =       'SELECT PAGE_ID,PAGE_TITLE FROM `CMS`.`pages`';
+        $result_div             =       $conn->query($select_div);
+        $goto_dropdown=  ''; 
+        while($row=mysqli_fetch_assoc($result_div)){
+            $data           =       $row['PAGE_TITLE'];
+            $ID             =       $row['PAGE_ID'];
+            if($data !== $_GET['p'])
+            $goto_dropdown.=     '<option value="'.$ID.'">'.$data.'</option>';
+        }
     ?>
     <div class="container">
         <ul class="nav nav-tabs outer-tabs">
             <li class="active"><a href="#tab_1" data-toggle="tab">Tab 1</a><span>x</span></li>
             <li><a href="#" class="add-outer-tab" data-toggle="tab">+ Add Tab</a></li>
         </ul>
+        <div style="    margin-top: -37px; float: right;"> <button type="button" class="btn btn-primary" onClick="openPopUp()" >Save </button> </div>
         <div class="tab-content outer-tab-content">
             <div id="tab_1" class="tab-pane active" >
                 <div class="container">
@@ -1031,10 +1041,7 @@
             </div>            
         </div>
 
-
-        <div style="margin-top: 20px;">
-            <button type="button" class="btn btn-primary" onClick="openPopUp()" >click me </button>
-        </div>       
+       
 
     </div>
 
@@ -1068,10 +1075,7 @@
                             </select>
                             <select class="form-control col-md-4"  id="goto_dropdown" style="width: 33%; display: none;" >
                                 <option id="0"  selected="selected">Select one...</option>                            
-                                <option id="1" >Page 1</option>                            
-                                <option id="2" >Page 2</option>                            
-                                <option id="3" >Page 3</option>                            
-                                <option id="4" >Page 4</option>                            
+                               <?php echo $goto_dropdown;?>                         
                             </select>
                         </div>
                     </div>
