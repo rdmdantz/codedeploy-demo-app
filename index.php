@@ -743,41 +743,14 @@
     <meta name="author" content="">
 
     <link href="bootstrap/css/bootstrap.css"              rel="stylesheet">
-
+	 <link href="css/style.css"              rel="stylesheet">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>   
     <script type="text/javascript"  src="bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/manage_nested_tab_handler.js"></script>
 
 
-    <style type="text/css">
-
-        .container{
-            margin-top: 10px;
-        }
-
-        .nav-tabs > li {
-            position:relative;    
-        }
-
-        .nav-tabs > li > a {
-            display:inline-block;
-        }
-
-        .nav-tabs > li > span {
-            display:none;
-            cursor:pointer;
-            position:absolute;
-            right: 6px;
-            top: 8px;
-            color: red;
-        }
-
-        .nav-tabs > li:hover > span {
-            display: inline-block;
-        }        
-
-    </style>
+   
  <script>
 	$( document ).ready(function() {
    
@@ -838,19 +811,7 @@
 	            }  
 	        });
 			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			 
-		
+
 		});	
 	});
 	
@@ -1089,7 +1050,3 @@
         </div>
     </div>
 </body>
-
-
-    
-
