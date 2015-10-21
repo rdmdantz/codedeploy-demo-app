@@ -1,8 +1,5 @@
 var DEFAULT_TAB_DATA = '<form method="post" action="">'
-                                +'<label>Select DIV:</label>'+
-                                '<select name="div_load" id="div_load">'+
-                                   ' <?php echo $dropdown;?>'+
-                               ' </select>'+
+                                +
 
 
                                ' <h2>HTML Attributes</h2>'+

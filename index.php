@@ -778,7 +778,83 @@
         }        
 
     </style>
+ <script>
+	$( document ).ready(function() {
+   
+		$("#html_element").change(function(){
+			var selected = $('#html_element option:selected').val();
+			if(selected	==	'radio'){$("#radio").show('slow');}
+			if(selected	==	'checkbox'){$("#checkbox").show('slow');}
+			if(selected	==	'select'){$("#select").show('slow');}
+			if(selected	==	'list'){$("#list").show('slow');}	
+			});
+			
+		$( "#div_load" ).change(function() {
+		var e						= 		$('#div_load').val();
+		$.ajax({ 
+		
+	            type: "POST",  
+	            url: "load_element.php",  
+	            data: {REQUEST: "SEARCH_NAME", ID: e},  
+	            success: function(dataString) {    	// alert(dataString); 
+					  
+					 var json = jQuery.parseJSON(dataString);
+					 var HTML	=	json.data.HTML;//alert(HTML);
+					 var CSS	=	json.data.CSS; // alert(CSS); 
+					 var lableName	=	json.data.NAME;
+					 var update_id	=	json.data.ID;
+					 var variableName	=	HTML.substring(HTML.indexOf(' name="')+7, HTML.indexOf(' id="')-1);
+					 var elementName	=	HTML.substring(HTML.indexOf('</label><')+9, HTML.indexOf(' name="'));
+					 if(elementName	!=	'textarea'){
+					 	 elementName	=	HTML.substring(HTML.indexOf('type="')+6, HTML.indexOf(' name="')-1);
+					   variableName	=	HTML.substring(HTML.indexOf(' name="')+7, HTML.indexOf(' value="')-1);
+					 }
+					  $('#var_name').val(variableName);
+						$('#label').val(lableName);
+						 if(elementName	==	'textarea')
+						 	$('#html_element').val('text_area');
+						 else
+						 	$('#html_element').val(elementName);
 
+						var backgroundColor	=	CSS.substring(CSS.indexOf('background-color')+17, CSS.indexOf('width:')-1);
+						var fontColor	=	CSS.substring(CSS.indexOf(';color:')+7, CSS.indexOf(';position:')-1);
+						var fontSize	=	CSS.substring(CSS.indexOf(';font-size:')+11, CSS.indexOf(';color:'));
+						var height	=	CSS.substring(CSS.indexOf(';height:')+8, CSS.indexOf(';margin-top:')-2);
+						var width	=	CSS.substring(CSS.indexOf(';width:')+7, CSS.indexOf(';height:')-2);
+						var zIndex	=	CSS.substring(CSS.indexOf(';z-index:')+9, CSS.indexOf(';font-size:'));
+						var xPos	=	CSS.substring(CSS.indexOf(';margin-top:')+12, CSS.indexOf(';margin-bottom:')-2);
+						var yPos	=	CSS.substring(CSS.indexOf(';margin-bottom:')+15, CSS.indexOf(';z-index:')-2); 
+						$('#color').val(backgroundColor);
+						$('#font_color').val(fontColor);
+						$('#font_size').val(fontSize);
+						$('#height').val(height);
+						$('#width').val(width); 
+						$('#z_index').val(zIndex);
+						$('#x_position').val(xPos);
+						$('#y_position').val(yPos); 
+						$('#update_id').val(update_id); 
+						$('#update').val('true'); 
+
+	            }  
+	        });
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			 
+		
+		});	
+	});
+	
+	</script>
 
 </head>
 
@@ -815,10 +891,10 @@
                     <div class="tab-content inner-tab-content">
                         <div id="tab_1_1" class="tab-pane active" > 
                             <form method="post" action="">
-                                <label>Select DIV:</label>
+                                <!--<label>Select DIV:</label>
                                 <select name="div_load" id="div_load">
                                     <?php echo $dropdown;?>
-                                </select>
+                                </select>-->
 
 
                                 <h2>HTML Attributes</h2>
