@@ -1,5 +1,4 @@
-<?php 
-
+<?php
     Class HTML{
         public function text($name,$label,$value,$div_name){
 
@@ -932,7 +931,7 @@
 
 
         <div style="margin-top: 20px;">
-            <button type="button" class="btn btn-primary" onclick="openPopUp()" >click me </button>
+            <button type="button" class="btn btn-primary" onClick="openPopUp()" >click me </button>
         </div>       
 
     </div> 
