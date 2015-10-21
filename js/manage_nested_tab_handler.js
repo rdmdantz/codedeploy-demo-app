@@ -1,4 +1,4 @@
-
+var DEFAULT_TAB_DATA = 'This is default data';
 $(document).ready(function(){
 
     bindTabsClick();
@@ -39,7 +39,7 @@ function bindOuterTabsClick()
             <li><a href="#" class="add-inner-tab" data-toggle="tab">+ Add Tab</a></li>\
             </ul>\
             <div class="tab-content inner-tab-content">\
-            <div id="tab_'+id+'_1" class="tab-pane active" >Tab '+id+'.1 Details\
+            <div id="tab_'+id+'_1" class="tab-pane active" ><textarea rows="10" style="width: 100%;">'+DEFAULT_TAB_DATA+'</textarea>\
             </div>\
             </div>\
             </div>');
@@ -64,7 +64,7 @@ function bindInnerTabsClick()
 
         var id = $('#'+outerTabId+' .nav-tabs').children().length; 
         $(this).closest('li').before('<li><a href="#tab_'+outerTabIndex+'_'+id+'">New Tab</a><span>x</span></li>');         
-        $('#'+outerTabId+' .inner-tab-content').append('<div id="tab_'+outerTabIndex+'_'+id+'" class="tab-pane" >Tab '+outerTabIndex+'.'+id+' Details</div>');
+        $('#'+outerTabId+' .inner-tab-content').append('<div id="tab_'+outerTabIndex+'_'+id+'" class="tab-pane" > <textarea rows="10" style="width: 100%;">'+DEFAULT_TAB_DATA+'</textarea> </div>');
         bindInnerTabsClick(); 
     }); 
 }
