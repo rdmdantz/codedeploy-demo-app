@@ -97,8 +97,9 @@
                             width: $('#width').val(),
                             x_position: $('#x_position').val(),
                             y_position: $('#y_position').val(),
-                            z_index: $('#z_index').val(),
-                            submit: $('#submit').val()
+                            submit: true,
+                            update: false,
+                            z_index: $('#z_index').val()
                              }, 
                         success: function(dataString) {
                              alert(dataString);
