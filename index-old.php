@@ -1,6 +1,5 @@
 <?php 
-error_reporting(0); echo '<pre>';
-print_r($_POST);exit;
+error_reporting(0); 
 Class HTML{
 	public function text($name,$label,$value,$div_name){
 		
