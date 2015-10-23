@@ -1,4 +1,35 @@
-<?php if(isset($_GET['p'])){$project	=	$_GET['p'];echo $project;}?>
+<?php if(isset($_GET['p'])){$project	=	$_GET['p'];
+
+ 		$servername = "localhost";
+        $username = "root";
+        $password = "";
+        $conn = new mysqli($servername, $username, $password);
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+		//GET the current project ID to get its respective data from the database
+        $select			=		"SELECT PROJECT_ID FROM `CMS`.`projects` WHERE PROJECT_NAME =	'$project'";
+        $result				=		$conn->query($select);
+       
+        while($row=mysqli_fetch_assoc($result)){
+			$ID	=	$row['PROJECT_ID'];//ID contains the current project ID
+		}
+		
+		//Get the project data against its ID in the database 
+		$select			=		"SELECT * FROM `CMS`.`pages` WHERE PROJECT_ID =	$ID";
+        $result				=		$conn->query($select);
+		$page_data	=	array();
+		while($row=mysqli_fetch_assoc($result)){
+			$PAGE_TITLE	=	$row['PAGE_TITLE'];
+			$NEXT_PAGE	=	$row['NEXT_PAGE'];
+			$PROJECT_ID	=	$row['PROJECT_ID'];
+			$PAGE_ID	=	$row['PAGE_ID'];
+			$array	=	array($PAGE_ID,$PAGE_TITLE,$NEXT_PAGE,$PROJECT_ID);
+			array_push($page_data,$array);
+		}
+		//print_r($page_data);//$page_data contains all the data of the current page
+		
+}//end of isset?>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
