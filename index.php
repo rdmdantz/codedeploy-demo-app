@@ -1,8 +1,3 @@
-<?php
-   
-    
-
-?>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -87,19 +82,19 @@
                         type:'POST', 
                         url: 'db_elements.php', 
                         data: { 
-                            var_name: $('#var_name').val(),
-                            label: $('#label').val(),
-                            html_element: $('#html_element').val(),
-                            color: $('#color').val(),
-                            font_color: $('#font_color').val(),
-                            font_size: $('#font_size').val(),
-                            height: $('#height').val(),
-                            width: $('#width').val(),
-                            x_position: $('#x_position').val(),
-                            y_position: $('#y_position').val(),
                             submit: true,
                             update: false,
-                            z_index: $('#z_index').val()
+                            html_element: $('#html_element').val(),
+                            font_color: $('#font_color').val(),
+                            x_position: $('#x_position').val(),
+                            y_position: $('#y_position').val(),
+                            font_size: $('#font_size').val(),
+                            var_name: $('#var_name').val(),
+                            height: $('#height').val(),
+                            z_index: $('#z_index').val(),
+                            label: $('#label').val(),
+                            width: $('#width').val(),
+                            color: $('#color').val()
                              }, 
                         success: function(dataString) {
                              alert(dataString);
