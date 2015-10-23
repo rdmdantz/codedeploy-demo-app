@@ -9,7 +9,6 @@ $servername = "localhost";
 		$select				=		'SELECT * FROM `cms`.`jtable`';
 		$result	=	$conn->query($select);
 		
-		$msg = '';
 		$jtable_title = '';
 		$jtable_desc = '';
 		$jtable_cost = 0;
