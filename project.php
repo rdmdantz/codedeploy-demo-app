@@ -158,7 +158,8 @@ padding-bottom: 20px;
 
 	<br>
 	<form id="projectForm" action="index.php">
-    	<select name="p" id="projects" style="width:300px;">
+    
+    	<center><select name="p" id="projects" style="width:300px;">
             <?php echo $dropdown;?>
             <option value="new"> New </option> 
         </select>
@@ -182,7 +183,7 @@ padding-bottom: 20px;
 <input type="text" value="" id="projectName" name="projectName">
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" id="ok_btn" data-dismiss="modal">OK</button>
+                    <button type="button" class="btn btn-default" id="ok_btn" data-dismiss="modal">OK</button></center>
                 </div>
             </div>
         </div>
