@@ -27,6 +27,8 @@
 			$array	=	array($PAGE_ID,$PAGE_TITLE,$NEXT_PAGE,$PROJECT_ID);
 			array_push($page_data,$array);
 		}
+		$size	= count($page_data);
+		
 		//print_r($page_data);//$page_data contains all the data of the current page
 		
 }//end of isset?>
@@ -109,6 +111,51 @@
 
 		});	
 	});
+	function preview(){
+		var var_name = $('#var_name').val();
+		var label = $('#label').val();
+		var html_element = $('#html_element').val();
+		var color = $('#color').val();
+		var font_color = $('#font_color').val();
+		var font_size = $('#font_size').val();
+		var height = $('#height').val();
+		var width = $('#width').val();
+		var x_position = $('#x_position').val();
+		var y_position = $('#y_position').val();
+		
+		 $.ajax({
+                        type:'POST', 
+                        url: 'get_preview.php', 
+                        data: { 
+                            
+                            html_element: $('#html_element').val(),
+                            font_color: $('#font_color').val(),
+                            x_position: $('#x_position').val(),
+                            y_position: $('#y_position').val(),
+                            font_size: $('#font_size').val(),
+                            var_name: $('#var_name').val(),
+                            height: $('#height').val(),
+                            z_index: $('#z_index').val(),
+                            label: $('#label').val(),
+                            width: $('#width').val(),
+                            color: $('#color').val()
+                             }, 
+                        success: function(dataString) {
+                             alert(dataString);
+                              
+                            // var json = jQuery.parseJSON(dataString);
+                             
+                            },
+                            error: function()
+                            {
+                                alert('err');
+                               console.log(arguments);
+                            }
+                            
+                        });
+		
+		
+		}
 	function form_submit(){
                 $.ajax({
                         type:'POST', 
@@ -318,12 +365,14 @@
                                 <input type="text" name="z_index" id="z_index"/><br/>
 
 
-                                <input type="button" name="submit" value="save element"  onclick="form_submit();" />
+                                <input type="button" name="submit" value="save element"  onclick="form_submit();preview();" />
                                 <input type="hidden" name="update" id="update" value="false">
                                 <input type="hidden" name="update_id" id="update_id" value="0"> 
                             </form>
 
                         </div>                        
+                    </div>
+                    <div class="preview" style="border:1px solid #999; width:500px; height:300px;">
                     </div>
                 </div>  
 
