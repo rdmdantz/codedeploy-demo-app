@@ -1,37 +1,37 @@
 <?php if(isset($_GET['p'])){$project	=	$_GET['p'];
 
- 		$servername = "localhost";
+        $servername = "localhost";
         $username = "root";
         $password = "";
         $conn = new mysqli($servername, $username, $password);
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }
-		//GET the current project ID to get its respective data from the database
+        //GET the current project ID to get its respective data from the database
         $select			=		"SELECT PROJECT_ID FROM `CMS`.`projects` WHERE PROJECT_NAME =	'$project'";
         $result				=		$conn->query($select);
-       
+
         while($row=mysqli_fetch_assoc($result)){
-			$ID	=	$row['PROJECT_ID'];//ID contains the current project ID
-		}
-		
-		//Get the project data against its ID in the database 
-		$select			=		"SELECT * FROM `CMS`.`pages` WHERE PROJECT_ID =	$ID";
+            $ID	=	$row['PROJECT_ID'];//ID contains the current project ID
+        }
+
+        //Get the project data against its ID in the database 
+        $select			=		"SELECT * FROM `CMS`.`pages` WHERE PROJECT_ID =	$ID";
         $result				=		$conn->query($select);
-		$page_data	=	array();
-		while($row=mysqli_fetch_assoc($result)){
-			$PAGE_TITLE	=	$row['PAGE_TITLE'];
-			$NEXT_PAGE	=	$row['NEXT_PAGE'];
-			$PROJECT_ID	=	$row['PROJECT_ID'];
-			$PAGE_ID	=	$row['PAGE_ID'];
-			$array	=	array($PAGE_ID,$PAGE_TITLE,$NEXT_PAGE,$PROJECT_ID);
-			array_push($page_data,$array);
-		}
-		$size	= count($page_data);
-		
-		//print_r($page_data);//$page_data contains all the data of the current page
-		
-}//end of isset?>
+        $page_data	=	array();
+        while($row=mysqli_fetch_assoc($result)){
+            $PAGE_TITLE	=	$row['PAGE_TITLE'];
+            $NEXT_PAGE	=	$row['NEXT_PAGE'];
+            $PROJECT_ID	=	$row['PROJECT_ID'];
+            $PAGE_ID	=	$row['PAGE_ID'];
+            $array	=	array($PAGE_ID,$PAGE_TITLE,$NEXT_PAGE,$PROJECT_ID);
+            array_push($page_data,$array);
+        }
+        $size	= count($page_data);
+
+        //print_r($page_data);//$page_data contains all the data of the current page
+
+    }//end of isset?>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -40,162 +40,162 @@
     <meta name="author" content="">
 
     <link href="bootstrap/css/bootstrap.css"              rel="stylesheet">
-	 <link href="css/style.css"              rel="stylesheet">
+    <link href="css/style.css"              rel="stylesheet">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>   
     <script type="text/javascript"  src="bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/manage_nested_tab_handler.js"></script>
 
 
-   
- <script>
-	$( document ).ready(function() {
-   
-		$("#html_element").change(function(){
-			var selected = $('#html_element option:selected').val();
-			if(selected	==	'radio'){$("#radio").show('slow');}
-			if(selected	==	'checkbox'){$("#checkbox").show('slow');}
-			if(selected	==	'select'){$("#select").show('slow');}
-			if(selected	==	'list'){$("#list").show('slow');}	
-			});
-			
-		$( "#div_load" ).change(function() {
-		var e						= 		$('#div_load').val();
-		$.ajax({ 
-		
-	            type: "POST",  
-	            url: "load_element.php",  
-	            data: {REQUEST: "SEARCH_NAME", ID: e},  
-	            success: function(dataString) {    	// alert(dataString); 
-					  
-					 var json = jQuery.parseJSON(dataString);
-					 var HTML	=	json.data.HTML;//alert(HTML);
-					 var CSS	=	json.data.CSS; // alert(CSS); 
-					 var lableName	=	json.data.NAME;
-					 var update_id	=	json.data.ID;
-					 var variableName	=	HTML.substring(HTML.indexOf(' name="')+7, HTML.indexOf(' id="')-1);
-					 var elementName	=	HTML.substring(HTML.indexOf('</label><')+9, HTML.indexOf(' name="'));
-					 if(elementName	!=	'textarea'){
-					 	 elementName	=	HTML.substring(HTML.indexOf('type="')+6, HTML.indexOf(' name="')-1);
-					   variableName	=	HTML.substring(HTML.indexOf(' name="')+7, HTML.indexOf(' value="')-1);
-					 }
-					  $('#var_name').val(variableName);
-						$('#label').val(lableName);
-						 if(elementName	==	'textarea')
-						 	$('#html_element').val('text_area');
-						 else
-						 	$('#html_element').val(elementName);
 
-						var backgroundColor	=	CSS.substring(CSS.indexOf('background-color')+17, CSS.indexOf('width:')-1);
-						var fontColor	=	CSS.substring(CSS.indexOf(';color:')+7, CSS.indexOf(';position:')-1);
-						var fontSize	=	CSS.substring(CSS.indexOf(';font-size:')+11, CSS.indexOf(';color:'));
-						var height	=	CSS.substring(CSS.indexOf(';height:')+8, CSS.indexOf(';margin-top:')-2);
-						var width	=	CSS.substring(CSS.indexOf(';width:')+7, CSS.indexOf(';height:')-2);
-						var zIndex	=	CSS.substring(CSS.indexOf(';z-index:')+9, CSS.indexOf(';font-size:'));
-						var xPos	=	CSS.substring(CSS.indexOf(';margin-top:')+12, CSS.indexOf(';margin-bottom:')-2);
-						var yPos	=	CSS.substring(CSS.indexOf(';margin-bottom:')+15, CSS.indexOf(';z-index:')-2); 
-						$('#color').val(backgroundColor);
-						$('#font_color').val(fontColor);
-						$('#font_size').val(fontSize);
-						$('#height').val(height);
-						$('#width').val(width); 
-						$('#z_index').val(zIndex);
-						$('#x_position').val(xPos);
-						$('#y_position').val(yPos); 
-						$('#update_id').val(update_id); 
-						$('#update').val('true'); 
+    <script>
+        $( document ).ready(function() {
 
-	            }  
-	        });
-			
+            $("#html_element").change(function(){
+                var selected = $('#html_element option:selected').val();
+                if(selected	==	'radio'){$("#radio").show('slow');}
+                if(selected	==	'checkbox'){$("#checkbox").show('slow');}
+                if(selected	==	'select'){$("#select").show('slow');}
+                if(selected	==	'list'){$("#list").show('slow');}	
+            });
 
-		});	
-	});
-	function preview(){
-		var var_name = $('#var_name').val();
-		var label = $('#label').val();
-		var html_element = $('#html_element').val();
-		var color = $('#color').val();
-		var font_color = $('#font_color').val();
-		var font_size = $('#font_size').val();
-		var height = $('#height').val();
-		var width = $('#width').val();
-		var x_position = $('#x_position').val();
-		var y_position = $('#y_position').val();
-		
-		 $.ajax({
-                        type:'POST', 
-                        url: 'get_preview.php', 
-                        data: { 
-                            
-                            html_element: $('#html_element').val(),
-                            font_color: $('#font_color').val(),
-                            x_position: $('#x_position').val(),
-                            y_position: $('#y_position').val(),
-                            font_size: $('#font_size').val(),
-                            var_name: $('#var_name').val(),
-                            height: $('#height').val(),
-                            z_index: $('#z_index').val(),
-                            label: $('#label').val(),
-                            width: $('#width').val(),
-                            color: $('#color').val()
-                             }, 
-                        success: function(dataString) {
-                             alert(dataString);
-                              
-                            // var json = jQuery.parseJSON(dataString);
-                             
-                            },
-                            error: function()
-                            {
-                                alert('err');
-                               console.log(arguments);
-                            }
-                            
-                        });
-		
-		
-		}
-	function form_submit(){
-                $.ajax({
-                        type:'POST', 
-                        url: 'db_elements.php', 
-                        data: { 
-                            submit: true,
-                            update: false,
-                            html_element: $('#html_element').val(),
-                            font_color: $('#font_color').val(),
-                            x_position: $('#x_position').val(),
-                            y_position: $('#y_position').val(),
-                            font_size: $('#font_size').val(),
-                            var_name: $('#var_name').val(),
-                            height: $('#height').val(),
-                            z_index: $('#z_index').val(),
-                            label: $('#label').val(),
-                            width: $('#width').val(),
-                            color: $('#color').val()
-                             }, 
-                        success: function(dataString) {
-                             alert(dataString);
-                              
-                            // var json = jQuery.parseJSON(dataString);
-                             
-                            },
-                            error: function()
-                            {
-                                alert('err');
-                               console.log(arguments);
-                            }
-                            
-                        });
-                    
-    }
-	</script>
+            $( "#div_load" ).change(function() {
+                var e						= 		$('#div_load').val();
+                $.ajax({ 
+
+                    type: "POST",  
+                    url: "load_element.php",  
+                    data: {REQUEST: "SEARCH_NAME", ID: e},  
+                    success: function(dataString) {    	// alert(dataString); 
+
+                        var json = jQuery.parseJSON(dataString);
+                        var HTML	=	json.data.HTML;//alert(HTML);
+                        var CSS	=	json.data.CSS; // alert(CSS); 
+                        var lableName	=	json.data.NAME;
+                        var update_id	=	json.data.ID;
+                        var variableName	=	HTML.substring(HTML.indexOf(' name="')+7, HTML.indexOf(' id="')-1);
+                        var elementName	=	HTML.substring(HTML.indexOf('</label><')+9, HTML.indexOf(' name="'));
+                        if(elementName	!=	'textarea'){
+                            elementName	=	HTML.substring(HTML.indexOf('type="')+6, HTML.indexOf(' name="')-1);
+                            variableName	=	HTML.substring(HTML.indexOf(' name="')+7, HTML.indexOf(' value="')-1);
+                        }
+                        $('#var_name').val(variableName);
+                        $('#label').val(lableName);
+                        if(elementName	==	'textarea')
+                            $('#html_element').val('text_area');
+                        else
+                            $('#html_element').val(elementName);
+
+                        var backgroundColor	=	CSS.substring(CSS.indexOf('background-color')+17, CSS.indexOf('width:')-1);
+                        var fontColor	=	CSS.substring(CSS.indexOf(';color:')+7, CSS.indexOf(';position:')-1);
+                        var fontSize	=	CSS.substring(CSS.indexOf(';font-size:')+11, CSS.indexOf(';color:'));
+                        var height	=	CSS.substring(CSS.indexOf(';height:')+8, CSS.indexOf(';margin-top:')-2);
+                        var width	=	CSS.substring(CSS.indexOf(';width:')+7, CSS.indexOf(';height:')-2);
+                        var zIndex	=	CSS.substring(CSS.indexOf(';z-index:')+9, CSS.indexOf(';font-size:'));
+                        var xPos	=	CSS.substring(CSS.indexOf(';margin-top:')+12, CSS.indexOf(';margin-bottom:')-2);
+                        var yPos	=	CSS.substring(CSS.indexOf(';margin-bottom:')+15, CSS.indexOf(';z-index:')-2); 
+                        $('#color').val(backgroundColor);
+                        $('#font_color').val(fontColor);
+                        $('#font_size').val(fontSize);
+                        $('#height').val(height);
+                        $('#width').val(width); 
+                        $('#z_index').val(zIndex);
+                        $('#x_position').val(xPos);
+                        $('#y_position').val(yPos); 
+                        $('#update_id').val(update_id); 
+                        $('#update').val('true'); 
+
+                    }  
+                });
+
+
+            });	
+        });
+        function preview(){
+            var var_name = $('#var_name').val();
+            var label = $('#label').val();
+            var html_element = $('#html_element').val();
+            var color = $('#color').val();
+            var font_color = $('#font_color').val();
+            var font_size = $('#font_size').val();
+            var height = $('#height').val();
+            var width = $('#width').val();
+            var x_position = $('#x_position').val();
+            var y_position = $('#y_position').val();
+
+            $.ajax({
+                type:'POST', 
+                url: 'get_preview.php', 
+                data: { 
+
+                    html_element: $('#html_element').val(),
+                    font_color: $('#font_color').val(),
+                    x_position: $('#x_position').val(),
+                    y_position: $('#y_position').val(),
+                    font_size: $('#font_size').val(),
+                    var_name: $('#var_name').val(),
+                    height: $('#height').val(),
+                    z_index: $('#z_index').val(),
+                    label: $('#label').val(),
+                    width: $('#width').val(),
+                    color: $('#color').val()
+                }, 
+                success: function(dataString) {
+                    alert(dataString);
+
+                    // var json = jQuery.parseJSON(dataString);
+
+                },
+                error: function()
+                {
+                    alert('err');
+                    console.log(arguments);
+                }
+
+            });
+
+
+        }
+        function form_submit(){
+            $.ajax({
+                type:'POST', 
+                url: 'db_elements.php', 
+                data: { 
+                    submit: true,
+                    update: false,
+                    html_element: $('#html_element').val(),
+                    font_color: $('#font_color').val(),
+                    x_position: $('#x_position').val(),
+                    y_position: $('#y_position').val(),
+                    font_size: $('#font_size').val(),
+                    var_name: $('#var_name').val(),
+                    height: $('#height').val(),
+                    z_index: $('#z_index').val(),
+                    label: $('#label').val(),
+                    width: $('#width').val(),
+                    color: $('#color').val()
+                }, 
+                success: function(dataString) {
+                    alert(dataString);
+
+                    // var json = jQuery.parseJSON(dataString);
+
+                },
+                error: function()
+                {
+                    alert('err');
+                    console.log(arguments);
+                }
+
+            });
+
+        }
+    </script>
 
 </head>
 
 <body>
- <?php
+    <?php
         $servername = "localhost";
         $username = "root";
         $password = "";
@@ -218,7 +218,7 @@
             $data           =       $row['PAGE_TITLE'];
             $ID             =       $row['PAGE_ID'];
             if($data !== $_GET['p'])
-            $goto_dropdown.=     '<option value="'.$ID.'">'.$data.'</option>';
+                $goto_dropdown.=     '<option value="'.$ID.'">'.$data.'</option>';
         }
     ?>
     <div class="container">
@@ -239,7 +239,7 @@
                             <form method="post" action="">
                                 <!--<label>Select DIV:</label>
                                 <select name="div_load" id="div_load">
-                                    <?php echo $dropdown;?>
+                                <?php echo $dropdown;?>
                                 </select>-->
 
 
@@ -379,7 +379,7 @@
             </div>            
         </div>
 
-       
+
 
     </div>
 
@@ -387,14 +387,14 @@
 
 
 
-    <div id="vc_Popup" style="display: none;" class="modal fade">
-        <div class="modal-dialog">
+    <div id="vc_Popup" class="modal fade" style="display: none;">
+        <div class="modal-dialog" style="width: 650px;">
             <div class="modal-content">
                 <div style="background: black; color: gray;" class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="glyphicon glyphicon-remove white" aria-hidden="true" style="color: white;"></span></button>
                     <h4 class="modal-title">PopUp</h4>
                 </div>
-                <div class="modal-body" style="height: 200px;"> 
+                <div class="modal-body" style="height: 200px; max-height: 400px; overflow-y:auto;"> 
 
                     <div>
 
@@ -413,8 +413,64 @@
                             </select>
                             <select class="form-control col-md-4"  id="goto_dropdown" style="width: 33%; display: none;" >
                                 <option id="0"  selected="selected">Select one...</option>                            
-                               <?php echo $goto_dropdown;?>                         
+                                <?php echo $goto_dropdown;?>                         
                             </select>
+                        </div>
+
+
+                        <div class="col-md-12" style="margin-top: 10px;">
+                            <label class=" control-label col-md-4" style="text-align: left;" >Save:</label>
+                            <select class="form-control col-md-8"  id="save_dropdown" onChange="saveDropDownChangeHandler();" style="display: inline-block; width: 66%;" >   
+                                <option id="0"  selected="selected">Select one...</option>                            
+                                <option id="input">input</option>                            
+                                <option id="test">dummy 1</option>                            
+                                <option id="goto">dummy 2</option>                            
+                            </select>
+
+                        </div>
+
+                        <div id="addInputFieldsWrapper" class="col-md-12" style="margin-top: 10px; display: none;">
+
+                            <table style="width: 100%;">
+
+                                <thead>
+                                    <tr class="col-md-12" style="width: 100%;">
+                                        <td class="col-md-3" > <label class=" control-label col-md-12" style="text-align: left;" >Label</label></td>
+                                        <td class="col-md-3" > <label class=" control-label col-md-12" style="text-align: left;" >Type</label></td>
+                                        <td class="col-md-3" > <label class=" control-label col-md-12" style="text-align: left;" >Table</label></td>
+                                        <td class="col-md-3" > <label class=" control-label col-md-12" style="text-align: left;" >Field</label></td>
+                                        <td class="col-md-3" > <label class=" control-label col-md-12" style="text-align: left;" ></label></td>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr class="col-md-12" style="width: 100%;">
+                                        <td class="col-md-3" >
+                                            <select class="form-control col-md-12"  id="save_dropdown" style="display: inline-block;" >   
+                                                <option id="name_field_opt">Name</option>                            
+                                                <option id="age_field_opt">Age</option>                            
+                                                <option id="email_field_opt">Email</option>                                                                        
+                                            </select>
+                                        </td>
+                                        <td class="col-md-2"> <label class=" control-label" style="text-align: left; font-weight: normal;" >Type</label></td>
+                                        <td class="col-md-3">
+                                            <select class="form-control col-md-12"  id="save_dropdown" style="display: inline-block;" >   
+
+                                                <option id="user_tbl_opt">User</option>                            
+                                                <option id="group_tbl_opt">Group</option>                            
+                                                <option id="asset_tbl_opt">Asset</option>                                                                        
+                                            </select>
+                                        </td>
+                                        <td class="col-md-2"> <label class=" control-label" style="text-align: left; font-weight: normal;" >Field</label></td>
+                                        <td class="col-md-2"> 
+                                            <button type="button" class="btn btn-primary" onclick="removeCurrentInputFieldRow(this)">-</button>
+                                            <button type="button" class="btn btn-primary" onclick="addNewInputFieldRow()">+ </button>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
                         </div>
                     </div>
 

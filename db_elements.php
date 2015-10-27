@@ -7,7 +7,11 @@
 
             $label	=	'<label>'.$label.'</label>';
             $output	=	$label.'<input type="text" name="'.$name.'" value="'.$value.'" id="'.$name.'">';
-
+			$output_json	=	array(
+			'LABEL'	=>	$label,
+			'TEXTAREA'	=>	
+			
+			);
             return $output;
         }
         public function text_area($name,$label,$value,$div_name){

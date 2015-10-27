@@ -1,25 +1,36 @@
 
-      .container{
-            margin-top: 10px;
-        }
+.container{
+    margin-top: 10px;
+}
 
-        .nav-tabs > li {
-            position:relative;    
-        }
+.nav-tabs > li {
+    position:relative;    
+}
 
-        .nav-tabs > li > a {
-            display:inline-block;
-        }
+.nav-tabs > li > a {
+    display:inline-block;
+}
 
-        .nav-tabs > li > span {
-            display:none;
-            cursor:pointer;
-            position:absolute;
-            right: 6px;
-            top: 8px;
-            color: red;
-        }
+.nav-tabs > li > span {
+    display:none;
+    cursor:pointer;
+    position:absolute;
+    right: 6px;
+    top: 8px;
+    color: red;
+}
 
-        .nav-tabs > li:hover > span {
-            display: inline-block;
-        }        
+.nav-tabs > li:hover > span {
+    display: inline-block;
+} 
+
+#addInputFieldsWrapper table thead label
+{ 
+    padding-left: 0px;
+    
+}
+        
+#addInputFieldsWrapper table td
+{ 
+    padding-left: 0px;
+}
