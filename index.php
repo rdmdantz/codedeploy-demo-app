@@ -226,7 +226,8 @@
             <li class="active"><a href="#tab_1" data-toggle="tab">Tab 1</a><span>x</span></li>
             <li><a href="#" class="add-outer-tab" data-toggle="tab">+ Add Tab</a></li>
         </ul>
-        <div style="    margin-top: -37px; float: right;"> <button type="button" class="btn btn-primary" onClick="openPopUp()" >Save </button> </div>
+        <div style="    margin-top: -37px; float: right;"> 
+		<button name="btn_save" type="button" class="btn btn-primary" onClick="openPopUp()" >Save </button> </div>
         <div class="tab-content outer-tab-content">
             <div id="tab_1" class="tab-pane active" >
                 <div class="container">
@@ -463,8 +464,8 @@
                                         </td>
                                         <td class="col-md-2"> <label class=" control-label" style="text-align: left; font-weight: normal;" >Field</label></td>
                                         <td class="col-md-2"> 
-                                            <button type="button" class="btn btn-primary" onclick="removeCurrentInputFieldRow(this)">-</button>
-                                            <button type="button" class="btn btn-primary" onclick="addNewInputFieldRow()">+ </button>
+                                            <button type="button" class="btn btn-primary" onClick="removeCurrentInputFieldRow(this)">-</button>
+                                            <button type="button" class="btn btn-primary" onClick="addNewInputFieldRow()">+ </button>
                                         </td>
                                     </tr>
 
