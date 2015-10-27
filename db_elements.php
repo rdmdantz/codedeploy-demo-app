@@ -102,7 +102,7 @@
             
 			 $output_json	=	array(
 			'LABEL'	=>	$label,
-			'ELEMENT'	=>	'radio',
+			'ELEMENT'	=>	'checkbox',
 			'VARIABLE'	=>	$name,
 			'VALUE'	=>	$value,
 			'ID'	=>	$name,
@@ -142,19 +142,49 @@
             }
             $output.=	'</select>';
 
-            return $output;
+            $output_json	=	array(
+			'LABEL'	=>	$label,
+			'ELEMENT'	=>	'select',
+			'VARIABLE'	=>	$name,
+			'VALUE'	=>	$value,
+			'ID'	=>	$name,
+			'DIV'	=>	$div_name,
+			'HTML'	=>	$output
+			);
+			$data	=	json_encode($output_json);
+            return $data;
         }
         public function file_html($name,$label,$value,$div_name){
 
             $label	=	'<label>'.$label.'</label>';
             $output	=	$label.'&nbsp;&nbsp;<input type="file" name="'.$name.'" id="'.$name.'">';
 
-            return $output;
+            $output_json	=	array(
+			'LABEL'	=>	$label,
+			'ELEMENT'	=>	'file_html',
+			'VARIABLE'	=>	$name,
+			'VALUE'	=>	$value,
+			'ID'	=>	$name,
+			'DIV'	=>	$div_name,
+			'HTML'	=>	$output
+			);
+			$data	=	json_encode($output_json);
+            return $data;
         }
         public function hidden($name,$label,$value,$div_name){
 
             $output	=	'<input type="hidden" name="'.$name.'" value="'.$label.'" id="'.$name.'">';	
-            return $output;
+           $output_json	=	array(
+			'LABEL'	=>	$label,
+			'ELEMENT'	=>	'hidden',
+			'VARIABLE'	=>	$name,
+			'VALUE'	=>	$value,
+			'ID'	=>	$name,
+			'DIV'	=>	$div_name,
+			'HTML'	=>	$output
+			);
+			$data	=	json_encode($output_json);
+            return $data;
         }
 
         public function label($name,$label,$value,$div_name){
@@ -162,14 +192,34 @@
             $label	=	'<label id="'.$name.'">'.$label.'</label>';
             $output	=	$label;
 
-            return $output;
+            $output_json	=	array(
+			'LABEL'	=>	$label,
+			'ELEMENT'	=>	'label',
+			'VARIABLE'	=>	$name,
+			'VALUE'	=>	$value,
+			'ID'	=>	$name,
+			'DIV'	=>	$div_name,
+			'HTML'	=>	$output
+			);
+			$data	=	json_encode($output_json);
+            return $data;
         }
         public function table($name,$label,$value,$div_name){
 
             $label	=	'<table id="'.$name.'">'.'</table>';
 
             $output	=	$label;	
-            return $output;
+            $output_json	=	array(
+			'LABEL'	=>	$label,
+			'ELEMENT'	=>	'table',
+			'VARIABLE'	=>	$name,
+			'VALUE'	=>	$value,
+			'ID'	=>	$name,
+			'DIV'	=>	$div_name,
+			'HTML'	=>	$output
+			);
+			$data	=	json_encode($output_json);
+            return $data;
         }
         public function list_html($name,$label,$value,$div_name){
 
@@ -180,45 +230,115 @@
             }
             $output.=	'</ul>';
 
-            return $output;
+            $output_json	=	array(
+			'LABEL'	=>	$label,
+			'ELEMENT'	=>	'list',
+			'VARIABLE'	=>	$name,
+			'VALUE'	=>	$value,
+			'ID'	=>	$name,
+			'DIV'	=>	$div_name,
+			'HTML'	=>	$output
+			);
+			$data	=	json_encode($output_json);
+            return $data;
         }
         public function form($name,$label,$value,$div_name){
 
             $label	=	'<form name="'.$name.'" method="post" action="'.$label.'" id="'.$name.'"></form>';
             $output	=	$label;	
 
-            return $output;
+            $output_json	=	array(
+			'LABEL'	=>	$label,
+			'ELEMENT'	=>	'form',
+			'VARIABLE'	=>	$name,
+			'VALUE'	=>	$value,
+			'ID'	=>	$name,
+			'DIV'	=>	$div_name,
+			'HTML'	=>	$output
+			);
+			$data	=	json_encode($output_json);
+            return $data;
         }
         public function image($name,$label,$value,$div_name){
 
             $output	=	'<img src="'.$label.'" id="'.$name.'">';	
 
-            return $output;
+            $output_json	=	array(
+			'LABEL'	=>	$label,
+			'ELEMENT'	=>	'image',
+			'VARIABLE'	=>	$name,
+			'VALUE'	=>	$value,
+			'ID'	=>	$name,
+			'DIV'	=>	$div_name,
+			'HTML'	=>	$output
+			);
+			$data	=	json_encode($output_json);
+            return $data;
         }
         public function fieldset($name,$label,$value,$div_name){
 
             $output	=	'<fieldset id="'.$name.'"></fieldset>';
 
-            return $output;
+            $output_json	=	array(
+			'LABEL'	=>	$label,
+			'ELEMENT'	=>	'fieldset',
+			'VARIABLE'	=>	$name,
+			'VALUE'	=>	$value,
+			'ID'	=>	$name,
+			'DIV'	=>	$div_name,
+			'HTML'	=>	$output
+			);
+			$data	=	json_encode($output_json);
+            return $data;
         }
         public function table_row($name,$label,$value,$div_name){
 
             $output	=	'<tr id="'.$name.'"></tr>';	
-            return $output;
+            $output_json	=	array(
+			'LABEL'	=>	$label,
+			'ELEMENT'	=>	'table_row',
+			'VARIABLE'	=>	$name,
+			'VALUE'	=>	$value,
+			'ID'	=>	$name,
+			'DIV'	=>	$div_name,
+			'HTML'	=>	$output
+			);
+			$data	=	json_encode($output_json);
+            return $data;
         }
         public function table_data($name,$label,$value,$div_name){
             $output	=	'<td id="'.$name.'"></td>';
-            return $output;
+            $output_json	=	array(
+			'LABEL'	=>	$label,
+			'ELEMENT'	=>	'table_data',
+			'VARIABLE'	=>	$name,
+			'VALUE'	=>	$value,
+			'ID'	=>	$name,
+			'DIV'	=>	$div_name,
+			'HTML'	=>	$output
+			);
+			$data	=	json_encode($output_json);
+            return $data;
         }
         public function href($name,$label,$value,$div_name){
 
             $output	=	'<a href="'.$name.'">'.$label.'</a>';
             $output.=	'</div>';	
-            return $output;
+            $output_json	=	array(
+			'LABEL'	=>	$label,
+			'ELEMENT'	=>	'href',
+			'VARIABLE'	=>	$name,
+			'VALUE'	=>	$value,
+			'ID'	=>	$name,
+			'DIV'	=>	$div_name,
+			'HTML'	=>	$output
+			);
+			$data	=	json_encode($output_json);
+            return $data;
         }
         function write_to_file($data,$html_file_name,$css_file_name,$data_css)
         {
-            if(!isset($html_file_name) || $html_file_name == ''){$html_file_name	=	'output';$css_file_name	=	'output';}
+           /* if(!isset($html_file_name) || $html_file_name == ''){$html_file_name	=	'output';$css_file_name	=	'output';}
             $start_html	=	'<html><head><link rel="stylesheet" type="text/css" href="'.$css_file_name.'.css"></head><body>';
             $end_html	=	'</body></html>';
             $file = 'dummy/'.$html_file_name.'.html';
@@ -245,18 +365,31 @@
             $current .= $data_css;
 
             // Write the contents back to the file
-            file_put_contents($file, $current);
+            file_put_contents($file, $current);*/
         }	
 
     }//end of class HTML
     Class CSS{
         function styles($var_name,$color,$width,$height,$x_pos,$y_pos,$z_index,$font_size,$font_color){
             $output	=	'#'.$var_name.'{'.'background-color:'.$color.';width:'.$width.'px;height:'.$height.'px;margin-top:'.$x_pos.'px;margin-bottom:'.$y_pos.'px;z-index:'.$z_index.';font-size:'.$font_size.';color:'.$font_color.';position:relative;}';
+			
+			$data_CSS	=	array('NAME'	=>	$var_name,
+			'NAME'	=>	$var_name,
+			'BACKGROUND_COLOR'	=>	$color,
+			'WIDTH'	=>	$width,
+			'HEIGHT'	=>	$height,
+			'X_POS'	=>	$x_pos,
+			'Y_POS'	=>	$y_pos,
+			'Z_INDEX'	=>	$z_index,
+			'FONT_SIZE'	=>	$font_size,
+			'FONT_COLOR'	=>	$font_color,
+			'CSS_OUTPUT'	=> $output
+			);
             return $output;
             #id{color:#FFF;width:23px;height:23px;}
         }
         function write_to_file($data,$css_file_name)
-        {
+        {/*
             if(!isset($css_file_name) || $css_file_name == ''){$css_file_name	=	'output';}
             $file = 'dummy/'.$css_file_name.'.css';
             $myfile = fopen($file, "w");
@@ -269,7 +402,7 @@
 
             // Write the contents back to the file
             file_put_contents($file, $current);
-        }	
+        */}	
 
     }
     $obj		=	new HTML;
