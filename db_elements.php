@@ -6,13 +6,17 @@
         public function text($name,$label,$value,$div_name){
 
             $label	=	'<label>'.$label.'</label>';
-            $output	=	$label.'<input type="text" name="'.$name.'" value="'.$value.'" id="'.$name.'">';
+            $output	=	'<input type="text" name="'.$name.'" value="'.$value.'" id="'.$name.'">';
 			$output_json	=	array(
 			'LABEL'	=>	$label,
-			'TEXTAREA'	=>	
-			
+			'ELEMENT'	=>	'text',
+			'VARIABLE'	=>	$name,
+			'VALUE'	=>	$value,
+			'ID'	=>	$name,
+			'HTML'	=>	$output
 			);
-            return $output;
+			$data	=	json_encode($output_json);
+            return $data;
         }
         public function text_area($name,$label,$value,$div_name){
 
