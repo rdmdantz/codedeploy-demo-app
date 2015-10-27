@@ -141,7 +141,7 @@
                     color: $('#color').val()
                 }, 
                 success: function(dataString) {
-                    alert(dataString);
+                    //alert(dataString);
 
                     // var json = jQuery.parseJSON(dataString);
 
@@ -463,8 +463,8 @@
                                         </td>
                                         <td class="col-md-2"> <label class=" control-label" style="text-align: left; font-weight: normal;" >Field</label></td>
                                         <td class="col-md-2"> 
-                                            <button type="button" class="btn btn-primary" onclick="removeCurrentInputFieldRow(this)">-</button>
-                                            <button type="button" class="btn btn-primary" onclick="addNewInputFieldRow()">+ </button>
+                                            <button type="button" class="btn btn-primary" onClick="removeCurrentInputFieldRow(this)">-</button>
+                                            <button type="button" class="btn btn-primary" onClick="addNewInputFieldRow()">+ </button>
                                         </td>
                                     </tr>
 

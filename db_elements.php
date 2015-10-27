@@ -5,14 +5,15 @@
 	Class HTML{
         public function text($name,$label,$value,$div_name){
 
-            $label	=	'<label>'.$label.'</label>';
-            $output	=	'<input type="text" name="'.$name.'" value="'.$value.'" id="'.$name.'">';
+            
+            $output	=	'<label>'.$label.'</label>'.'<input type="text" name="'.$name.'" value="'.$value.'" id="'.$name.'">';
 			$output_json	=	array(
 			'LABEL'	=>	$label,
 			'ELEMENT'	=>	'text',
 			'VARIABLE'	=>	$name,
 			'VALUE'	=>	$value,
 			'ID'	=>	$name,
+			'DIV'	=>	$div_name,
 			'HTML'	=>	$output
 			);
 			$data	=	json_encode($output_json);
@@ -20,31 +21,74 @@
         }
         public function text_area($name,$label,$value,$div_name){
 
-            $label	=	'<label>'.$label.'</label>';
-            $output	=	$label.'<textarea name="'.$name.'" id="'.$name.'">'.$value.'</textarea>';
-            $output.=	'</div>';	
-            return $output;
+            
+            $output	=	'<label>'.$label.'</label>'.'<textarea name="'.$name.'" id="'.$name.'">'.$value.'</textarea>';
+            	
+            $output_json	=	array(
+			'LABEL'	=>	$label,
+			'ELEMENT'	=>	'text_area',
+			'VARIABLE'	=>	$name,
+			'VALUE'	=>	$value,
+			'ID'	=>	$name,
+			'DIV'	=>	$div_name,
+			'HTML'	=>	$output
+			);
+			$data	=	json_encode($output_json);
+            return $data;
         }
         public function password($name,$label,$value,$div_name){
 
-            $label	=	'<label>'.$label.'</label>';
-            $output	=	$label.'<input type="password" name="'.$name.'" value="'.$value.'" id="'.$name.'">';
+           
+            $output	=	'<label>'.$label.'</label>'.'<input type="password" name="'.$name.'" value="'.$value.'" id="'.$name.'">';
 
-            return $output;
+            	
+            $output_json	=	array(
+			'LABEL'	=>	$label,
+			'ELEMENT'	=>	'password',
+			'VARIABLE'	=>	$name,
+			'VALUE'	=>	$value,
+			'ID'	=>	$name,
+			'DIV'	=>	$div_name,
+			'HTML'	=>	$output
+			);
+			$data	=	json_encode($output_json);
+            return $data;
         }
         public function submit($name,$label,$value,$div_name){
 
             $output	=	'<input type="submit" name="'.$name.'" value='.$label.' id="'.$name.'">';
 
-            return $output;
+             $output_json	=	array(
+			'LABEL'	=>	$label,
+			'ELEMENT'	=>	'Submit',
+			'VARIABLE'	=>	$name,
+			'VALUE'	=>	$value,
+			'ID'	=>	$name,
+			'DIV'	=>	$div_name,
+			'HTML'	=>	$output
+			);
+			$data	=	json_encode($output_json);
+            return $data;
         }
         public function radio($name,$label,$value,$div_name){
 
             $label	=	'<label>'.$label.'</label>';
             $output	=	$label.'<input type="radio" name="'.$name.'" value="'.$value[0].'" id="'.$name.'">'.$value[0];
             $output.=	'<input type="radio" name="'.$name.'" value="'.$value[1].'" id="'.$name.'">'.$value[1];
+			
+			 $output_json	=	array(
+			'LABEL'	=>	$label,
+			'ELEMENT'	=>	'radio',
+			'VARIABLE'	=>	$name,
+			'VALUE'	=>	$value,
+			'ID'	=>	$name,
+			'DIV'	=>	$div_name,
+			'HTML'	=>	$output
+			);
+			$data	=	json_encode($output_json);
+            return $data;
 
-            return $output;
+           
         }	
         public function checkbox($name,$label,$value,$div_name){
             //<input type="checkbox" name="vehicle" value="Bike">
@@ -55,14 +99,38 @@
                 $output.=	'<input type="checkbox" name="'.$name.'" value="'.$values.'" id='.$name.'>'.$values.'&nbsp;&nbsp;';
             }
 
-            return $output;
+            
+			 $output_json	=	array(
+			'LABEL'	=>	$label,
+			'ELEMENT'	=>	'radio',
+			'VARIABLE'	=>	$name,
+			'VALUE'	=>	$value,
+			'ID'	=>	$name,
+			'DIV'	=>	$div_name,
+			'HTML'	=>	$output
+			);
+			$data	=	json_encode($output_json);
+            return $data;
+
         }
         public function button($name,$label,$value,$div_name){
 
             $label	=	'<button type="button" name="'.$name.'" id="'.$name.'">'.$label.'</button>';
             $output	=	$label;
 
-            return $output;
+            
+			 $output_json	=	array(
+			'LABEL'	=>	$label,
+			'ELEMENT'	=>	'radio',
+			'VARIABLE'	=>	$name,
+			'VALUE'	=>	$value,
+			'ID'	=>	$name,
+			'DIV'	=>	$div_name,
+			'HTML'	=>	$output
+			);
+			$data	=	json_encode($output_json);
+            return $data;
+
         }
         public function select($name,$label,$value,$div_name){
 
@@ -311,8 +379,8 @@
                     WHERE `HTML_CSS_ID` = ".$_POST["update_id"];
 
                 $result	=	$conn->query($insert_div_data);
-                echo 'HTML & CSS Code created successfully<br/>';
-
+                
+				echo 'HTML & CSS Code created successfully<br/>';
 
 
 
@@ -334,8 +402,8 @@
                 $ID	=	mysqli_insert_id($conn);
                 $insert_div_data	=	"INSERT INTO `CMS`.`divs` (`ID`, `ELEMENT`, `HTML_CSS_ID`) VALUES (NULL, '$data_html',$ID);";
                 $result	=	$conn->query($insert_div_data);
-                echo 'HTML & CSS Code created successfully<br/>';
-
+                //echo $data_html;
+				echo 'HTML & CSS Code created successfully<br/>';
 
 
 
