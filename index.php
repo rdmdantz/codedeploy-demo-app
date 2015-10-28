@@ -18,18 +18,43 @@
         //Get the project data against its ID in the database 
         $select			=		"SELECT * FROM `CMS`.`pages` WHERE PROJECT_ID =	$ID";
         $result				=		$conn->query($select);
+		
         $page_data	=	array();
+		$elements	=	array();
+		$counter	=	0;
         while($row=mysqli_fetch_assoc($result)){
             $PAGE_TITLE	=	$row['PAGE_TITLE'];
             $NEXT_PAGE	=	$row['NEXT_PAGE'];
             $PROJECT_ID	=	$row['PROJECT_ID'];
             $PAGE_ID	=	$row['PAGE_ID'];
-            $array	=	array($PAGE_ID,$PAGE_TITLE,$NEXT_PAGE,$PROJECT_ID);
-            array_push($page_data,$array);
-        }
+		$select_element			=		"SELECT * FROM `CMS`.`html_css` WHERE PAGE_ID =	$PAGE_ID";
+        $result_select_element				=		$conn->query($select_element);
+		echo $select_element.'<br/>';
+		$array=NULL;
+			 while($row_element=mysqli_fetch_assoc($result_select_element)){
+				 $array_ele	=	array(
+				 						$row_element['NAME'],
+										/*$row_element['CSS'],
+										$row_element['HTML'],
+										$row_element['PAGE_ID'],
+										$row_element['CLASS']*/
+										);
+				 //array_push($elements,$array_ele);
+				 $array[$counter]	=	$array_ele;
+				 $counter++;
+				 echo '<pre>';
+					 
+				 }
+				  array_push($elements,$array);
+				 
+				 $counter	=0;
+           // $array	=	array($PAGE_ID,$PAGE_TITLE,$NEXT_PAGE,$PROJECT_ID,$elements);
+            //array_push($page_data,$array);
+        	//$counter++;
+		}print_r($elements);
         $size	= count($page_data);
-		echo '<pre>';
-		print_r($page_data);
+		/*echo '<pre>';
+		print_r($page_data);*/
 
         //print_r($page_data);//$page_data contains all the data of the current page
 
