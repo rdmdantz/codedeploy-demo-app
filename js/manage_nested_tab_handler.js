@@ -1,7 +1,5 @@
 var DEFAULT_TAB_DATA = '<form method="post" action="">'
 +
-
-
 ' <h2>HTML Attributes</h2>'+
 ' <label>Enter variable name:</label>'+
 '<input type="text" name="var_name" id="var_name"/><br/>'+
@@ -130,8 +128,9 @@ $(document).ready(function(){
 
     bindTabsClick();
     bindOuterTabsClick();
-    bindInnerTabsClick();  
-
+    bindInnerTabsClick(); 
+    init_outerTabs(); 
+    setTabsElementFormNames();   
 });
 
 function bindTabsClick()
@@ -157,12 +156,12 @@ function bindOuterTabsClick()
     $('.add-outer-tab').click(function(e) {
         e.preventDefault();
         var id = $(".outer-tabs").children().length; 
-        $(this).closest('li').before('<li><a href="#tab_'+id+'">New Tab</a><span>x</span></li>');         
+        $(this).closest('li').before('<li><a class="tab_buttons" href="#tab_'+id+'">New Tab</a><span>x</span></li>');         
         $('.outer-tab-content').append('<div id="tab_'+id+'" class="tab-pane" ></div>');
 
         $('#tab_'+id).append('<div class="container">\
             <ul class="nav nav-tabs">\
-            <li class="active"><a href="#tab_'+id+'_1" data-toggle="tab">New Tab</a><span>x</span></li>\
+            <li class="active"><a class="tab_buttons" href="#tab_'+id+'_1" data-toggle="tab">New Tab</a><span>x</span></li>\
             <li><a href="#" class="add-inner-tab" data-toggle="tab">+ Add Tab</a></li>\
             </ul>\
             <div class="tab-content inner-tab-content">\
@@ -174,6 +173,7 @@ function bindOuterTabsClick()
         bindTabsClick();
         bindOuterTabsClick();
         bindInnerTabsClick();
+        setTabsElementFormNames();
 
     });
 }
@@ -184,16 +184,65 @@ function bindInnerTabsClick()
     $('.add-inner-tab').click(function(e) {
         e.preventDefault();
         var outerTabId=$(e.target).parent().parent().parent().parent().attr('id');
-
-
         var outerTabIndex=$(e.target).parent().parent().parent().parent().index();
         outerTabIndex++;
 
         var id = $('#'+outerTabId+' .nav-tabs').children().length; 
-        $(this).closest('li').before('<li><a href="#tab_'+outerTabIndex+'_'+id+'">New Tab</a><span>x</span></li>');         
+        $(this).closest('li').before('<li><a class="tab_buttons" href="#tab_'+outerTabIndex+'_'+id+'">New Tab</a><span>x</span></li>');         
         $('#'+outerTabId+' .inner-tab-content').append('<div id="tab_'+outerTabIndex+'_'+id+'" class="tab-pane" > '+DEFAULT_TAB_DATA+' </div>');
         bindInnerTabsClick(); 
+        setTabsElementFormNames();
     }); 
+}
+
+function setTabsElementFormNames()
+{
+    $('.tab_buttons').unbind();
+    $('.tab_buttons').on('click',function(){
+
+        var outerTabPostFix = $('.outer-tabs  >li.active>a').text();
+        outerTabPostFix.split(' ').join('-');
+        var innerTabPostFix = $('.outer-tab-content >div.active .nav-tabs > li.active > a').text();
+        innerTabPostFix.split(' ').join('-');
+        var container = $('.outer-tab-content >div.active div.active');
+
+        console.log($(container).attr('id'));
+
+        var namePostFix = '_'+outerTabPostFix+'_'+innerTabPostFix;
+
+        $(container).find('#var_name').eq(0).attr('name','var_name'+namePostFix);
+        $(container).find('#label').eq(0).attr('name','label'+namePostFix);
+        $(container).find('#html_element').eq(0).attr('name','html_element'+namePostFix);
+
+
+        $(container).find('#color').eq(0).attr('name','color'+'_'+outerTabPostFix+'_'+innerTabPostFix);
+        $(container).find('#font_color').eq(0).attr('name','font_color'+'_'+outerTabPostFix+'_'+innerTabPostFix);
+        $(container).find('#font_size').eq(0).attr('name','font_size'+'_'+outerTabPostFix+'_'+innerTabPostFix);
+        $(container).find('#height').eq(0).attr('name','height'+'_'+outerTabPostFix+'_'+innerTabPostFix);
+        $(container).find('#width').eq(0).attr('name','width'+'_'+outerTabPostFix+'_'+innerTabPostFix);
+        $(container).find('#x_position').eq(0).attr('name','x_position'+'_'+outerTabPostFix+'_'+innerTabPostFix);
+        $(container).find('#y_position').eq(0).attr('name','y_position'+'_'+outerTabPostFix+'_'+innerTabPostFix);
+        $(container).find('#z_index').eq(0).attr('name','z_index'+'_'+outerTabPostFix+'_'+innerTabPostFix);
+        $(container).find('#z_index').eq(0).attr('name','z_index'+'_'+outerTabPostFix+'_'+innerTabPostFix);    
+    });
+
+}
+
+function init_outerTabs()
+{
+    for(var i=1; i<g_outerTabsList.length; i++)
+        $('.add-outer-tab').click();
+
+    $.each(g_outerTabsList,function(index,tab)
+        {
+            var allOuterTabs=$('.outer-tabs>li');
+
+            $(allOuterTabs[index]).find('a').eq(0).text(tab[1]);
+    });
+
+    $('a[href="#tab_1"]').click();
+    $('a[href="#tab_1_1"]').click();
+
 }
 
 function openPopUp()
@@ -271,5 +320,3 @@ function appendNewInputFieldRow()
         </td>\
         </tr>'); 
 }
-
-
