@@ -1,4 +1,4 @@
-var DEFAULT_TAB_DATA = '<form method="post" action="">'
+var DEFAULT_TAB_DATA = '<form id="" method="post" action="">'
 +
 ' <h2>HTML Attributes</h2>'+
 ' <label>Enter variable name:</label>'+
