@@ -159,7 +159,10 @@
 
 
         }
-        function form_submit(){
+        function form_submit(targetFormId){
+            
+            alert(targetFormId);
+            return false;
             $.ajax({
                 type:'POST', 
                 url: 'db_elements.php', 
@@ -370,7 +373,7 @@
                                 <input id="pageIdHiddenField" type="hidden" name="pageId" value="0" />
                                 <input id="elementIdHiddenField" type="hidden" name="elementId" value="0" />
                                 
-                                <input type="button" name="submit" value="save element"  onclick="form_submit();preview();" />
+                                <input id="submit_button" type="button" name="submit" value="save element"  onclick="form_submit();preview();" />
                                 <input type="hidden" name="update" id="update" value="false">
                                 <input type="hidden" name="update_id" id="update_id" value="0"> 
                             </form>

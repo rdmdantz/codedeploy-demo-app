@@ -126,7 +126,7 @@ var DEFAULT_TAB_DATA = '<form class="elements_form" method="post" action="">'
 ' <input id="pageIdHiddenField" type="hidden" name="pageId" value="0" />'+
 ' <input id="elementIdHiddenField" type="hidden" name="elementId" value="0" />'+
 
-' <input type="submit" name="submit" value="save element" />'+
+' <input id="submit_button" type="button" name="submit" value="save element"  onclick="form_submit();preview();" />'+
 '<input type="hidden" name="update" id="update" value="false">'+
 '<input type="hidden" name="update_id" id="update_id" value="0"> '+
 '</form>';
@@ -178,10 +178,11 @@ function bindOuterTabsClick()
         var formId = 'formId_'+g_formIdCounter;     
         $($('#tab_'+id + ' .elements_form')[0]).attr('id',formId);
         $('#' +formId + ' #pageIdHiddenField').val('0');
-        $('#' +formId + ' #elementIdHiddenField').val(g_elementIdCounter);
-        g_formIdCounter++; 
-        g_elementIdCounter++;
+        $('#' +formId + ' #elementIdHiddenField').val('0'); 
+        $('#' +formId + ' #submit_button').attr('onClick','form_submit(\''+formId+'\')');
 
+
+        g_formIdCounter++;   
 
         bindTabsClick();
         bindOuterTabsClick();
@@ -206,9 +207,9 @@ function bindInnerTabsClick()
         var formId = 'formId_'+g_formIdCounter;     
         $($('#tab_'+outerTabIndex+'_'+id+' .elements_form')[0]).attr('id',formId);
         $('#' +formId + ' #pageIdHiddenField').val('0');
-        $('#' +formId + ' #elementIdHiddenField').val(g_elementIdCounter);
-        g_formIdCounter++; 
-        g_elementIdCounter++;
+        $('#' +formId + ' #elementIdHiddenField').val('0');
+        $('#' +formId + ' #submit_button').attr('onClick','form_submit(\''+formId+'\')');
+        g_formIdCounter++;         
         bindInnerTabsClick();         
     }); 
 }
@@ -240,6 +241,9 @@ function init_outerTabs()
             var allOuterTabs=$('.outer-tabs>li'); 
             $(allOuterTabs[index]).find('a').eq(0).text(tab[1]); 
             $($(allForms[index]).find('#pageIdHiddenField').eq(0)).val(tab[0]);
+            $($(allForms[index]).find('#elementIdHiddenField').eq(0)).val(tab[0]); 
+            var formId=$(allForms[index]).attr('id');         
+            $($(allForms[index]).find('#submit_button').eq(0)).attr('onClick','form_submit(\''+formId+'\')');
     });
     $('a[href="#tab_1"]').click();
     $('a[href="#tab_1_1"]').click();
