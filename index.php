@@ -28,10 +28,6 @@
             array_push($page_data,$array);
         }
         $size	= count($page_data);
-		echo '<pre>';
-		print_r($page_data);
-
-        //print_r($page_data);//$page_data contains all the data of the current page
 
     }//end of isset
 ?>
@@ -52,7 +48,7 @@
     <script type="text/javascript" src="js/manage_nested_tab_handler.js"></script>
 
     <script type="text/javascript">
-    <?php echo 'var g_outerTabsList = '.json_encode($page_data).';'; ?>
+        <?php echo 'var g_outerTabsList = '.json_encode($page_data).';'; ?>
     </script>
 
     <script>
@@ -230,7 +226,7 @@
     ?>
     <div class="container">
         <ul class="nav nav-tabs outer-tabs">
-            <li class="active"><a class="tab_buttons" href="#tab_1" data-toggle="tab">Tab 1</a><span>x</span></li>
+            <li class="active"><a href="#tab_1" data-toggle="tab">Tab 1</a><span>x</span></li>
             <li><a href="#" class="add-outer-tab" data-toggle="tab">+ Add Tab</a></li>
         </ul>
         <div style="    margin-top: -37px; float: right;"> <button type="button" class="btn btn-primary" onClick="openPopUp()" >Save </button> </div>
@@ -238,12 +234,12 @@
             <div id="tab_1" class="tab-pane active" >
                 <div class="container">
                     <ul class="nav nav-tabs">
-                        <li class="active"><a class="tab_buttons" href="#tab_1_1" data-toggle="tab">Tab 1.1</a><span>x</span></li>                        
+                        <li class="active"><a href="#tab_1_1" data-toggle="tab">Tab 1.1</a><span>x</span></li>                        
                         <li><a href="#" class="add-inner-tab" data-toggle="tab">+ Add Tab</a></li>
                     </ul>
                     <div class="tab-content inner-tab-content">
                         <div id="tab_1_1" class="tab-pane active" > 
-                            <form method="post" action="">
+                            <form class="elements_form" method="post" action="">
                                 <!--<label>Select DIV:</label>
                                 <select name="div_load" id="div_load">
                                 <?php echo $dropdown;?>
@@ -371,7 +367,9 @@
                                 <label>Z-index:</label>
                                 <input type="text" name="z_index" id="z_index"/><br/>
 
-
+                                <input id="pageIdHiddenField" type="hidden" name="pageId" value="0" />
+                                <input id="elementIdHiddenField" type="hidden" name="elementId" value="0" />
+                                
                                 <input type="button" name="submit" value="save element"  onclick="form_submit();preview();" />
                                 <input type="hidden" name="update" id="update" value="false">
                                 <input type="hidden" name="update_id" id="update_id" value="0"> 

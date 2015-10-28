@@ -1,4 +1,7 @@
-var DEFAULT_TAB_DATA = '<form id="" method="post" action="">'
+var g_formIdCounter=1;
+var g_elementIdCounter=1;
+
+var DEFAULT_TAB_DATA = '<form class="elements_form" method="post" action="">'
 +
 ' <h2>HTML Attributes</h2>'+
 ' <label>Enter variable name:</label>'+
@@ -120,6 +123,9 @@ var DEFAULT_TAB_DATA = '<form id="" method="post" action="">'
 '<input type="text" name="z_index" id="z_index"/><br/>'+
 
 
+' <input id="pageIdHiddenField" type="hidden" name="pageId" value="0" />'+
+' <input id="elementIdHiddenField" type="hidden" name="elementId" value="0" />'+
+
 ' <input type="submit" name="submit" value="save element" />'+
 '<input type="hidden" name="update" id="update" value="false">'+
 '<input type="hidden" name="update_id" id="update_id" value="0"> '+
@@ -128,9 +134,9 @@ $(document).ready(function(){
 
     bindTabsClick();
     bindOuterTabsClick();
-    bindInnerTabsClick(); 
-    init_outerTabs(); 
-    setTabsElementFormNames();   
+    bindInnerTabsClick();
+    setPreAddedFormsId(); 
+    init_outerTabs();     
 });
 
 function bindTabsClick()
@@ -145,7 +151,7 @@ function bindTabsClick()
         var anchor = $(this).siblings('a');
         $(anchor.attr('href')).remove();
         $(this).parent().remove();
-        // $(".nav-tabs li").children('a').first().click();
+
     });
 }
 
@@ -169,11 +175,17 @@ function bindOuterTabsClick()
             </div>\
             </div>\
             </div>');
+        var formId = 'formId_'+g_formIdCounter;     
+        $($('#tab_'+id + ' .elements_form')[0]).attr('id',formId);
+        $('#' +formId + ' #pageIdHiddenField').val('0');
+        $('#' +formId + ' #elementIdHiddenField').val(g_elementIdCounter);
+        g_formIdCounter++; 
+        g_elementIdCounter++;
+
 
         bindTabsClick();
         bindOuterTabsClick();
-        bindInnerTabsClick();
-        setTabsElementFormNames();
+        bindInnerTabsClick();        
 
     });
 }
@@ -190,40 +202,28 @@ function bindInnerTabsClick()
         var id = $('#'+outerTabId+' .nav-tabs').children().length; 
         $(this).closest('li').before('<li><a class="tab_buttons" href="#tab_'+outerTabIndex+'_'+id+'">New Tab</a><span>x</span></li>');         
         $('#'+outerTabId+' .inner-tab-content').append('<div id="tab_'+outerTabIndex+'_'+id+'" class="tab-pane" > '+DEFAULT_TAB_DATA+' </div>');
-        bindInnerTabsClick(); 
-        setTabsElementFormNames();
+
+        var formId = 'formId_'+g_formIdCounter;     
+        $($('#tab_'+outerTabIndex+'_'+id+' .elements_form')[0]).attr('id',formId);
+        $('#' +formId + ' #pageIdHiddenField').val('0');
+        $('#' +formId + ' #elementIdHiddenField').val(g_elementIdCounter);
+        g_formIdCounter++; 
+        g_elementIdCounter++;
+        bindInnerTabsClick();         
     }); 
 }
 
-function setTabsElementFormNames()
+function setPreAddedFormsId()
 {
-    $('.tab_buttons').unbind();
-    $('.tab_buttons').on('click',function(){
-
-        var outerTabPostFix = $('.outer-tabs  >li.active>a').text();
-        outerTabPostFix.split(' ').join('-');
-        var innerTabPostFix = $('.outer-tab-content >div.active .nav-tabs > li.active > a').text();
-        innerTabPostFix.split(' ').join('-');
-        var container = $('.outer-tab-content >div.active div.active');
-
-        console.log($(container).attr('id'));
-
-        var namePostFix = '_'+outerTabPostFix+'_'+innerTabPostFix;
-
-        $(container).find('#var_name').eq(0).attr('name','var_name'+namePostFix);
-        $(container).find('#label').eq(0).attr('name','label'+namePostFix);
-        $(container).find('#html_element').eq(0).attr('name','html_element'+namePostFix);
-
-
-        $(container).find('#color').eq(0).attr('name','color'+'_'+outerTabPostFix+'_'+innerTabPostFix);
-        $(container).find('#font_color').eq(0).attr('name','font_color'+'_'+outerTabPostFix+'_'+innerTabPostFix);
-        $(container).find('#font_size').eq(0).attr('name','font_size'+'_'+outerTabPostFix+'_'+innerTabPostFix);
-        $(container).find('#height').eq(0).attr('name','height'+'_'+outerTabPostFix+'_'+innerTabPostFix);
-        $(container).find('#width').eq(0).attr('name','width'+'_'+outerTabPostFix+'_'+innerTabPostFix);
-        $(container).find('#x_position').eq(0).attr('name','x_position'+'_'+outerTabPostFix+'_'+innerTabPostFix);
-        $(container).find('#y_position').eq(0).attr('name','y_position'+'_'+outerTabPostFix+'_'+innerTabPostFix);
-        $(container).find('#z_index').eq(0).attr('name','z_index'+'_'+outerTabPostFix+'_'+innerTabPostFix);
-        $(container).find('#z_index').eq(0).attr('name','z_index'+'_'+outerTabPostFix+'_'+innerTabPostFix);    
+    var allForms = $('.elements_form');
+    $.each(allForms,function(index,form)
+        {
+            var formId = 'formId_'+g_formIdCounter;            
+            $(form).attr('id',formId);
+            $('#' +formId + ' #pageIdHiddenField').val('0');
+            $('#' +formId + ' #elementIdHiddenField').val(g_elementIdCounter);
+            g_formIdCounter++; 
+            g_elementIdCounter++; 
     });
 
 }
@@ -233,16 +233,16 @@ function init_outerTabs()
     for(var i=1; i<g_outerTabsList.length; i++)
         $('.add-outer-tab').click();
 
+    var allForms = $('.elements_form');
+
     $.each(g_outerTabsList,function(index,tab)
         {
-            var allOuterTabs=$('.outer-tabs>li');
-
-            $(allOuterTabs[index]).find('a').eq(0).text(tab[1]);
+            var allOuterTabs=$('.outer-tabs>li'); 
+            $(allOuterTabs[index]).find('a').eq(0).text(tab[1]); 
+            $($(allForms[index]).find('#pageIdHiddenField').eq(0)).val(tab[0]);
     });
-
     $('a[href="#tab_1"]').click();
     $('a[href="#tab_1_1"]').click();
-
 }
 
 function openPopUp()
