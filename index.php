@@ -164,7 +164,8 @@
 							  
 							var json = jQuery.parseJSON(dataString);
 							var json1 = jQuery.parseJSON(json.HTML);
-							 alert(json1.HTML);
+							$('.preview').append(json1.HTML);
+							 //alert(json1.HTML);
 							},
 							error: function()
 							{

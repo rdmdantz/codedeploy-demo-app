@@ -540,7 +540,10 @@
                 $insert_div_data	=	"INSERT INTO `CMS`.`divs` (`ID`, `ELEMENT`, `HTML_CSS_ID`) VALUES (NULL, '$data_html',$ID);";
                 $result	=	$conn->query($insert_div_data);
                 //echo $data_html;
-				echo 'HTML & CSS Code created successfully<br/>';
+				$array	=	array('HTML'	=>	$data_html,
+							 'CSS'	=>	$data_css);
+                $array_send	=	json_encode($array);
+				echo $array_send;
 
 
 
@@ -561,7 +564,10 @@
                 $ID	=	mysqli_insert_id($conn);
                 $insert_div_data	=	"INSERT INTO `CMS`.`divs` (`ID`, `ELEMENT`, `HTML_CSS_ID`) VALUES (NULL, '$data_html',$ID);";
                 $result	=	$conn->query($insert_div_data);
-                echo 'HTML & CSS Code created successfully<br/>';
+                $array	=	array('HTML'	=>	$data_html,
+							 'CSS'	=>	$data_css);
+                $array_send	=	json_encode($array);
+				echo $array_send;
 
 
 
@@ -583,7 +589,10 @@
                 $ID	=	mysqli_insert_id($conn);
                 $insert_div_data	=	"INSERT INTO `CMS`.`divs` (`ID`, `ELEMENT`, `HTML_CSS_ID`) VALUES (NULL, '$data_html',$ID);";
                 $result	=	$conn->query($insert_div_data);
-                echo 'HTML & CSS Code created successfully<br/>';
+                $array	=	array('HTML'	=>	$data_html,
+							 'CSS'	=>	$data_css);
+                $array_send	=	json_encode($array);
+				echo $array_send;
 
 
 
@@ -607,7 +616,10 @@
                 $ID	=	mysqli_insert_id($conn);
                 $insert_div_data	=	"INSERT INTO `CMS`.`divs` (`ID`, `ELEMENT`, `HTML_CSS_ID`) VALUES (NULL, '$data_html',$ID);";
                 $result	=	$conn->query($insert_div_data);
-                echo 'HTML & CSS Code created successfully<br/>';
+                $array	=	array('HTML'	=>	$data_html,
+							 'CSS'	=>	$data_css);
+                $array_send	=	json_encode($array);
+				echo $array_send;
 
 
 
@@ -636,7 +648,10 @@
                 $ID	=	mysqli_insert_id($conn);
                 $insert_div_data	=	"INSERT INTO `CMS`.`divs` (`ID`, `ELEMENT`, `HTML_CSS_ID`) VALUES (NULL, '$data_html',$ID);";
                 $result	=	$conn->query($insert_div_data);
-                echo 'HTML & CSS Code created successfully<br/>';
+                $array	=	array('HTML'	=>	$data_html,
+							 'CSS'	=>	$data_css);
+                $array_send	=	json_encode($array);
+				echo $array_send;
 
 
 
@@ -658,7 +673,10 @@
                 $ID	=	mysqli_insert_id($conn);
                 $insert_div_data	=	"INSERT INTO `CMS`.`divs` (`ID`, `ELEMENT`, `HTML_CSS_ID`) VALUES (NULL, '$data_html',$ID);";
                 $result	=	$conn->query($insert_div_data);
-                echo 'HTML & CSS Code created successfully<br/>';
+                $array	=	array('HTML'	=>	$data_html,
+							 'CSS'	=>	$data_css);
+                $array_send	=	json_encode($array);
+				echo $array_send;
 
 
 
@@ -687,7 +705,10 @@
                 $ID	=	mysqli_insert_id($conn);
                 $insert_div_data	=	"INSERT INTO `CMS`.`divs` (`ID`, `ELEMENT`, `HTML_CSS_ID`) VALUES (NULL, '$data_html',$ID);";
                 $result	=	$conn->query($insert_div_data);
-                echo 'HTML & CSS Code created successfully<br/>';
+                $array	=	array('HTML'	=>	$data_html,
+							 'CSS'	=>	$data_css);
+                $array_send	=	json_encode($array);
+				echo $array_send;
 
 
 
@@ -709,7 +730,10 @@
                 $ID	=	mysqli_insert_id($conn);
                 $insert_div_data	=	"INSERT INTO `CMS`.`divs` (`ID`, `ELEMENT`, `HTML_CSS_ID`) VALUES (NULL, '$data_html',$ID);";
                 $result	=	$conn->query($insert_div_data);
-                echo 'HTML & CSS Code created successfully<br/>';
+                $array	=	array('HTML'	=>	$data_html,
+							 'CSS'	=>	$data_css);
+                $array_send	=	json_encode($array);
+				echo $array_send;
 
 
 
@@ -731,7 +755,10 @@
                 $ID	=	mysqli_insert_id($conn);
                 $insert_div_data	=	"INSERT INTO `CMS`.`divs` (`ID`, `ELEMENT`, `HTML_CSS_ID`) VALUES (NULL, '$data_html',$ID);";
                 $result	=	$conn->query($insert_div_data);
-                echo 'HTML & CSS Code created successfully<br/>';
+                $array	=	array('HTML'	=>	$data_html,
+							 'CSS'	=>	$data_css);
+                $array_send	=	json_encode($array);
+				echo $array_send;
 
 
 
@@ -753,7 +780,10 @@
                 $ID	=	mysqli_insert_id($conn);
                 $insert_div_data	=	"INSERT INTO `CMS`.`divs` (`ID`, `ELEMENT`, `HTML_CSS_ID`) VALUES (NULL, '$data_html',$ID);";
                 $result	=	$conn->query($insert_div_data);
-                echo 'HTML & CSS Code created successfully<br/>';
+                $array	=	array('HTML'	=>	$data_html,
+							 'CSS'	=>	$data_css);
+                $array_send	=	json_encode($array);
+				echo $array_send;
 
 
 
@@ -775,7 +805,10 @@
                 $ID	=	mysqli_insert_id($conn);
                 $insert_div_data	=	"INSERT INTO `CMS`.`divs` (`ID`, `ELEMENT`, `HTML_CSS_ID`) VALUES (NULL, '$data_html',$ID);";
                 $result	=	$conn->query($insert_div_data);
-                echo 'HTML & CSS Code created successfully<br/>';
+                $array	=	array('HTML'	=>	$data_html,
+							 'CSS'	=>	$data_css);
+                $array_send	=	json_encode($array);
+				echo $array_send;
 
 
 
@@ -803,7 +836,10 @@
                 $ID	=	mysqli_insert_id($conn);
                 $insert_div_data	=	"INSERT INTO `CMS`.`divs` (`ID`, `ELEMENT`, `HTML_CSS_ID`) VALUES (NULL, '$data_html',$ID);";
                 $result	=	$conn->query($insert_div_data);
-                echo 'HTML & CSS Code created successfully<br/>';
+                $array	=	array('HTML'	=>	$data_html,
+							 'CSS'	=>	$data_css);
+                $array_send	=	json_encode($array);
+				echo $array_send;
 
 
 
@@ -826,7 +862,10 @@
                 $ID	=	mysqli_insert_id($conn);
                 $insert_div_data	=	"INSERT INTO `CMS`.`divs` (`ID`, `ELEMENT`, `HTML_CSS_ID`) VALUES (NULL, '$data_html',$ID);";
                 $result	=	$conn->query($insert_div_data);
-                echo 'HTML & CSS Code created successfully<br/>';
+                $array	=	array('HTML'	=>	$data_html,
+							 'CSS'	=>	$data_css);
+                $array_send	=	json_encode($array);
+				echo $array_send;
 
 
 
@@ -848,7 +887,10 @@
                 $ID	=	mysqli_insert_id($conn);
                 $insert_div_data	=	"INSERT INTO `CMS`.`divs` (`ID`, `ELEMENT`, `HTML_CSS_ID`) VALUES (NULL, '$data_html',$ID);";
                 $result	=	$conn->query($insert_div_data);
-                echo 'HTML & CSS Code created successfully<br/>';
+                $array	=	array('HTML'	=>	$data_html,
+							 'CSS'	=>	$data_css);
+                $array_send	=	json_encode($array);
+				echo $array_send;
 
 
 
@@ -870,7 +912,10 @@
                 $ID	=	mysqli_insert_id($conn);
                 $insert_div_data	=	"INSERT INTO `CMS`.`divs` (`ID`, `ELEMENT`, `HTML_CSS_ID`) VALUES (NULL, '$data_html',$ID);";
                 $result	=	$conn->query($insert_div_data);
-                echo 'HTML & CSS Code created successfully<br/>';
+                $array	=	array('HTML'	=>	$data_html,
+							 'CSS'	=>	$data_css);
+                $array_send	=	json_encode($array);
+				echo $array_send;
 
 
 
@@ -892,7 +937,10 @@
                 $ID	=	mysqli_insert_id($conn);
                 $insert_div_data	=	"INSERT INTO `CMS`.`divs` (`ID`, `ELEMENT`, `HTML_CSS_ID`) VALUES (NULL, '$data_html',$ID);";
                 $result	=	$conn->query($insert_div_data);
-                echo 'HTML & CSS Code created successfully<br/>';
+                $array	=	array('HTML'	=>	$data_html,
+							 'CSS'	=>	$data_css);
+                $array_send	=	json_encode($array);
+				echo $array_send;
 
 
 
@@ -914,7 +962,10 @@
                 $ID	=	mysqli_insert_id($conn);
                 $insert_div_data	=	"INSERT INTO `CMS`.`divs` (`ID`, `ELEMENT`, `HTML_CSS_ID`) VALUES (NULL, '$data_html',$ID);";
                 $result	=	$conn->query($insert_div_data);
-                echo 'HTML & CSS Code created successfully<br/>';
+                $array	=	array('HTML'	=>	$data_html,
+							 'CSS'	=>	$data_css);
+                $array_send	=	json_encode($array);
+				echo $array_send;
 
 
 
@@ -936,7 +987,10 @@
                 $ID	=	mysqli_insert_id($conn);
                 $insert_div_data	=	"INSERT INTO `CMS`.`divs` (`ID`, `ELEMENT`, `HTML_CSS_ID`) VALUES (NULL, '$data_html',$ID);";
                 $result	=	$conn->query($insert_div_data);
-                echo 'HTML & CSS Code created successfully<br/>';
+                $array	=	array('HTML'	=>	$data_html,
+							 'CSS'	=>	$data_css);
+                $array_send	=	json_encode($array);
+				echo $array_send;
 
 
 
