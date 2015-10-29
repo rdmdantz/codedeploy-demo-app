@@ -1,7 +1,8 @@
 <?php 
- 	//if(isset($_POST['submit']))
- 	//	print_r($_POST);
- 	//	exit;
+ 	//
+	//if(isset($_POST['update']))
+ 		//print_r($_POST);
+ 		//exit;
 	Class HTML{
         public function text($name,$label,$value,$div_name){
 
@@ -408,7 +409,7 @@
     $obj		=	new HTML;
     $obj_css	=	new CSS;
 
-    if(isset($_POST['submit'])){
+    if(isset($_POST['update'])){
 
         //create DB connection
         $servername = "localhost";
