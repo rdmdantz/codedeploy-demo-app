@@ -24,6 +24,7 @@
 		
 
         $size	= count($page_data);
+		print_r($page_data);
 }
 		/*echo '<pre>';
 		print_r($page_data);*/
