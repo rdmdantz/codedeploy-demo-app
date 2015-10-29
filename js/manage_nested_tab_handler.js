@@ -293,17 +293,22 @@ function removeCurrentInputFieldRow(target)
     var targetRow=$(target).parent().parent();
     $(targetRow).delay(300).fadeOut(300, function(){
         $(targetRow).remove();
-
+        
         if($('#addInputFieldsWrapper tbody tr').length==0)
             appendNewInputFieldRow(); 
         else
             $('#addInputFieldsWrapper tbody tr:last td:last button:last').css('visibility','visible');
+<<<<<<< HEAD
 
 
         countTr = $('#addInputFieldsWrapper tbody tr').length;
         $('#elementsCountHiddenField_popup').val(countTr);
 
 
+=======
+            
+            
+>>>>>>> 1e559549f56ea846bf042bc12f90f262c39e33c3
     });
 }
 function addNewInputFieldRow()
@@ -317,7 +322,11 @@ function appendNewInputFieldRow()
     countTr = $('#addInputFieldsWrapper tbody tr').length;
     $('#elementsCountHiddenField_popup').val(countTr);
     countTr++;
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 1e559549f56ea846bf042bc12f90f262c39e33c3
     $('#addInputFieldsWrapper tbody').append('<tr class="col-md-12" style="width: 100%;">\
         <td class="col-md-3" >\
         <select class="form-control name="label_'+countTr+'" col-md-12" style="display: inline-block;" >\
