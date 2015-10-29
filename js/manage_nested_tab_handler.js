@@ -161,7 +161,7 @@ function bindOuterTabsClick()
     $('.add-outer-tab').click(function(e) {
         e.preventDefault();
         var id = $(".outer-tabs").children().length; 
-        $(this).closest('li').before('<li><a class="tab_buttons" href="#tab_'+id+'">New Tab</a><span>x</span></li>');         
+        $(this).closest('li').before('<li><a id="0" class="tab_buttons" href="#tab_'+id+'">New Tab</a><span>x</span></li>');         
         $('.outer-tab-content').append('<div id="tab_'+id+'" class="tab-pane" ></div>');
 
         $('#tab_'+id).append('<div class="container">\
@@ -222,7 +222,7 @@ function setPreAddedFormsId()
             $(form).attr('id',formId);
             $('#' +formId + ' #pageIdHiddenField').val('0');
             $('#' +formId + ' #elementIdHiddenField').val('0');            
-             $('#' +formId + ' #submit_button').attr('onClick','form_submit(\''+formId+'\')');
+            $('#' +formId + ' #submit_button').attr('onClick','form_submit(\''+formId+'\')');
             g_formIdCounter++;             
     });
 
@@ -239,6 +239,7 @@ function init_outerTabs()
         {
             var allOuterTabs=$('.outer-tabs>li'); 
             $(allOuterTabs[index]).find('a').eq(0).text(tab[1]); 
+            $(allOuterTabs[index]).find('a').eq(0).attr('id',tab[0]); 
             $($(allForms[index]).find('#pageIdHiddenField').eq(0)).val(tab[0]);
             $($(allForms[index]).find('#elementIdHiddenField').eq(0)).val(tab[0]); 
             var formId=$(allForms[index]).attr('id');         
@@ -250,9 +251,14 @@ function init_outerTabs()
 
 function openPopUp()
 {
-
     $('#vc_Popup').modal({backdrop: 'static',keyboard: false,'show':true});
-
+    $.each(g_outerTabsList,function(index,tab)
+        {
+            var allOuterTabs=$('.outer-tabs>li'); 
+            if($('.outer-tabs >li.active>a').attr('id') ==tab[0])
+                $('#pageIdHiddenField_popup').val(g_projectId);
+    });
+    $('#projectIdHiddenField_popup').val(g_projectId);
 }
 
 function nextDropDownChangeHandler()
@@ -270,18 +276,21 @@ function saveDropDownChangeHandler()
     {
         $('#addInputFieldsWrapper').show();
         $('#vc_Popup .modal-body').height('400px');
+        countTr = $('#addInputFieldsWrapper tbody tr').length;
+        $('#elementsCountHiddenField_popup').val(countTr);
     }
 
     else
     {
         $('#addInputFieldsWrapper').hide();
         $('#vc_Popup .modal-body').height('300px');
+        $('#elementsCountHiddenField_popup').val(0);
     }
 }
 
 function removeCurrentInputFieldRow(target)
 {
-    var targetRow=$(target).parent().parent()
+    var targetRow=$(target).parent().parent();
     $(targetRow).delay(300).fadeOut(300, function(){
         $(targetRow).remove();
 
@@ -289,6 +298,11 @@ function removeCurrentInputFieldRow(target)
             appendNewInputFieldRow(); 
         else
             $('#addInputFieldsWrapper tbody tr:last td:last button:last').css('visibility','visible');
+
+
+        countTr = $('#addInputFieldsWrapper tbody tr').length;
+        $('#elementsCountHiddenField_popup').val(countTr);
+
 
     });
 }
@@ -300,23 +314,27 @@ function addNewInputFieldRow()
 
 function appendNewInputFieldRow()
 {
+    countTr = $('#addInputFieldsWrapper tbody tr').length;
+    $('#elementsCountHiddenField_popup').val(countTr);
+    countTr++;
+
     $('#addInputFieldsWrapper tbody').append('<tr class="col-md-12" style="width: 100%;">\
         <td class="col-md-3" >\
-        <select class="form-control col-md-12"  id="save_dropdown" style="display: inline-block;" >\
+        <select class="form-control name="label_'+countTr+'" col-md-12" style="display: inline-block;" >\
         <option id="name_field_opt">Name</option>\
         <option id="age_field_opt">Age</option>\
         <option id="email_field_opt">Email</option>\
         </select>\
         </td>\
-        <td class="col-md-2"> <label class=" control-label" style="text-align: left; font-weight: normal;" >Type</label></td>\
+        <td class="col-md-2"> <label class="control-label" name="type_'+countTr+'" style="text-align: left; font-weight: normal;" >Type</label></td>\
         <td class="col-md-3">\
-        <select class="form-control col-md-12"  id="save_dropdown" style="display: inline-block;" >\
+        <select class="form-control col-md-12" name="table_'+countTr+'" style="display: inline-block;" >\
         <option id="user_tbl_opt">User</option>\
         <option id="group_tbl_opt">Group</option>\
         <option id="asset_tbl_opt">Asset</option>\
         </select>\
         </td>\
-        <td class="col-md-2"> <label class=" control-label" style="text-align: left; font-weight: normal;" >Field</label></td>\
+        <td class="col-md-2"> <label class=" control-label" name="field_'+countTr+'" style="text-align: left; font-weight: normal;" >Field</label></td>\
         <td class="col-md-2">\
         <button type="button" class="btn btn-primary" onclick="removeCurrentInputFieldRow(this)">-</button>\
         <button type="button" class="btn btn-primary" onclick="addNewInputFieldRow()">+ </button>\
