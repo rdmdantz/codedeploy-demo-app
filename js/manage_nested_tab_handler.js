@@ -90,8 +90,7 @@ var DEFAULT_TAB_DATA = '<form class="elements_form" method="post" action="">'
 
 '<label>Enter list value 5:</label>'+
 ' <input type="text" name="list5" />'+
-'</span>'+
-
+'</span>'+    
 
 
 '<h2>CSS Attributes</h2>'+
@@ -222,7 +221,8 @@ function setPreAddedFormsId()
             var formId = 'formId_'+g_formIdCounter;            
             $(form).attr('id',formId);
             $('#' +formId + ' #pageIdHiddenField').val('0');
-            $('#' +formId + ' #elementIdHiddenField').val(g_elementIdCounter);
+            $('#' +formId + ' #elementIdHiddenField').val(g_elementIdCounter);            
+             $('#' +formId + ' #submit_button').attr('onClick','form_submit(\''+formId+'\')');
             g_formIdCounter++; 
             g_elementIdCounter++; 
     });
