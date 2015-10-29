@@ -7,10 +7,7 @@
 				$.ajax({
 						type:'POST', 
 						url: 'db_elements.php', 
-						data: { 
-							name: $('#name').val(),
-							name2: $('#name2').val(),
-							 }, 
+						data:  $("#form"+a).serialize(), 
 						success: function(dataString) {
 							 alert(dataString);
 							  
@@ -38,7 +35,19 @@
             <label class="title">Name</label>
             <input type="text" id="name2" name="name2" >
         </div>
-<input type="button" id="submit" onclick="form_submit(1);"  name="submitButton" value="Submit">
+<input type="button" id="submit" onClick="form_submit(1);"  name="submitButton" value="Submit">
+</form>
+<br><br><br>
+<form id="form2" action="db_elements.php" method="POST">
+		<div>
+            <label class="title">name</label>
+            <input type="text" id="name" name="name" >
+        </div>
+        <div>
+            <label class="title">Name</label>
+            <input type="text" id="name2" name="name2" >
+        </div>
+<input type="button" id="submit" onClick="form_submit(2);"  name="submitButton" value="Submit">
 </form>
 </body>
 </html>

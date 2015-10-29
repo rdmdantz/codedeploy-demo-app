@@ -53,13 +53,12 @@
         	//$counter++;
 		}print_r($elements);
         $size	= count($page_data);
-<<<<<<< HEAD
+
 		/*echo '<pre>';
 		print_r($page_data);*/
 
         //print_r($page_data);//$page_data contains all the data of the current page
-=======
->>>>>>> 477e92ad51004ac8093a19ff4d4cfee09dfeef19
+
 
     }//end of isset
 ?>
