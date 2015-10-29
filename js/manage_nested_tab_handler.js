@@ -256,9 +256,12 @@ function openPopUp()
         {
             var allOuterTabs=$('.outer-tabs>li'); 
             if($('.outer-tabs >li.active>a').attr('id') ==tab[0])
-                $('#pageIdHiddenField_popup').val(g_projectId);
+                $('#pageIdHiddenField_popup').val(tab[0]);
     });
     $('#projectIdHiddenField_popup').val(g_projectId);
+    var popUpFormId= 'formId_'+g_projectId;
+    $($('.popup_form')[0]).attr('id',popUpFormId);    
+    $('#submitButton_popup').attr('onClick','popUpFormSubmit(\''+popUpFormId+'\')');
 }
 
 function nextDropDownChangeHandler()
@@ -293,22 +296,16 @@ function removeCurrentInputFieldRow(target)
     var targetRow=$(target).parent().parent();
     $(targetRow).delay(300).fadeOut(300, function(){
         $(targetRow).remove();
-        
+
         if($('#addInputFieldsWrapper tbody tr').length==0)
             appendNewInputFieldRow(); 
         else
             $('#addInputFieldsWrapper tbody tr:last td:last button:last').css('visibility','visible');
-<<<<<<< HEAD
-
-
         countTr = $('#addInputFieldsWrapper tbody tr').length;
-        $('#elementsCountHiddenField_popup').val(countTr);
+        $('#elementsCountHiddenField_popup').val(countTr);    
 
 
-=======
-            
-            
->>>>>>> 1e559549f56ea846bf042bc12f90f262c39e33c3
+
     });
 }
 function addNewInputFieldRow()
@@ -320,13 +317,9 @@ function addNewInputFieldRow()
 function appendNewInputFieldRow()
 {
     countTr = $('#addInputFieldsWrapper tbody tr').length;
-    $('#elementsCountHiddenField_popup').val(countTr);
     countTr++;
-<<<<<<< HEAD
+    $('#elementsCountHiddenField_popup').val(countTr);
 
-=======
-    
->>>>>>> 1e559549f56ea846bf042bc12f90f262c39e33c3
     $('#addInputFieldsWrapper tbody').append('<tr class="col-md-12" style="width: 100%;">\
         <td class="col-md-3" >\
         <select class="form-control name="label_'+countTr+'" col-md-12" style="display: inline-block;" >\
@@ -349,4 +342,9 @@ function appendNewInputFieldRow()
         <button type="button" class="btn btn-primary" onclick="addNewInputFieldRow()">+ </button>\
         </td>\
         </tr>'); 
+}
+
+function popUpFormSubmit(id)
+{
+    alert(id);
 }
