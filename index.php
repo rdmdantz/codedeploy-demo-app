@@ -22,7 +22,7 @@
         $page_data	=	array();
 		$elements	=	array();
 		$counter	=	0;
-        while($row=mysqli_fetch_assoc($result)){
+        while($row=mysqli_fetch_assoc($result)){  
             $PAGE_TITLE	=	$row['PAGE_TITLE'];
             $NEXT_PAGE	=	$row['NEXT_PAGE'];
             $PROJECT_ID	=	$row['PROJECT_ID'];
