@@ -386,7 +386,8 @@
 			'FONT_COLOR'	=>	$font_color,
 			'CSS_OUTPUT'	=> $output
 			);
-            return $output;
+			$data	=	json_encode($data_CSS);
+            return $data;
             #id{color:#FFF;width:23px;height:23px;}
         }
         function write_to_file($data,$css_file_name)
@@ -491,7 +492,7 @@
                 $data_html	=	$obj->text($var_name,$label,$value,$div_name);
 
                 $data_css 	=	$obj_css->styles($var_name,$color,$width,$height,$x_position,$y_position,$z_index,$font_size,$font_color);
-                $obj->write_to_file($data_html,$html_file_name,$css_file_name,$data_css);
+                
                 if($_POST['update']	==	"false")
                     $insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`, `NAME`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1', '$label');";
                 else
@@ -513,8 +514,10 @@
                     WHERE `HTML_CSS_ID` = ".$_POST["update_id"];
 
                 $result	=	$conn->query($insert_div_data);
-                
-				echo 'HTML & CSS Code created successfully<br/>';
+				$array	=	array('HTML'	=>	$data_html,
+							 'CSS'	=>	$data_css);
+                $array_send	=	json_encode($array);
+				echo $array_send;
 
 
 
@@ -524,7 +527,7 @@
             case 'text_area':
                 $data_html	=	$obj->text_area($var_name,$label,$value,$div_name);
                 $data_css 	=	$obj_css->styles($var_name,$color,$width,$height,$x_position,$y_position,$z_index,$font_size,$font_color);
-                $obj->write_to_file($data_html,$html_file_name,$css_file_name,$data_css);
+                
                 if($_POST['update']	==	"false")
                     $insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`, `NAME`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1', '$label');";
                 else
@@ -546,7 +549,7 @@
             case 'password':
                 $data_html	=	$obj->password($var_name,$label,$value,$div_name);
                 $data_css 	=	$obj_css->styles($var_name,$color,$width,$height,$x_position,$y_position,$z_index,$font_size,$font_color);
-                $obj->write_to_file($data_html,$html_file_name,$css_file_name,$data_css);
+                
                 if($_POST['update']	==	"false")
                     $insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`, `NAME`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1', '$label');";
                 else
@@ -568,7 +571,7 @@
             case 'Submit':
                 $data_html	=	$obj->submit($var_name,$label,$value,$div_name);
                 $data_css 	=	$obj_css->styles($var_name,$color,$width,$height,$x_position,$y_position,$z_index,$font_size,$font_color);
-                $obj->write_to_file($data_html,$html_file_name,$css_file_name,$data_css);
+                
                 if($_POST['update']	==	"false")
                     $insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`, `NAME`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1', '$label');";
                 else
@@ -592,7 +595,7 @@
                 array_push($radio_values,$radio1,$radio2);//more than one values will be handled in an array
                 $data_html	=	$obj->radio($var_name,$label,$radio_values,$div_name);
                 $data_css 	=	$obj_css->styles($var_name,$color,$width,$height,$x_position,$y_position,$z_index,$font_size,$font_color);
-                $obj->write_to_file($data_html,$html_file_name,$css_file_name,$data_css);
+                
                 if($_POST['update']	==	"false")
                     $insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`, `NAME`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1', '$label');";
                 else
@@ -621,7 +624,7 @@
 
                 $data_html	= $obj->checkbox($var_name,$label,$checkbox,$div_name);
                 $data_css 	=	$obj_css->styles($var_name,$color,$width,$height,$x_position,$y_position,$z_index,$font_size,$font_color);
-                $obj->write_to_file($data_html,$html_file_name,$css_file_name,$data_css);
+                
                 if($_POST['update']	==	"false")
                     $insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`, `NAME`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1', '$label');";
                 else
@@ -643,7 +646,7 @@
             case 'button':
                 $data_html	= $obj->button($var_name,$label,$value,$div_name);
                 $data_css 	=	$obj_css->styles($var_name,$color,$width,$height,$x_position,$y_position,$z_index,$font_size,$font_color);
-                $obj->write_to_file($data_html,$html_file_name,$css_file_name,$data_css);
+                
                 if($_POST['update']	==	"false")
                     $insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`, `NAME`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1', '$label');";
                 else
@@ -672,7 +675,7 @@
                 if(isset($select5)){array_push($select,$select5);}
                 $data_html	= $obj->select($var_name,$label,$select,$div_name);
                 $data_css 	=	$obj_css->styles($var_name,$color,$width,$height,$x_position,$y_position,$z_index,$font_size,$font_color);
-                $obj->write_to_file($data_html,$html_file_name,$css_file_name,$data_css);
+                
                 if($_POST['update']	==	"false")
                     $insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`, `NAME`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1', '$label');";
                 else
@@ -694,7 +697,7 @@
             case 'file_html':
                 $data_html	= $obj->file_html($var_name,$label,$value,$div_name);
                 $data_css 	=	$obj_css->styles($var_name,$color,$width,$height,$x_position,$y_position,$z_index,$font_size,$font_color);
-                $obj->write_to_file($data_html,$html_file_name,$css_file_name,$data_css);
+                
                 if($_POST['update']	==	"false")
                     $insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`, `NAME`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1', '$label');";
                 else
@@ -716,7 +719,7 @@
             case 'hidden':
                 $data_html	= $obj->hidden($var_name,$label,$value,$div_name);
                 $data_css 	=	$obj_css->styles($var_name,$color,$width,$height,$x_position,$y_position,$z_index,$font_size,$font_color);
-                $obj->write_to_file($data_html,$html_file_name,$css_file_name,$data_css);
+                
                 if($_POST['update']	==	"false")
                     $insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`, `NAME`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1', '$label');";
                 else
@@ -738,7 +741,7 @@
             case 'label':
                 $data_html	= $obj->label($var_name,$label,$value,$div_name);
                 $data_css 	=	$obj_css->styles($var_name,$color,$width,$height,$x_position,$y_position,$z_index,$font_size,$font_color);
-                $obj->write_to_file($data_html,$html_file_name,$css_file_name,$data_css);
+                
                 if($_POST['update']	==	"false")
                     $insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`, `NAME`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1', '$label');";
                 else
@@ -760,7 +763,7 @@
             case 'table':
                 $data_html =	$obj->table($var_name,$label,$value,$div_name);
                 $data_css 	=	$obj_css->styles($var_name,$color,$width,$height,$x_position,$y_position,$z_index,$font_size,$font_color);
-                $obj->write_to_file($data_html,$html_file_name,$css_file_name,$data_css);
+                
                 if($_POST['update']	==	"false")
                     $insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`, `NAME`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1', '$label');";
                 else
@@ -788,7 +791,7 @@
                 if(isset($list5)){array_push($list,$list5);}
                 $data_html	= $obj->list_html($var_name,$label,$list,$div_name);
                 $data_css 	=	$obj_css->styles($var_name,$color,$width,$height,$x_position,$y_position,$z_index,$font_size,$font_color);
-                $obj->write_to_file($data_html,$html_file_name,$css_file_name,$data_css);
+                
                 if($_POST['update']	==	"false")
                     $insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`, `NAME`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1', '$label');";
                 else
@@ -811,7 +814,7 @@
 
                 $data_html	= $obj->form($var_name,$label,$value,$div_name);
                 $data_css 	=	$obj_css->styles($var_name,$color,$width,$height,$x_position,$y_position,$z_index,$font_size,$font_color);
-                $obj->write_to_file($data_html,$html_file_name,$css_file_name,$data_css);
+                
                 if($_POST['update']	==	"false")
                     $insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`, `NAME`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1', '$label');";
                 else
@@ -833,7 +836,7 @@
             case 'image':
                 $data_html	= $obj->image($var_name,$label,$value,$div_name);
                 $data_css 	=	$obj_css->styles($var_name,$color,$width,$height,$x_position,$y_position,$z_index,$font_size,$font_color);
-                $obj->write_to_file($data_html,$html_file_name,$css_file_name,$data_css);
+                
                 if($_POST['update']	==	"false")
                     $insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`, `NAME`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1', '$label');";
                 else
@@ -855,7 +858,7 @@
             case 'fieldset':
                 $data_html	= $obj->fieldset($var_name,$label,$value,$div_name);
                 $data_css 	=	$obj_css->styles($var_name,$color,$width,$height,$x_position,$y_position,$z_index,$font_size,$font_color);
-                $obj->write_to_file($data_html,$html_file_name,$css_file_name,$data_css);
+                
                 if($_POST['update']	==	"false")
                     $insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`, `NAME`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1', '$label');";
                 else
@@ -877,7 +880,7 @@
             case 'table_row':
                 $data_html	= $obj->table_row($var_name,$label,$value,$div_name);
                 $data_css 	=	$obj_css->styles($var_name,$color,$width,$height,$x_position,$y_position,$z_index,$font_size,$font_color);
-                $obj->write_to_file($data_html,$html_file_name,$css_file_name,$data_css);
+                
                 if($_POST['update']	==	"false")
                     $insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`, `NAME`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1', '$label');";
                 else
@@ -899,7 +902,7 @@
             case 'table_data':
                 $data_html	= $obj->table_data($var_name,$label,$value,$div_name);
                 $data_css 	=	$obj_css->styles($var_name,$color,$width,$height,$x_position,$y_position,$z_index,$font_size,$font_color);
-                $obj->write_to_file($data_html,$html_file_name,$css_file_name,$data_css);
+                
                 if($_POST['update']	==	"false")
                     $insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`, `NAME`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1', '$label');";
                 else
@@ -921,7 +924,7 @@
             case 'href':
                 $data_html	= $obj->href($var_name,$label,$value,$div_name);
                 $data_css 	=	$obj_css->styles($var_name,$color,$width,$height,$x_position,$y_position,$z_index,$font_size,$font_color);
-                $obj->write_to_file($data_html,$html_file_name,$css_file_name,$data_css);
+                
                 if($_POST['update']	==	"false")
                     $insert	=	"INSERT INTO `CMS`.`html_css` (`ID`, `HTML`, `CSS`,  `FORM_ID`,`STATUS`, `NAME`) VALUES (NULL, '$data_html', '$data_css', $index_of_form,'1', '$label');";
                 else
