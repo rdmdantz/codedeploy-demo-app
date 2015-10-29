@@ -192,40 +192,27 @@
 
         }
         function form_submit(targetFormId){
-
-            alert(targetFormId);
-            return false;
-            $.ajax({
-                type:'POST', 
-                url: 'db_elements.php', 
-                data: { 
-                    submit: true,
-                    update: false,
-                    html_element: $('#html_element').val(),
-                    font_color: $('#font_color').val(),
-                    x_position: $('#x_position').val(),
-                    y_position: $('#y_position').val(),
-                    font_size: $('#font_size').val(),
-                    var_name: $('#var_name').val(),
-                    height: $('#height').val(),
-                    z_index: $('#z_index').val(),
-                    label: $('#label').val(),
-                    width: $('#width').val(),
-                    color: $('#color').val()
-                }, 
-                success: function(dataString) {
-                    alert(dataString);
-
-                    // var json = jQuery.parseJSON(dataString);
-
-                },
-                error: function()
-                {
-                    alert('err');
-                    console.log(arguments);
-                }
-
-            });
+ 
+           // alert(targetFormId); 
+         $.ajax({
+						type:'POST', 
+						url: 'db_elements.php', 
+						data:  $("#"+targetFormId).serialize(), 
+						success: function(dataString) {
+							 //alert(dataString);
+							  
+							var json = jQuery.parseJSON(dataString);
+							var json1 = jQuery.parseJSON(json.HTML);
+							$('.preview').append(json1.HTML);
+							 //alert(json1.HTML);
+							},
+							error: function()
+							{
+								alert('err');
+							   console.log(arguments);
+							}
+							
+						}); 
 
         }
     </script>
