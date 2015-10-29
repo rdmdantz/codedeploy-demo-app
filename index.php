@@ -29,7 +29,7 @@
             $PAGE_ID	=	$row['PAGE_ID'];
 		$select_element			=		"SELECT * FROM `CMS`.`html_css` WHERE PAGE_ID =	$PAGE_ID";
         $result_select_element				=		$conn->query($select_element);
-		echo $select_element.'<br/>';
+		
 		$array=NULL;
 			 while($row_element=mysqli_fetch_assoc($result_select_element)){
 				 $array_ele	=	array(
@@ -51,7 +51,7 @@
            // $array	=	array($PAGE_ID,$PAGE_TITLE,$NEXT_PAGE,$PROJECT_ID,$elements);
             //array_push($page_data,$array);
         	//$counter++;
-		}print_r($elements);
+		}
         $size	= count($page_data);
 
 		/*echo '<pre>';
