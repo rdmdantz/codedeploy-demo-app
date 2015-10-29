@@ -13,54 +13,60 @@
 
         while($row=mysqli_fetch_assoc($result)){
             $ID	=	$row['PROJECT_ID'];//ID contains the current project ID
-        }
+      
 
         //Get the project data against its ID in the database 
         $select			=		"SELECT * FROM `CMS`.`pages` WHERE PROJECT_ID =	$ID";
         $result				=		$conn->query($select);
+		
 
         $page_data	=	array();
-        $elements	=	array();
-        $counter	=	0;
-        while($row=mysqli_fetch_assoc($result)){
+		$elements	=	array();
+		$counter	=	0;
+        while($row=mysqli_fetch_assoc($result)){  
             $PAGE_TITLE	=	$row['PAGE_TITLE'];
             $NEXT_PAGE	=	$row['NEXT_PAGE'];
             $PROJECT_ID	=	$row['PROJECT_ID'];
             $PAGE_ID	=	$row['PAGE_ID'];
-            $select_element			=		"SELECT * FROM `CMS`.`html_css` WHERE PAGE_ID =	$PAGE_ID";
-            $result_select_element				=		$conn->query($select_element);
+		$select_element			=		"SELECT * FROM `CMS`.`html_css` WHERE PAGE_ID =	$PAGE_ID";
+        $result_select_element				=		$conn->query($select_element);
+		$array=NULL;
+			 while($row_element=mysqli_fetch_assoc($result_select_element)){
+				 $array_ele	=	array(
+				 						$row_element['NAME'],
+										/*$row_element['CSS'],
+										$row_element['HTML'],
+										$row_element['PAGE_ID'],
+										$row_element['CLASS']*/
+										);
+				 //array_push($elements,$array_ele);
+				 $array[$counter]	=	$array_ele;
+				 $counter++;
+				 //echo '<pre>';
+					 
+				 }
+				  array_push($elements,$array);
+				 
+				
+           	$array	=	array($PAGE_ID,$PAGE_TITLE,$NEXT_PAGE,$PROJECT_ID,$elements);
+            array_push($page_data,$array); $counter	=0;
+        	//$counter++;
 
-            $array=NULL;
-            while($row_element=mysqli_fetch_assoc($result_select_element)){
-                $array_ele	=	array(
-                    $row_element['NAME'],
-                    /*$row_element['CSS'],
-                    $row_element['HTML'],
-                    $row_element['PAGE_ID'],
-                    $row_element['CLASS']*/
-                );
-                //array_push($elements,$array_ele);
-                $array[$counter]	=	$array_ele;
-                $counter++;
-                echo '<pre>';
+		}//echo '<pre>';//print_r($elements);
 
-            }
-            array_push($elements,$array);
-
-            $counter	=0;
-            // $array	=	array($PAGE_ID,$PAGE_TITLE,$NEXT_PAGE,$PROJECT_ID,$elements);
-            //array_push($page_data,$array);
-            //$counter++;
-        }
-        $size	= count($page_data);
-
-        /*echo '<pre>';
-        print_r($page_data);*/
+       
+	   ////////////////////
+	    $size	= count($page_data);
+		//use this page_data to populate the dynamic tabs for pages and elements
+		//print_r($page_data);
+}
+		/*echo '<pre>';
+		print_r($page_data);*/
 
         //print_r($page_data);//$page_data contains all the data of the current page
 
-
-    }//end of isset
+}
+    
 ?>
 
 
@@ -80,7 +86,6 @@
 
     <script type="text/javascript">
         <?php echo 'var g_outerTabsList = '.json_encode($page_data).';'; ?>
-        <?php echo 'var g_projectId = "'.$_GET['p'].'";'; ?>
     </script>
 
     <script>
@@ -146,53 +151,9 @@
 
             });	
         });
-        function preview(){
-            var var_name = $('#var_name').val();
-            var label = $('#label').val();
-            var html_element = $('#html_element').val();
-            var color = $('#color').val();
-            var font_color = $('#font_color').val();
-            var font_size = $('#font_size').val();
-            var height = $('#height').val();
-            var width = $('#width').val();
-            var x_position = $('#x_position').val();
-            var y_position = $('#y_position').val();
-
-            $.ajax({
-                type:'POST', 
-                url: 'get_preview.php', 
-                data: { 
-
-                    html_element: $('#html_element').val(),
-                    font_color: $('#font_color').val(),
-                    x_position: $('#x_position').val(),
-                    y_position: $('#y_position').val(),
-                    font_size: $('#font_size').val(),
-                    var_name: $('#var_name').val(),
-                    height: $('#height').val(),
-                    z_index: $('#z_index').val(),
-                    label: $('#label').val(),
-                    width: $('#width').val(),
-                    color: $('#color').val()
-                }, 
-                success: function(dataString) {
-                    alert(dataString);
-
-                    // var json = jQuery.parseJSON(dataString);
-
-                },
-                error: function()
-                {
-                    alert('err');
-                    console.log(arguments);
-                }
-
-            });
-
-
-        }
+       
         function form_submit(targetFormId){
- 
+            
            // alert(targetFormId); 
          $.ajax({
 						type:'POST', 
@@ -212,7 +173,7 @@
 							   console.log(arguments);
 							}
 							
-						}); 
+						});
 
         }
     </script>
@@ -248,7 +209,7 @@
     ?>
     <div class="container">
         <ul class="nav nav-tabs outer-tabs">
-            <li class="active"><a id="0" href="#tab_1" data-toggle="tab">Tab 1</a><span>x</span></li>
+            <li class="active"><a href="#tab_1" data-toggle="tab">Tab 1</a><span>x</span></li>
             <li><a href="#" class="add-outer-tab" data-toggle="tab">+ Add Tab</a></li>
         </ul>
         <div style="    margin-top: -37px; float: right;"> <button type="button" class="btn btn-primary" onClick="openPopUp()" >Save </button> </div>
@@ -256,7 +217,7 @@
             <div id="tab_1" class="tab-pane active" >
                 <div class="container">
                     <ul class="nav nav-tabs">
-                        <li class="active"><a  href="#tab_1_1" data-toggle="tab">Tab 1.1</a><span>x</span></li>                        
+                        <li class="active"><a href="#tab_1_1" data-toggle="tab">Tab 1.1</a><span>x</span></li>                        
                         <li><a href="#" class="add-inner-tab" data-toggle="tab">+ Add Tab</a></li>
                     </ul>
                     <div class="tab-content inner-tab-content">
@@ -391,7 +352,7 @@
 
                                 <input id="pageIdHiddenField" type="hidden" name="pageId" value="0" />
                                 <input id="elementIdHiddenField" type="hidden" name="elementId" value="0" />
-
+                                
                                 <input id="submit_button" type="button" name="submit" value="save element"  onclick="form_submit();preview();" />
                                 <input type="hidden" name="update" id="update" value="false">
                                 <input type="hidden" name="update_id" id="update_id" value="0"> 
@@ -423,94 +384,88 @@
                 </div>
                 <div class="modal-body" style="height: 200px; max-height: 400px; overflow-y:auto;"> 
 
-                    <form class="popup_form" method="post" action="">
+                    <div>
 
-                        <div>
-
-                            <div class="col-md-12" style="margin-top: 10px;">
-                                <label class=" control-label col-md-6 " style="text-align: left;" >Button Name:</label>
-                                <button type="button" class="btn btn-primary col-md-6"  onclick="">Action</button>                          
-                            </div>
-
-                            <div class="col-md-12" style="margin-top: 10px;">
-                                <label class=" control-label col-md-4" style="text-align: left;" >Next:</label>
-                                <select class="form-control col-md-4"  id="next_dropdown" name="next_dropdown" style="width: 33%;" onChange="nextDropDownChangeHandler();" >   
-                                    <option id="0"  selected="selected">Select one...</option>                            
-                                    <option id="input">input</option>                            
-                                    <option id="test">test</option>                            
-                                    <option id="goto">Goto</option>                            
-                                </select>
-                                <select class="form-control col-md-4"  id="goto_dropdown" name="goto_dropdown" style="width: 33%; display: none;" >
-                                    <option id="0"  selected="selected">Select one...</option>                            
-                                    <?php echo $goto_dropdown;?>                         
-                                </select>
-                            </div>
-
-                            <div class="col-md-12" style="margin-top: 10px;">
-                                <label class=" control-label col-md-4" style="text-align: left;" >Save:</label>
-                                <select class="form-control col-md-8"  id="save_dropdown" name="save_dropdown" onChange="saveDropDownChangeHandler();" style="display: inline-block; width: 66%;" >   
-                                    <option id="0"  selected="selected">Select one...</option>                            
-                                    <option id="input">input</option>                            
-                                    <option id="test">dummy 1</option>                            
-                                    <option id="goto">dummy 2</option>                            
-                                </select>
-
-                            </div>
-
-                            <div id="addInputFieldsWrapper" class="col-md-12" style="margin-top: 10px; display: none;">
-
-                                <table style="width: 100%;">
-
-                                    <thead>
-                                        <tr class="col-md-12" style="width: 100%;">
-                                            <td class="col-md-3" > <label class=" control-label col-md-12" style="text-align: left;" >Label</label></td>
-                                            <td class="col-md-3" > <label class=" control-label col-md-12" style="text-align: left;" >Type</label></td>
-                                            <td class="col-md-3" > <label class=" control-label col-md-12" style="text-align: left;" >Table</label></td>
-                                            <td class="col-md-3" > <label class=" control-label col-md-12" style="text-align: left;" >Field</label></td>
-                                            <td class="col-md-3" > <label class=" control-label col-md-12" style="text-align: left;" ></label></td>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody>
-                                        <tr class="col-md-12" style="width: 100%;">
-                                            <td class="col-md-3" >
-                                                <select class="form-control col-md-12" name="label_1"  style="display: inline-block;" >   
-                                                    <option id="name_field_opt">Name</option>                            
-                                                    <option id="age_field_opt">Age</option>                            
-                                                    <option id="email_field_opt">Email</option>                                                                        
-                                                </select>
-                                            </td>
-                                            <td class="col-md-2"> <label class=" control-label" name="type_1" style="text-align: left; font-weight: normal;" >Type</label></td>
-                                            <td class="col-md-3">
-                                                <select class="form-control col-md-12" name="table_1" style="display: inline-block;" >   
-
-                                                    <option id="user_tbl_opt">User</option>                            
-                                                    <option id="group_tbl_opt">Group</option>                            
-                                                    <option id="asset_tbl_opt">Asset</option>                                                                        
-                                                </select>
-                                            </td>
-                                            <td class="col-md-2"> <label class=" control-label" name="field_1" style="text-align: left; font-weight: normal;" >Field</label></td>
-                                            <td class="col-md-2"> 
-                                                <button type="button" class="btn btn-primary" onClick="removeCurrentInputFieldRow(this)">-</button>
-                                                <button type="button" class="btn btn-primary" onClick="addNewInputFieldRow()">+ </button>
-                                            </td>
-                                        </tr>
-
-                                    </tbody>
-
-                                </table>
-                            </div>
+                        <div class="col-md-12" style="margin-top: 10px;">
+                            <label class=" control-label col-md-6 " style="text-align: left;" >Button Name:</label>
+                            <button type="button" class="btn btn-primary col-md-6"  onclick="">Action</button>                          
                         </div>
 
-                        <input id="pageIdHiddenField_popup" type="hidden" name="pageId" value="0" />
-                        <input id="projectIdHiddenField_popup" type="hidden" name="projectId" value="0" />
-                        <input id="elementsCountHiddenField_popup" type="hidden" name="elementCount" value="0" />
-                    </form>
+                        <div class="col-md-12" style="margin-top: 10px;">
+                            <label class=" control-label col-md-4" style="text-align: left;" >Next:</label>
+                            <select class="form-control col-md-4"  id="next_dropdown" style="width: 33%;" onChange="nextDropDownChangeHandler();" >   
+                                <option id="0"  selected="selected">Select one...</option>                            
+                                <option id="input">input</option>                            
+                                <option id="test">test</option>                            
+                                <option id="goto">Goto</option>                            
+                            </select>
+                            <select class="form-control col-md-4"  id="goto_dropdown" style="width: 33%; display: none;" >
+                                <option id="0"  selected="selected">Select one...</option>                            
+                                <?php echo $goto_dropdown;?>                         
+                            </select>
+                        </div>
+
+
+                        <div class="col-md-12" style="margin-top: 10px;">
+                            <label class=" control-label col-md-4" style="text-align: left;" >Save:</label>
+                            <select class="form-control col-md-8"  id="save_dropdown" onChange="saveDropDownChangeHandler();" style="display: inline-block; width: 66%;" >   
+                                <option id="0"  selected="selected">Select one...</option>                            
+                                <option id="input">input</option>                            
+                                <option id="test">dummy 1</option>                            
+                                <option id="goto">dummy 2</option>                            
+                            </select>
+
+                        </div>
+
+                        <div id="addInputFieldsWrapper" class="col-md-12" style="margin-top: 10px; display: none;">
+
+                            <table style="width: 100%;">
+
+                                <thead>
+                                    <tr class="col-md-12" style="width: 100%;">
+                                        <td class="col-md-3" > <label class=" control-label col-md-12" style="text-align: left;" >Label</label></td>
+                                        <td class="col-md-3" > <label class=" control-label col-md-12" style="text-align: left;" >Type</label></td>
+                                        <td class="col-md-3" > <label class=" control-label col-md-12" style="text-align: left;" >Table</label></td>
+                                        <td class="col-md-3" > <label class=" control-label col-md-12" style="text-align: left;" >Field</label></td>
+                                        <td class="col-md-3" > <label class=" control-label col-md-12" style="text-align: left;" ></label></td>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr class="col-md-12" style="width: 100%;">
+                                        <td class="col-md-3" >
+                                            <select class="form-control col-md-12"  id="save_dropdown" style="display: inline-block;" >   
+                                                <option id="name_field_opt">Name</option>                            
+                                                <option id="age_field_opt">Age</option>                            
+                                                <option id="email_field_opt">Email</option>                                                                        
+                                            </select>
+                                        </td>
+                                        <td class="col-md-2"> <label class=" control-label" style="text-align: left; font-weight: normal;" >Type</label></td>
+                                        <td class="col-md-3">
+                                            <select class="form-control col-md-12"  id="save_dropdown" style="display: inline-block;" >   
+
+                                                <option id="user_tbl_opt">User</option>                            
+                                                <option id="group_tbl_opt">Group</option>                            
+                                                <option id="asset_tbl_opt">Asset</option>                                                                        
+                                            </select>
+                                        </td>
+                                        <td class="col-md-2"> <label class=" control-label" style="text-align: left; font-weight: normal;" >Field</label></td>
+                                        <td class="col-md-2"> 
+                                            <button type="button" class="btn btn-primary" onClick="removeCurrentInputFieldRow(this)">-</button>
+                                            <button type="button" class="btn btn-primary" onClick="addNewInputFieldRow()">+ </button>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
 
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>                          
-                    <button type="submit" class="btn btn-primary" >OK</button>                          
+                    <button type="button" class="btn btn-primary" >OK</button>                          
                 </div>
             </div>
         </div>
