@@ -42,7 +42,7 @@
 				 //array_push($elements,$array_ele);
 				 $array[$counter]	=	$array_ele;
 				 $counter++;
-				 echo '<pre>';
+				 //echo '<pre>';
 					 
 				 }
 				  array_push($elements,$array);
@@ -51,7 +51,7 @@
            // $array	=	array($PAGE_ID,$PAGE_TITLE,$NEXT_PAGE,$PROJECT_ID,$elements);
             //array_push($page_data,$array);
         	//$counter++;
-		}print_r($elements);
+		}//print_r($elements);
         $size	= count($page_data);
 
 		/*echo '<pre>';
