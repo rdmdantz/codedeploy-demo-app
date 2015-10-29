@@ -90,8 +90,7 @@ var DEFAULT_TAB_DATA = '<form class="elements_form" method="post" action="">'
 
 '<label>Enter list value 5:</label>'+
 ' <input type="text" name="list5" />'+
-'</span>'+
-
+'</span>'+    
 
 
 '<h2>CSS Attributes</h2>'+
