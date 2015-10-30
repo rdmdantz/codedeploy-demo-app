@@ -152,7 +152,10 @@
 
             });	
         });
-
+		function popUpFormSubmit(targetFormId){
+			alert(targetFormId);
+			alert($("#"+targetFormId).serialize());
+			}
         function form_submit(targetFormId){
 
             // alert(targetFormId); 
@@ -471,7 +474,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>                          
-                    <button id="submitButton_popup" type="submit" onclick="popUpFormSubmit();" class="btn btn-primary" >OK</button>                          
+                    <button id="submitButton_popup" type="submit" onClick="popUpFormSubmit();" class="btn btn-primary" >OK</button>                          
                 </div>
             </div>
         </div>
