@@ -13,8 +13,8 @@
 
         while($row=mysqli_fetch_assoc($result)){
             $ID	=	$row['PROJECT_ID'];//ID contains the current project ID
+      
 
-<<<<<<< HEAD
         //Get the project data against its ID in the database 
         $select			=		"SELECT * FROM `CMS`.`pages` WHERE PROJECT_ID =	$ID";
         $result				=		$conn->query($select);
@@ -34,10 +34,11 @@
 			 while($row_element=mysqli_fetch_assoc($result_select_element)){
 				 $array_ele	=	array(
 				 						$row_element['NAME'],
-										/*$row_element['CSS'],
+										$row_element['ID'],
+										$row_element['CSS'],
 										$row_element['HTML'],
 										$row_element['PAGE_ID'],
-										$row_element['CLASS']*/
+										$row_element['CLASS']
 										);
 				 //array_push($elements,$array_ele);
 				 $array[$counter]	=	$array_ele;
@@ -61,65 +62,13 @@
 		/*echo '<pre>';
 		print_r($page_data);*/
 }
-		/*echo '<pre>';
-		print_r($page_data);*/
-=======
-
-            //Get the project data against its ID in the database 
-            $select			=		"SELECT * FROM `CMS`.`pages` WHERE PROJECT_ID =	$ID";
-            $result				=		$conn->query($select);
-
-
-            $page_data	=	array();
-            $elements	=	array();
-            $counter	=	0;
-            while($row=mysqli_fetch_assoc($result)){  
-                $PAGE_TITLE	=	$row['PAGE_TITLE'];
-                $NEXT_PAGE	=	$row['NEXT_PAGE'];
-                $PROJECT_ID	=	$row['PROJECT_ID'];
-                $PAGE_ID	=	$row['PAGE_ID'];
-                $select_element			=		"SELECT * FROM `CMS`.`html_css` WHERE PAGE_ID =	$PAGE_ID";
-                $result_select_element				=		$conn->query($select_element);
-                $array=NULL;
-                while($row_element=mysqli_fetch_assoc($result_select_element)){
-                    $array_ele	=	array(
-                        $row_element['NAME'],
-                        /*$row_element['CSS'],
-                        $row_element['HTML'],
-                        $row_element['PAGE_ID'],
-                        $row_element['CLASS']*/
-                    );
-                    //array_push($elements,$array_ele);
-                    $array[$counter]	=	$array_ele;
-                    $counter++;
-                    //echo '<pre>';
-
-                }
-                array_push($elements,$array);
-
-
-                $array	=	array($PAGE_ID,$PAGE_TITLE,$NEXT_PAGE,$PROJECT_ID,$elements);
-                array_push($page_data,$array); $counter	=0;
-                //$counter++;
-
-            }//echo '<pre>';//print_r($elements);
-
-
-            ////////////////////
-            $size	= count($page_data);
-            echo "<pre>";
-            print_r($page_data);
-            //use this page_data to populate the dynamic tabs for pages and elements
-
-        }
-        /*echo '<pre>';
-        print_r($page_data);*/
->>>>>>> 9d67d1b4d4c4ea8a805658c4863e80b774052e4f
+		echo '<pre>';
+		print_r($page_data);
 
         //print_r($page_data);//$page_data contains all the data of the current page
 
-    }
-
+}
+    
 ?>
 
 
