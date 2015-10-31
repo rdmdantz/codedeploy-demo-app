@@ -1,4 +1,4 @@
-<?php if(isset($_GET['p'])){$project	=	$_GET['p'];
+<?php if(isset($_GET['p'])){$project = $_GET['p'];
 
         $servername = "localhost";
         $username = "root";
@@ -8,40 +8,40 @@
             die("Connection failed: " . $conn->connect_error);
         }
         //GET the current project ID to get its respective data from the database
-        $select			=		"SELECT PROJECT_ID FROM `CMS`.`projects` WHERE PROJECT_NAME =	'$project'";
-        $result				=		$conn->query($select);
+        $select   =  "SELECT PROJECT_ID FROM `CMS`.`projects` WHERE PROJECT_NAME = '$project'";
+        $result    =  $conn->query($select);
 
         while($row=mysqli_fetch_assoc($result)){
-            $ID	=	$row['PROJECT_ID'];//ID contains the current project ID
+            $ID = $row['PROJECT_ID'];//ID contains the current project ID
 
 
             //Get the project data against its ID in the database 
-            $select			=		"SELECT * FROM `CMS`.`pages` WHERE PROJECT_ID =	$ID";
-            $result				=		$conn->query($select);
+            $select   =  "SELECT * FROM `CMS`.`pages` WHERE PROJECT_ID = $ID";
+            $result    =  $conn->query($select);
 
 
-            $page_data	=	array();
-            $elements	=	array();
-            $counter	=	0;
+            $page_data = array();
+            $elements = array();
+            $counter = 0;
             while($row=mysqli_fetch_assoc($result)){  
-                $PAGE_TITLE	=	$row['PAGE_TITLE'];
-                $NEXT_PAGE	=	$row['NEXT_PAGE'];
-                $PROJECT_ID	=	$row['PROJECT_ID'];
-                $PAGE_ID	=	$row['PAGE_ID'];
-                $select_element			=		"SELECT * FROM `CMS`.`html_css` WHERE PAGE_ID =	$PAGE_ID";
-                $result_select_element				=		$conn->query($select_element);
+                $PAGE_TITLE = $row['PAGE_TITLE'];
+                $NEXT_PAGE = $row['NEXT_PAGE'];
+                $PROJECT_ID = $row['PROJECT_ID'];
+                $PAGE_ID = $row['PAGE_ID'];
+                $select_element   =  "SELECT * FROM `CMS`.`html_css` WHERE PAGE_ID = $PAGE_ID";
+                $result_select_element    =  $conn->query($select_element);
                 $array=NULL;
                 while($row_element=mysqli_fetch_assoc($result_select_element)){
-                    $array_ele	=	array(
+                    $array_ele = array(
                         $row_element['ID'],
                         $row_element['NAME'],                        
-                        /*$row_element['CSS'],
+                        $row_element['CSS'],
                         $row_element['HTML'],
                         $row_element['PAGE_ID'],
-                        $row_element['CLASS']*/
+                        $row_element['CLASS']
                     );
                     //array_push($elements,$array_ele);
-                    $array[$counter]	=	$array_ele;
+                    $array[$counter] = $array_ele;
                     $counter++;
                     //echo '<pre>';
 
@@ -49,23 +49,18 @@
                 array_push($elements,$array);
 
 
-                $array	=	array($PAGE_ID,$PAGE_TITLE,$NEXT_PAGE,$PROJECT_ID,$elements);
-                array_push($page_data,$array); $counter	=0;
+                $array = array($PAGE_ID,$PAGE_TITLE,$NEXT_PAGE,$PROJECT_ID,$elements);
+                array_push($page_data,$array); $counter =0;
                 //$counter++;
 
             }//echo '<pre>';//print_r($elements);
 
-
             ////////////////////
-            $size	= count($page_data);
-            /*echo "<pre>";
-            print_r($page_data);*/
+            $size = count($page_data);
             //use this page_data to populate the dynamic tabs for pages and elements
-
+            /*echo '<pre>';
+            print_r($page_data);*/
         }
-        /*echo '<pre>';
-        print_r($page_data);*/
-
         //print_r($page_data);//$page_data contains all the data of the current page
 
     }
@@ -155,9 +150,9 @@
 
             });	
         });
-		function popUpFormSubmit(targetFormId){
-			alert(targetFormId);
-			 $.ajax({
+        function popUpFormSubmit(targetFormId){
+            alert(targetFormId);
+            $.ajax({
                 type:'POST', 
                 url: 'db_pages.php', 
                 data:  $("#"+targetFormId).serialize(), 
@@ -176,7 +171,7 @@
                 }
 
             });
-			}
+        }
         function form_submit(targetFormId){
 
             // alert(targetFormId); 
@@ -245,7 +240,7 @@
                         <li><a href="#" class="add-inner-tab" data-toggle="tab">+ Add Tab</a></li>
                     </ul>
                     <div class="tab-content inner-tab-content">
-                                                
+
                     </div>
                     <div class="preview" style="border:1px solid #999; width:500px; height:300px;">
                     </div>
@@ -353,8 +348,8 @@
 
                                 </table>
                             </div>
-                            
-                              <div class="col-md-12" style="margin-top: 10px;">
+
+                            <div class="col-md-12" style="margin-top: 10px;">
                                 <label class=" control-label col-md-4" style="text-align: left;" >Search:</label>
                                 <select class="form-control col-md-8"  id="search_dropdown" name="search_dropdown" onChange="searchDropDownChangeHandler();" style="display: inline-block; width: 66%;" >   
                                     <option id="0" value="0"  selected="selected">Select one...</option>                            
