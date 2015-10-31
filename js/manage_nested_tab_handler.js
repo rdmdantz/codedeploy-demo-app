@@ -134,7 +134,7 @@ $(document).ready(function(){
     bindTabsClick();
     bindOuterTabsClick();
     bindInnerTabsClick();
-    setPreAddedFormsId(); 
+    //setPreAddedFormsId(); 
     init_outerTabs();     
 });
 
@@ -166,22 +166,19 @@ function bindOuterTabsClick()
 
         $('#tab_'+id).append('<div class="container">\
             <ul class="nav nav-tabs">\
-            <li class="active"><a class="tab_buttons" href="#tab_'+id+'_1" data-toggle="tab">New Tab</a><span>x</span></li>\
             <li><a href="#" class="add-inner-tab" data-toggle="tab">+ Add Tab</a></li>\
             </ul>\
             <div class="tab-content inner-tab-content">\
-            <div id="tab_'+id+'_1" class="tab-pane active" >'+DEFAULT_TAB_DATA+'\
-            </div>\
             </div>\
             </div>');
-        var formId = 'formId_'+g_formIdCounter;     
+        /*var formId = 'formId_'+g_formIdCounter;     
         $($('#tab_'+id + ' .elements_form')[0]).attr('id',formId);
         $('#' +formId + ' #pageIdHiddenField').val('0');
         $('#' +formId + ' #elementIdHiddenField').val('0'); 
         $('#' +formId + ' #submit_button').attr('onClick','form_submit(\''+formId+'\')');
 
 
-        g_formIdCounter++;   
+        g_formIdCounter++;   */
 
         bindTabsClick();
         bindOuterTabsClick();
@@ -215,6 +212,8 @@ function bindInnerTabsClick()
 
 function setPreAddedFormsId()
 {
+    console.log('calllled');
+
     var allForms = $('.elements_form');
     $.each(allForms,function(index,form)
         {
@@ -233,18 +232,39 @@ function init_outerTabs()
     for(var i=1; i<g_outerTabsList.length; i++)
         $('.add-outer-tab').click();
 
-    var allForms = $('.elements_form');
+
 
     $.each(g_outerTabsList,function(index,tab)
         {
             var allOuterTabs=$('.outer-tabs>li'); 
             $(allOuterTabs[index]).find('a').eq(0).text(tab[1]); 
             $(allOuterTabs[index]).find('a').eq(0).attr('id',tab[0]); 
+            if(tab[4][index] != null)
+            {
+                $.each(tab[4][index],function(i,innerTab)
+                    {
+                        if(innerTab != null)
+                        {
+                            var targetIndex = index+1;                
+                            $('a[href="#tab_'+targetIndex+'"]').click();
+                            $('#tab_'+targetIndex).find('.add-inner-tab').click();
+                            $($('#tab_'+targetIndex +' .tab_buttons')[i]).attr('id',innerTab[0]);
+                            $($('#tab_'+targetIndex +' .tab_buttons')[i]).text(innerTab[1]);
+                        }
+
+
+                });     
+            }
+            var allForms = $('.elements_form');                                  
             $($(allForms[index]).find('#pageIdHiddenField').eq(0)).val(tab[0]);
             $($(allForms[index]).find('#elementIdHiddenField').eq(0)).val(tab[0]); 
             var formId=$(allForms[index]).attr('id');         
-            $($(allForms[index]).find('#submit_button').eq(0)).attr('onClick','form_submit(\''+formId+'\')');
+            $($(allForms[index]).find('#submit_button').eq(0)).attr('onClick','form_submit(\''+formId+'\')');  
+
+
     });
+
+
     $('a[href="#tab_1"]').click();
     $('a[href="#tab_1_1"]').click();
 }
