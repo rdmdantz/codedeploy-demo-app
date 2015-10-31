@@ -154,7 +154,28 @@
 
             });	
         });
+		function popUpFormSubmit(targetFormId){
+			alert(targetFormId);
+			 $.ajax({
+                type:'POST', 
+                url: 'db_pages.php', 
+                data:  $("#"+targetFormId).serialize(), 
+                success: function(dataString) {
+                    alert(dataString);
 
+                    //var json = jQuery.parseJSON(dataString);
+                    //var json1 = jQuery.parseJSON(json.HTML);
+                    //$('.preview').append(json1.HTML);
+                    //alert(json1.HTML);
+                },
+                error: function()
+                {
+                    alert('err');
+                    console.log(arguments);
+                }
+
+            });
+			}
         function form_submit(targetFormId){
 
             // alert(targetFormId); 
@@ -479,7 +500,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>                          
-                    <button id="submitButton_popup" type="submit" onclick="popUpFormSubmit();" class="btn btn-primary" >OK</button>                          
+                    <button id="submitButton_popup" type="submit" onClick="popUpFormSubmit();" class="btn btn-primary" >OK</button>                          
                 </div>
             </div>
         </div>
