@@ -252,16 +252,26 @@ function init_outerTabs()
 function openPopUp()
 {
     $('#vc_Popup').modal({backdrop: 'static',keyboard: false,'show':true});
+
+    var targetDivId=0;
     $.each(g_outerTabsList,function(index,tab)
         {
             var allOuterTabs=$('.outer-tabs>li'); 
             if($('.outer-tabs >li.active>a').attr('id') ==tab[0])
                 $('#pageIdHiddenField_popup').val(tab[0]);
-    });
+    });  
+
+    var  formId = $($($('.outer-tabs > li.active>a').attr('href')).find('.nav-tabs>li.active>a').attr('href')).find('form').attr('id');
     $('#projectIdHiddenField_popup').val(g_projectId);
-    var popUpFormId= 'formId_'+g_projectId;
+    var popUpFormId= formId+'+'+g_projectId;
     $($('.popup_form')[0]).attr('id',popUpFormId);    
     $('#submitButton_popup').attr('onClick','popUpFormSubmit(\''+popUpFormId+'\')');
+    $('#save_dropdown').val(0);
+    saveDropDownChangeHandler();
+    $('#addInputFieldsWrapper tbody').empty();
+    appendNewInputFieldRow();
+
+
 }
 
 function nextDropDownChangeHandler()
@@ -302,9 +312,7 @@ function removeCurrentInputFieldRow(target)
         else
             $('#addInputFieldsWrapper tbody tr:last td:last button:last').css('visibility','visible');
         countTr = $('#addInputFieldsWrapper tbody tr').length;
-        $('#elementsCountHiddenField_popup').val(countTr);    
-
-
+        $('#elementsCountHiddenField_popup').val(countTr); 
 
     });
 }
@@ -328,7 +336,7 @@ function appendNewInputFieldRow()
         <option id="email_field_opt">Email</option>\
         </select>\
         </td>\
-        <td class="col-md-2"> <label class="control-label" name="type_'+countTr+'" style="text-align: left; font-weight: normal;" >Type</label></td>\
+        <td class="col-md-1"> <label class="control-label" name="type_'+countTr+'" style="text-align: left; font-weight: normal;" >Type</label></td>\
         <td class="col-md-3">\
         <select class="form-control col-md-12" name="table_'+countTr+'" style="display: inline-block;" >\
         <option id="user_tbl_opt">User</option>\
@@ -336,7 +344,13 @@ function appendNewInputFieldRow()
         <option id="asset_tbl_opt">Asset</option>\
         </select>\
         </td>\
-        <td class="col-md-2"> <label class=" control-label" name="field_'+countTr+'" style="text-align: left; font-weight: normal;" >Field</label></td>\
+        <td class="col-md-3">\
+        <select class="form-control col-md-12"  name="field_1" style="display: inline-block;" >\
+        <option id="name_field_opt">Name</option>\
+        <option id="age_field_opt">Age</option>\
+        <option id="email_field_opt">Email</option>\
+        </select>\
+        </td>\
         <td class="col-md-2">\
         <button type="button" class="btn btn-primary" onclick="removeCurrentInputFieldRow(this)">-</button>\
         <button type="button" class="btn btn-primary" onclick="addNewInputFieldRow()">+ </button>\

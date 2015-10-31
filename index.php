@@ -57,8 +57,10 @@
 
             ////////////////////
             $size	= count($page_data);
+            echo "<pre>";
+            print_r($page_data);
             //use this page_data to populate the dynamic tabs for pages and elements
-            //print_r($page_data);
+
         }
         /*echo '<pre>';
         print_r($page_data);*/
@@ -377,7 +379,7 @@
 
 
     <div id="vc_Popup" class="modal fade" style="display: none;">
-        <div class="modal-dialog" style="width: 650px;">
+        <div class="modal-dialog" style="width: 700px;">
             <div class="modal-content">
                 <div style="background: black; color: gray;" class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="glyphicon glyphicon-remove white" aria-hidden="true" style="color: white;"></span></button>
@@ -410,7 +412,7 @@
                             <div class="col-md-12" style="margin-top: 10px;">
                                 <label class=" control-label col-md-4" style="text-align: left;" >Save:</label>
                                 <select class="form-control col-md-8"  id="save_dropdown" name="save_dropdown" onChange="saveDropDownChangeHandler();" style="display: inline-block; width: 66%;" >   
-                                    <option id="0"  selected="selected">Select one...</option>                            
+                                    <option id="0" value="0"  selected="selected">Select one...</option>                            
                                     <option id="input">input</option>                            
                                     <option id="test">dummy 1</option>                            
                                     <option id="goto">dummy 2</option>                            
@@ -441,7 +443,7 @@
                                                     <option id="email_field_opt">Email</option>                                                                        
                                                 </select>
                                             </td>
-                                            <td class="col-md-2"> <label class=" control-label" name="type_1" style="text-align: left; font-weight: normal;" >Type</label></td>
+                                            <td class="col-md-1"> <label class=" control-label" name="type_1" style="text-align: left; font-weight: normal;" >Type</label></td>
                                             <td class="col-md-3">
                                                 <select class="form-control col-md-12" name="table_1" style="display: inline-block;" >   
 
@@ -450,7 +452,13 @@
                                                     <option id="asset_tbl_opt">Asset</option>                                                                        
                                                 </select>
                                             </td>
-                                            <td class="col-md-2"> <label class=" control-label" name="field_1" style="text-align: left; font-weight: normal;" >Field</label></td>
+                                            <td class="col-md-3">
+                                                <select class="form-control col-md-12"  name="field_1" style="display: inline-block;" >   
+                                                    <option id="name_field_opt">Name</option>                            
+                                                    <option id="age_field_opt">Age</option>                            
+                                                    <option id="email_field_opt">Email</option>                                                                        
+                                                </select>                                                
+                                            </td>
                                             <td class="col-md-2"> 
                                                 <button type="button" class="btn btn-primary" onClick="removeCurrentInputFieldRow(this)">-</button>
                                                 <button type="button" class="btn btn-primary" onClick="addNewInputFieldRow()">+ </button>
