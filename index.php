@@ -58,7 +58,8 @@
 	   ////////////////////
 	    $size	= count($page_data);
 		//use this page_data to populate the dynamic tabs for pages and elements
-		//print_r($page_data);
+		/*echo '<pre>';
+		print_r($page_data);*/
 }
 		/*echo '<pre>';
 		print_r($page_data);*/
