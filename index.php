@@ -62,8 +62,8 @@
 		/*echo '<pre>';
 		print_r($page_data);*/
 }
-		echo '<pre>';
-		print_r($page_data);
+		/*echo '<pre>';
+		print_r($page_data);*/
 
         //print_r($page_data);//$page_data contains all the data of the current page
 
