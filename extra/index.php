@@ -6,7 +6,7 @@
 	alert(a);
 				$.ajax({
 						type:'POST', 
-						url: 'db_elements.php', 
+						url: 'db_pages.php', 
 						data:  $("#form"+a).serialize(), 
 						success: function(dataString) {
 							 alert(dataString);
