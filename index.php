@@ -154,7 +154,25 @@
         });
 		function popUpFormSubmit(targetFormId){
 			alert(targetFormId);
-			alert($("#"+targetFormId).serialize());
+			 $.ajax({
+                type:'POST', 
+                url: 'db_pages.php', 
+                data:  $("#"+targetFormId).serialize(), 
+                success: function(dataString) {
+                    alert(dataString);
+
+                    //var json = jQuery.parseJSON(dataString);
+                    //var json1 = jQuery.parseJSON(json.HTML);
+                    //$('.preview').append(json1.HTML);
+                    //alert(json1.HTML);
+                },
+                error: function()
+                {
+                    alert('err');
+                    console.log(arguments);
+                }
+
+            });
 			}
         function form_submit(targetFormId){
 
