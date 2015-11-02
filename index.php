@@ -324,18 +324,20 @@
                                             </td>
                                             <td class="col-md-1"> <label class=" control-label" name="type_1" style="text-align: left; font-weight: normal;" >Type</label></td>
                                             <td class="col-md-3">
-                                                <select class="form-control col-md-12" name="table_1" style="display: inline-block;" >   
+                                                <select class="form-control col-md-12" id="table_1" name="table_1" onchange="onTableChange(this);" style="display: inline-block;" >   
 
                                                     <option id="user_tbl_opt">User</option>                            
                                                     <option id="group_tbl_opt">Group</option>                            
                                                     <option id="asset_tbl_opt">Asset</option>                                                                        
+                                                    <option id="addNew_tbl_opt">Add New</option>                                                                        
                                                 </select>
                                             </td>
                                             <td class="col-md-3">
-                                                <select class="form-control col-md-12"  name="field_1" style="display: inline-block;" >   
+                                                <select class="form-control col-md-12" id="field_1"  name="field_1" onchange="onFieldChange(this);" style="display: inline-block;" >   
                                                     <option id="name_field_opt">Name</option>                            
                                                     <option id="age_field_opt">Age</option>                            
                                                     <option id="email_field_opt">Email</option>                                                                        
+                                                    <option id="addNew_field_opt">Add New</option>                                                                        
                                                 </select>                                                
                                             </td>
                                             <td class="col-md-2"> 
@@ -359,6 +361,57 @@
                                 </select>
 
                             </div>
+                            <div id="addSearchFieldsWrapper" class="col-md-12" style="margin-top: 10px; display: none;">
+
+                                <table style="width: 100%;">
+
+                                    <thead>
+                                        <tr class="col-md-12" style="width: 100%;">
+                                            <td class="col-md-3" > <label class=" control-label col-md-12" style="text-align: left;" >Label</label></td>
+                                            <td class="col-md-3" > <label class=" control-label col-md-12" style="text-align: left;" >Type</label></td>
+                                            <td class="col-md-3" > <label class=" control-label col-md-12" style="text-align: left;" >Table</label></td>
+                                            <td class="col-md-3" > <label class=" control-label col-md-12" style="text-align: left;" >Field</label></td>
+                                            <td class="col-md-3" > <label class=" control-label col-md-12" style="text-align: left;" ></label></td>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr class="col-md-12" style="width: 100%;">
+                                            <td class="col-md-3" >
+                                                <select class="form-control col-md-12"  name="label_1" style="display: inline-block;" >   
+                                                    <option id="name_field_opt">Name</option>                            
+                                                    <option id="age_field_opt">Age</option>                            
+                                                    <option id="email_field_opt">Email</option>                                                                        
+                                                </select>
+                                            </td>
+                                            <td class="col-md-1"> <label class=" control-label" name="type_1" style="text-align: left; font-weight: normal;" >Type</label></td>
+                                            <td class="col-md-3">
+                                                <select class="form-control col-md-12" id="table_1" name="table_1" onchange="onTableChange(this);" style="display: inline-block;" >   
+
+                                                    <option id="user_tbl_opt">User</option>                            
+                                                    <option id="group_tbl_opt">Group</option>                            
+                                                    <option id="asset_tbl_opt">Asset</option>                                                                        
+                                                    <option id="addNew_tbl_opt">Add New</option>                                                                        
+                                                </select>
+                                            </td>
+                                            <td class="col-md-3">
+                                                <select class="form-control col-md-12" id="field_1"  name="field_1" onchange="onFieldChange(this);" style="display: inline-block;" >   
+                                                    <option id="name_field_opt">Name</option>                            
+                                                    <option id="age_field_opt">Age</option>                            
+                                                    <option id="email_field_opt">Email</option>                                                                        
+                                                    <option id="addNew_field_opt">Add New</option>                                                                        
+                                                </select>                                                
+                                            </td>
+                                            <td class="col-md-2"> 
+                                                <button type="button" class="btn btn-primary" onClick="removeCurrentInputFieldRow(this)">-</button>
+                                                <button type="button" class="btn btn-primary" onClick="addNewInputFieldRow()">+ </button>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+
+                                </table>
+                            </div>
                         </div>
                         <input id="pageIdHiddenField_popup" type="hidden" name="pageId" value="0" />
                         <input id="projectIdHiddenField_popup" type="hidden" name="projectId" value="0" />
@@ -370,6 +423,87 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>                          
                     <button id="submitButton_popup" type="submit" onClick="popUpFormSubmit();" class="btn btn-primary" >OK</button>                          
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="vc_addNewTable" class="modal fade" style="display: none;">
+        <div class="modal-dialog" style="width: 500px; margin-top: 60px; ">
+            <div class="modal-content">
+                <div style="background: black; color: gray;" class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="glyphicon glyphicon-remove white" aria-hidden="true" style="color: white;"></span></button>
+                    <h4 class="modal-title">Add New Table</h4>
+                </div>
+                <div class="modal-body" style="height: 100px; max-height: 100px; overflow-y:auto;"> 
+                    <form class="popup_addNewTableform" method="post" action="">
+                        <div>
+
+                            <div class="col-md-12" style="margin-top: 10px;">
+                                <label class="control-label col-md-6" style="text-align: left;" >Table Name:</label>
+                                <input id="tableName_addNewTable" class="col-md-6"  />
+
+                            </div>
+
+
+                        </div>
+
+                    </form>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>                          
+                    <button id="submitButton_popup" type="submit" onClick="popUpAddNewTableSubmit();" class="btn btn-primary" >OK</button>                          
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="vc_addNewField" class="modal fade" style="display: none;">
+        <div class="modal-dialog" style="width: 500px; margin-top: 60px; ">
+            <div class="modal-content">
+                <div style="background: black; color: gray;" class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="glyphicon glyphicon-remove white" aria-hidden="true" style="color: white;"></span></button>
+                    <h4 class="modal-title">Add New Field</h4>
+                </div>
+                <div class="modal-body" style="height: 200px; max-height: 200px; overflow-y:auto;"> 
+                    <form class="popup_addNewTableform" method="post" action="">
+                        <div>
+
+                            <div class="col-md-12" style="margin-top: 10px;">
+                                <label class="control-label col-md-6" style="text-align: left;" >Field Name:</label>
+                                <input id="fieldName_addNewField" class="col-md-6"  />
+
+                            </div>
+
+                            <div class="col-md-12" style="margin-top: 10px;">
+                                <label class=" control-label col-md-6" style="text-align: left;" >Field Type:</label>
+                                <select class="form-control col-md-6"  id="fieldType_addNewField" name="fieldType_addNewField" style="display: inline-block; width: 50%;" >   
+                                    <option id="0" value="0"  selected="selected">Select one...</option>                            
+                                    <option id="intType">Int</option>                            
+                                    <option id="varcharType">Varchar</option>                            
+                                    <option id="doubleType">Double</option>                            
+                                </select>
+
+                            </div>
+
+                            <div class="col-md-12" style="margin-top: 10px;">
+                                <label class="control-label col-md-6" style="text-align: left;" >Field Length:</label>
+                                <input id="fieldLength_addNewField" class="col-md-6"  />
+
+                            </div>
+
+
+                        </div>
+
+                    </form>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>                          
+                    <button id="submitButton_popup" type="submit" onClick="popUpAddNewFieldSubmit();" class="btn btn-primary" >OK</button>                          
                 </div>
             </div>
         </div>

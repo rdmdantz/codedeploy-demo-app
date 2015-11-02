@@ -358,17 +358,19 @@ function appendNewInputFieldRow()
         </td>\
         <td class="col-md-1"> <label class="control-label" name="type_'+countTr+'" style="text-align: left; font-weight: normal;" >Type</label></td>\
         <td class="col-md-3">\
-        <select class="form-control col-md-12" name="table_'+countTr+'" style="display: inline-block;" >\
+        <select class="form-control col-md-12" id="table_'+countTr+'" name="table_'+countTr+'" onchange="onTableChange(this);" style="display: inline-block;" >\
         <option id="user_tbl_opt">User</option>\
         <option id="group_tbl_opt">Group</option>\
         <option id="asset_tbl_opt">Asset</option>\
+        <option id="addNew_tbl_opt">Add New</option>\
         </select>\
         </td>\
         <td class="col-md-3">\
-        <select class="form-control col-md-12"  name="field_1" style="display: inline-block;" >\
+        <select class="form-control col-md-12" id="field_'+countTr+'"  name="field_'+countTr+'" onchange="onFieldChange(this);" style="display: inline-block;" >\
         <option id="name_field_opt">Name</option>\
         <option id="age_field_opt">Age</option>\
         <option id="email_field_opt">Email</option>\
+        <option id="addNew_field_opt">Add New</option>\
         </select>\
         </td>\
         <td class="col-md-2">\
@@ -381,4 +383,41 @@ function appendNewInputFieldRow()
 function popUpFormSubmit(id)
 {
     alert(id);
+}
+
+function onTableChange(target)
+{
+    g_tableId=$(target).attr('id');   
+    if($('#'+g_tableId + ' option:selected').val() =='Add New')
+    {
+        $('#vc_addNewTable').modal({backdrop: 'static',keyboard: false,'show':true});
+    }
+
+}
+
+function popUpAddNewTableSubmit()
+{
+    var tableName=$('#tableName_addNewTable').val()
+    tableName_joiner=tableName.split(' ').join('_');
+    $('#'+g_tableId).prepend('<option id="'+tableName_joiner+'" value="'+tableName_joiner+'" >'+tableName+'</option>');
+    $('#'+g_tableId).val(tableName_joiner);
+    $('#vc_addNewTable').modal('hide');
+}
+
+function onFieldChange(target)
+{
+    g_fieldId=$(target).attr('id');   
+    if($('#'+g_fieldId + ' option:selected').val() =='Add New')
+    {
+        $('#vc_addNewField').modal({backdrop: 'static',keyboard: false,'show':true});
+    }
+}
+
+function popUpAddNewFieldSubmit()
+{
+    var fieldName=$('#fieldName_addNewField').val()
+    fieldName_joiner=fieldName.split(' ').join('_');
+    $('#'+g_fieldId).prepend('<option id="'+fieldName_joiner+'" value="'+fieldName_joiner+'" >'+fieldName+'</option>');
+    $('#'+g_fieldId).val(fieldName_joiner);
+    $('#vc_addNewField').modal('hide');
 }
