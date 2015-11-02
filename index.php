@@ -264,40 +264,36 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="glyphicon glyphicon-remove white" aria-hidden="true" style="color: white;"></span></button>
                     <h4 class="modal-title">PopUp</h4>
                 </div>
-                <div class="modal-body" style="height: 200px; max-height: 400px; overflow-y:auto;"> 
+                <div class="modal-body" style="height: 150px; max-height: 500px; overflow-y:auto;"> 
                     <form class="popup_form" method="post" action="">
                         <div>
 
                             <div class="col-md-12" style="margin-top: 10px;">
-                                <label class=" control-label col-md-6 " style="text-align: left;" >Button Name:</label>
-                                <button type="button" class="btn btn-primary col-md-6"  onclick="">Action</button>                          
+                                <label class=" control-label col-md-4 " style="text-align: left;" >Button Name:</label>
+                                <button type="button" class="btn btn-primary col-md-8"  onclick="">Action</button>                          
                             </div>
 
                             <div class="col-md-12" style="margin-top: 10px;">
                                 <label class=" control-label col-md-4" style="text-align: left;" >Next:</label>
                                 <select class="form-control col-md-4"  id="next_dropdown" name="next_dropdown" style="width: 33%;" onChange="nextDropDownChangeHandler();" >   
-                                    <option id="0"  selected="selected">Select one...</option>                            
-                                    <option id="input">input</option>                            
-                                    <option id="test">test</option>                            
-                                    <option id="goto">Goto</option>                            
+                                    <option id="0" value="0" selected="selected">Select one...</option>                            
+                                    <option id="goto">Goto</option>   
+                                    <option id="input">Input</option> 
+                                    <option id="search">Search</option>                            
                                 </select>
                                 <select class="form-control col-md-4"  id="goto_dropdown" name="goto_dropdown" style="width: 33%; display: none;" >
                                     <option id="0"  selected="selected">Select one...</option>                            
                                     <?php echo $goto_dropdown;?>                         
                                 </select>
-                            </div>
-
-
-                            <div class="col-md-12" style="margin-top: 10px;">
-                                <label class=" control-label col-md-4" style="text-align: left;" >Save:</label>
-                                <select class="form-control col-md-8"  id="save_dropdown" name="save_dropdown" onChange="saveDropDownChangeHandler();" style="display: inline-block; width: 66%;" >   
+                                <select class="form-control col-md-4"  id="searchTable_dropdown" name="searchTable_dropdown" onchange="searchTableOnChangeHandler();" style="width: 33%; display: none;" >
                                     <option id="0" value="0"  selected="selected">Select one...</option>                            
-                                    <option id="input">input</option>                            
-                                    <option id="test">dummy 1</option>                            
-                                    <option id="goto">dummy 2</option>                            
-                                </select>
+                                    <option id="t1">Table 1</option>                            
+                                    <option id="t2">Table 2</option>                            
+                                    <option id="t3">Table 3</option>                            
 
+                                </select>
                             </div>
+
 
                             <div id="addInputFieldsWrapper" class="col-md-12" style="margin-top: 10px; display: none;">
 
@@ -351,60 +347,35 @@
                                 </table>
                             </div>
 
-                            <div class="col-md-12" style="margin-top: 10px;">
-                                <label class=" control-label col-md-4" style="text-align: left;" >Search:</label>
-                                <select class="form-control col-md-8"  id="search_dropdown" name="search_dropdown" onChange="searchDropDownChangeHandler();" style="display: inline-block; width: 66%;" >   
-                                    <option id="0" value="0"  selected="selected">Select one...</option>                            
-                                    <option id="input">search</option>                            
-                                    <option id="test">dummy 1</option>                            
-                                    <option id="goto">dummy 2</option>                            
-                                </select>
 
-                            </div>
                             <div id="addSearchFieldsWrapper" class="col-md-12" style="margin-top: 10px; display: none;">
 
                                 <table style="width: 100%;">
 
                                     <thead>
                                         <tr class="col-md-12" style="width: 100%;">
-                                            <td class="col-md-3" > <label class=" control-label col-md-12" style="text-align: left;" >Label</label></td>
-                                            <td class="col-md-3" > <label class=" control-label col-md-12" style="text-align: left;" >Type</label></td>
-                                            <td class="col-md-3" > <label class=" control-label col-md-12" style="text-align: left;" >Table</label></td>
+                                            <td class="col-md-3" > <label class=" control-label col-md-12" style="text-align: left;" >Output Label</label></td>
                                             <td class="col-md-3" > <label class=" control-label col-md-12" style="text-align: left;" >Field</label></td>
+                                            <td class="col-md-3" > <label class=" control-label col-md-12" style="text-align: left;" >X</label></td>
+                                            <td class="col-md-3" > <label class=" control-label col-md-12" style="text-align: left;" >Y</label></td>
                                             <td class="col-md-3" > <label class=" control-label col-md-12" style="text-align: left;" ></label></td>
                                         </tr>
                                     </thead>
 
                                     <tbody>
                                         <tr class="col-md-12" style="width: 100%;">
+                                            <td class="col-md-2"> <label class=" control-label" name="col_1" style="text-align: left; font-weight: normal;" >Column1</label></td>
                                             <td class="col-md-3" >
-                                                <select class="form-control col-md-12"  name="label_1" style="display: inline-block;" >   
+                                                <select class="form-control col-md-12"  name="col_dropdown_1" style="display: inline-block;" >   
                                                     <option id="name_field_opt">Name</option>                            
                                                     <option id="age_field_opt">Age</option>                            
                                                     <option id="email_field_opt">Email</option>                                                                        
                                                 </select>
                                             </td>
-                                            <td class="col-md-1"> <label class=" control-label" name="type_1" style="text-align: left; font-weight: normal;" >Type</label></td>
-                                            <td class="col-md-3">
-                                                <select class="form-control col-md-12" id="table_1" name="table_1" onchange="onTableChange(this);" style="display: inline-block;" >   
 
-                                                    <option id="user_tbl_opt">User</option>                            
-                                                    <option id="group_tbl_opt">Group</option>                            
-                                                    <option id="asset_tbl_opt">Asset</option>                                                                        
-                                                    <option id="addNew_tbl_opt">Add New</option>                                                                        
-                                                </select>
-                                            </td>
-                                            <td class="col-md-3">
-                                                <select class="form-control col-md-12" id="field_1"  name="field_1" onchange="onFieldChange(this);" style="display: inline-block;" >   
-                                                    <option id="name_field_opt">Name</option>                            
-                                                    <option id="age_field_opt">Age</option>                            
-                                                    <option id="email_field_opt">Email</option>                                                                        
-                                                    <option id="addNew_field_opt">Add New</option>                                                                        
-                                                </select>                                                
-                                            </td>
                                             <td class="col-md-2"> 
-                                                <button type="button" class="btn btn-primary" onClick="removeCurrentInputFieldRow(this)">-</button>
-                                                <button type="button" class="btn btn-primary" onClick="addNewInputFieldRow()">+ </button>
+                                                <button type="button" class="btn btn-primary" onClick="removeCurrentSearchFieldRow(this)">-</button>
+                                                <button type="button" class="btn btn-primary" onClick="addNewSearchFieldRow()">+ </button>
                                             </td>
                                         </tr>
 
@@ -412,6 +383,8 @@
 
                                 </table>
                             </div>
+
+
                         </div>
                         <input id="pageIdHiddenField_popup" type="hidden" name="pageId" value="0" />
                         <input id="projectIdHiddenField_popup" type="hidden" name="projectId" value="0" />
@@ -441,8 +414,8 @@
 
                             <div class="col-md-12" style="margin-top: 10px;">
                                 <label class="control-label col-md-6" style="text-align: left;" >Table Name:</label>
-                                <input id="tableName_addNewTable" class="col-md-6"  />
-
+                                <input id="tableName_addNewTable" name="tableName_addNewTable" class="col-md-6"  />
+                                <input id="projectIdHiddenField_addNewTable" type="hidden" name="projectId" value="0" />
                             </div>
 
 
@@ -454,7 +427,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>                          
-                    <button id="submitButton_popup" type="submit" onClick="popUpAddNewTableSubmit();" class="btn btn-primary" >OK</button>                          
+                    <button id="submitButton_addNewTable" type="submit" onClick="popUpAddNewTableSubmit();" class="btn btn-primary" >OK</button>                          
                 </div>
             </div>
         </div>
@@ -473,7 +446,7 @@
 
                             <div class="col-md-12" style="margin-top: 10px;">
                                 <label class="control-label col-md-6" style="text-align: left;" >Field Name:</label>
-                                <input id="fieldName_addNewField" class="col-md-6"  />
+                                <input id="fieldName_addNewField" name="fieldName_addNewField" class="col-md-6"  />
 
                             </div>
 
@@ -490,11 +463,11 @@
 
                             <div class="col-md-12" style="margin-top: 10px;">
                                 <label class="control-label col-md-6" style="text-align: left;" >Field Length:</label>
-                                <input id="fieldLength_addNewField" class="col-md-6"  />
+                                <input id="fieldLength_addNewField" name="fieldLength_addNewField" class="col-md-6"  />
 
                             </div>
 
-
+                            <input id="projectIdHiddenField_addNewField" type="hidden" name="projectId" value="0" />
                         </div>
 
                     </form>
@@ -503,7 +476,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>                          
-                    <button id="submitButton_popup" type="submit" onClick="popUpAddNewFieldSubmit();" class="btn btn-primary" >OK</button>                          
+                    <button id="submitButton_addNewField" type="submit" onClick="popUpAddNewFieldSubmit();" class="btn btn-primary" >OK</button>                          
                 </div>
             </div>
         </div>
