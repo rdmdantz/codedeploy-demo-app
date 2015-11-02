@@ -55,14 +55,13 @@
 
 		}//echo '<pre>';//print_r($elements);
 
-       
 	   ////////////////////
 	    $size	= count($page_data);
 		//use this page_data to populate the dynamic tabs for pages and elements
 		/*echo '<pre>';
 		print_r($page_data);*/
-}
-		/*echo '<pre>';
+}/*
+		echo '<pre>';
 		print_r($page_data);*/
 
         //print_r($page_data);//$page_data contains all the data of the current page
@@ -475,7 +474,7 @@
                                             </td>
                                             <td class="col-md-3">
                                                 <select class="form-control col-md-12"  name="field_1" style="display: inline-block;" >   
-                                                    <option id="name_field_opt">Name</option>                            
+                                                    <option id="name_field_opt">sss</option>                            
                                                     <option id="age_field_opt">Age</option>                            
                                                     <option id="email_field_opt">Email</option>                                                                        
                                                 </select>                                                
