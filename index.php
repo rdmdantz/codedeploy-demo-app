@@ -456,7 +456,7 @@
                     <h4 class="modal-title">Add New Field</h4>
                 </div>
                 <div class="modal-body" style="height: 200px; max-height: 200px; overflow-y:auto;"> 
-                    <form class="popup_addNewTableform" method="post" action="">
+                    <form class="popup_addNewTableform" id="popup_addNewTableform_field" method="post" action="">
                         <div>
 
                             <div class="col-md-12" style="margin-top: 10px;">
