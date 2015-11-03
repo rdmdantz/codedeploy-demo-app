@@ -283,7 +283,7 @@ function openPopUp()
 
     var  formId = $($($('.outer-tabs > li.active>a').attr('href')).find('.nav-tabs>li.active>a').attr('href')).find('form').attr('id');
     $('#projectIdHiddenField_popup').val(g_projectId);
-    var popUpFormId= formId+'+'+g_projectId;
+    var popUpFormId= formId+'_'+g_projectId;
     $($('.popup_form')[0]).attr('id',popUpFormId);    
     $('#submitButton_popup').attr('onClick','popUpFormSubmit(\''+popUpFormId+'\')');
     $('#next_dropdown').val(0);
