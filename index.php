@@ -285,7 +285,7 @@
                                     <option id="0"  selected="selected">Select one...</option>                            
                                     <?php echo $goto_dropdown;?>                         
                                 </select>
-                                <select class="form-control col-md-4"  id="searchTable_dropdown" name="searchTable_dropdown" onchange="searchTableOnChangeHandler();" style="width: 33%; display: none;" >
+                                <select class="form-control col-md-4"  id="searchTable_dropdown" name="searchTable_dropdown" onChange="searchTableOnChangeHandler();" style="width: 33%; display: none;" >
                                     <option id="0" value="0"  selected="selected">Select one...</option>                            
                                     <option id="t1">Table 1</option>                            
                                     <option id="t2">Table 2</option>                            
@@ -320,7 +320,7 @@
                                             </td>
                                             <td class="col-md-1"> <label class=" control-label" name="type_1" style="text-align: left; font-weight: normal;" >Type</label></td>
                                             <td class="col-md-3">
-                                                <select class="form-control col-md-12" id="table_1" name="table_1" onchange="onTableChange(this);" style="display: inline-block;" >   
+                                                <select class="form-control col-md-12" id="table_1" name="table_1" onChange="onTableChange(this);" style="display: inline-block;" >   
 
                                                     <option id="user_tbl_opt">User</option>                            
                                                     <option id="group_tbl_opt">Group</option>                            
@@ -329,7 +329,7 @@
                                                 </select>
                                             </td>
                                             <td class="col-md-3">
-                                                <select class="form-control col-md-12" id="field_1"  name="field_1" onchange="onFieldChange(this);" style="display: inline-block;" >   
+                                                <select class="form-control col-md-12" id="field_1"  name="field_1" onChange="onFieldChange(this);" style="display: inline-block;" >   
                                                     <option id="name_field_opt">Name</option>                            
                                                     <option id="age_field_opt">Age</option>                            
                                                     <option id="email_field_opt">Email</option>                                                                        
@@ -409,7 +409,7 @@
                     <h4 class="modal-title">Add New Table</h4>
                 </div>
                 <div class="modal-body" style="height: 100px; max-height: 100px; overflow-y:auto;"> 
-                    <form class="popup_addNewTableform" method="post" action="">
+                    <form class="popup_addNewTableform" method="post" id="popup_addNewTableform_tablename" action="">
                         <div>
 
                             <div class="col-md-12" style="margin-top: 10px;">
@@ -441,7 +441,7 @@
                     <h4 class="modal-title">Add New Field</h4>
                 </div>
                 <div class="modal-body" style="height: 200px; max-height: 200px; overflow-y:auto;"> 
-                    <form class="popup_addNewTableform" method="post" action="">
+                    <form class="popup_addNewTableform" id="popup_addNewTableform_field" method="post" action="">
                         <div>
 
                             <div class="col-md-12" style="margin-top: 10px;">

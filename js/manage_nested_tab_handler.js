@@ -439,12 +439,31 @@ function onTableChange(target)
 
 function popUpAddNewTableSubmit(formId)
 {
-    alert('form Id = '+formId);
+  //  alert('form Id = '+formId);
+	$.ajax({
+                type:'POST', 
+                url: 'db_tables_columns.php?table=0', 
+                data:  $("#popup_addNewTableform_tablename").serialize(), 
+                success: function(dataString) {
+                    alert(dataString);
+
     var tableName=$('#tableName_addNewTable').val()
     tableName_joiner=tableName.split(' ').join('_');
-    $('#'+g_tableId).prepend('<option id="'+tableName_joiner+'" value="'+tableName_joiner+'" >'+tableName+'</option>');
+    $('#'+g_tableId).prepend('<option id="'+tableName_joiner+'" value="'+dataString+'" >'+tableName+'</option>');
     $('#'+g_tableId).val(tableName_joiner);
     $('#vc_addNewTable').modal('hide');
+                    //var json = jQuery.parseJSON(dataString);
+                    //var json1 = jQuery.parseJSON(json.HTML);
+                    //$('.preview').append(json1.HTML);
+                    //alert(json1.HTML);
+                },
+                error: function()
+                {
+                    alert('err');
+                    console.log(arguments);
+                }
+
+            });
 }
 
 function onFieldChange(target)
@@ -461,10 +480,25 @@ function onFieldChange(target)
 
 function popUpAddNewFieldSubmit(formId)
 {
-    alert('form Id = '+formId);
+   // alert('form Id = '+formId);
+	$.ajax({
+                type:'POST', 
+                url: 'db_tables_columns.php?column='+$('#table_1').val(), 
+                data:  $("#popup_addNewTableform_field").serialize(), 
+                success: function(dataString) {
+                    //alert(dataString); 
+                   
     var fieldName=$('#fieldName_addNewField').val()
     fieldName_joiner=fieldName.split(' ').join('_');
-    $('#'+g_fieldId).prepend('<option id="'+fieldName_joiner+'" value="'+fieldName_joiner+'" >'+fieldName+'</option>');
+    $('#'+g_fieldId).prepend('<option id="'+fieldName_joiner+'" value="'+dataString+'" >'+fieldName+'</option>');
     $('#'+g_fieldId).val(fieldName_joiner);
     $('#vc_addNewField').modal('hide');
+                },
+                error: function()
+                {
+                    alert('err');
+                    console.log(arguments);
+                }
+
+            });
 }

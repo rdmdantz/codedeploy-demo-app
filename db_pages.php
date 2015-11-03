@@ -1,6 +1,9 @@
 <?php 
 print_r($_POST);
-//exit;
+exit;
+if($_POST['next_dropdown']	==	'Input'){
+	header("db_");
+	}
 include 'class_db.php';
 
 Class PAGES{
@@ -48,7 +51,11 @@ Class PAGES{
 		}
 	
 }//endofclass
-		
+Class Search{
+			//HAVE TO CODE 
+		}
+	 
+    $Search	=	new Search;		
 $con	=	new 	database;
 $conn	=	$con->connection();
 $page	=	new PAGES;
