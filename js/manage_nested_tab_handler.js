@@ -134,7 +134,7 @@ $(document).ready(function(){
     bindTabsClick();
     bindOuterTabsClick();
     bindInnerTabsClick();
-    setPreAddedFormsId(); 
+    //setPreAddedFormsId(); 
     init_outerTabs();     
 });
 
@@ -166,22 +166,19 @@ function bindOuterTabsClick()
 
         $('#tab_'+id).append('<div class="container">\
             <ul class="nav nav-tabs">\
-            <li class="active"><a class="tab_buttons" href="#tab_'+id+'_1" data-toggle="tab">New Tab</a><span>x</span></li>\
             <li><a href="#" class="add-inner-tab" data-toggle="tab">+ Add Tab</a></li>\
             </ul>\
             <div class="tab-content inner-tab-content">\
-            <div id="tab_'+id+'_1" class="tab-pane active" >'+DEFAULT_TAB_DATA+'\
-            </div>\
             </div>\
             </div>');
-        var formId = 'formId_'+g_formIdCounter;     
+        /*var formId = 'formId_'+g_formIdCounter;     
         $($('#tab_'+id + ' .elements_form')[0]).attr('id',formId);
         $('#' +formId + ' #pageIdHiddenField').val('0');
         $('#' +formId + ' #elementIdHiddenField').val('0'); 
         $('#' +formId + ' #submit_button').attr('onClick','form_submit(\''+formId+'\')');
 
 
-        g_formIdCounter++;   
+        g_formIdCounter++;   */
 
         bindTabsClick();
         bindOuterTabsClick();
@@ -215,6 +212,8 @@ function bindInnerTabsClick()
 
 function setPreAddedFormsId()
 {
+    console.log('calllled');
+
     var allForms = $('.elements_form');
     $.each(allForms,function(index,form)
         {
@@ -233,18 +232,39 @@ function init_outerTabs()
     for(var i=1; i<g_outerTabsList.length; i++)
         $('.add-outer-tab').click();
 
-    var allForms = $('.elements_form');
+
 
     $.each(g_outerTabsList,function(index,tab)
         {
             var allOuterTabs=$('.outer-tabs>li'); 
             $(allOuterTabs[index]).find('a').eq(0).text(tab[1]); 
             $(allOuterTabs[index]).find('a').eq(0).attr('id',tab[0]); 
+            if(tab[4][index] != null)
+            {
+                $.each(tab[4][index],function(i,innerTab)
+                    {
+                        if(innerTab != null)
+                        {
+                            var targetIndex = index+1;                
+                            $('a[href="#tab_'+targetIndex+'"]').click();
+                            $('#tab_'+targetIndex).find('.add-inner-tab').click();
+                            $($('#tab_'+targetIndex +' .tab_buttons')[i]).attr('id',innerTab[0]);
+                            $($('#tab_'+targetIndex +' .tab_buttons')[i]).text(innerTab[1]);
+                        }
+
+
+                });     
+            }
+            var allForms = $('.elements_form');                                  
             $($(allForms[index]).find('#pageIdHiddenField').eq(0)).val(tab[0]);
             $($(allForms[index]).find('#elementIdHiddenField').eq(0)).val(tab[0]); 
             var formId=$(allForms[index]).attr('id');         
-            $($(allForms[index]).find('#submit_button').eq(0)).attr('onClick','form_submit(\''+formId+'\')');
+            $($(allForms[index]).find('#submit_button').eq(0)).attr('onClick','form_submit(\''+formId+'\')');  
+
+
     });
+
+
     $('a[href="#tab_1"]').click();
     $('a[href="#tab_1_1"]').click();
 }
@@ -266,39 +286,77 @@ function openPopUp()
     var popUpFormId= formId+'+'+g_projectId;
     $($('.popup_form')[0]).attr('id',popUpFormId);    
     $('#submitButton_popup').attr('onClick','popUpFormSubmit(\''+popUpFormId+'\')');
-    $('#save_dropdown').val(0);
-    saveDropDownChangeHandler();
+    $('#next_dropdown').val(0);
     $('#addInputFieldsWrapper tbody').empty();
-    appendNewInputFieldRow();
-
 
 }
 
 function nextDropDownChangeHandler()
 {
     if($('#next_dropdown option:selected').attr('id')=='goto')
-        $('#goto_dropdown').show();
-    else
-        $('#goto_dropdown').hide();
-
-}
-
-function saveDropDownChangeHandler()
-{
-    if($('#save_dropdown option:selected').attr('id')=='input')
     {
+        $('#goto_dropdown').show();
+        $('#searchTable_dropdown').hide();
+        $('#addInputFieldsWrapper').hide();
+        $('#addSearchFieldsWrapper').hide();
+        $('#vc_Popup .modal-body').height('150px');
+        $('#elementsCountHiddenField_popup').val('0');
+    }
+
+    else if($('#next_dropdown option:selected').attr('id')=='input')
+    {
+        $('#goto_dropdown').hide();
+        $('#addSearchFieldsWrapper').hide();
+        $('#searchTable_dropdown').hide();
         $('#addInputFieldsWrapper').show();
-        $('#vc_Popup .modal-body').height('400px');
+        $('#vc_Popup .modal-body').height('300px');
+        $('#addInputFieldsWrapper tbody').empty();
+        appendNewInputFieldRow();
         countTr = $('#addInputFieldsWrapper tbody tr').length;
         $('#elementsCountHiddenField_popup').val(countTr);
     }
+    else if($('#next_dropdown option:selected').attr('id')=='search')
+    {
+        $('#searchTable_dropdown').show();
+        $('#addInputFieldsWrapper').hide();        
+        $('#addSearchFieldsWrapper').hide();      
 
-    else
+        $('#goto_dropdown').hide();        
+        $('#vc_Popup .modal-body').height('150px');        
+        $('#elementsCountHiddenField_popup').val('0');
+    }else
+    {
+        $('#goto_dropdown').hide();
+        $('#searchTable_dropdown').hide();
+        $('#addInputFieldsWrapper').hide();
+        $('#addSearchFieldsWrapper').hide();
+        $('#vc_Popup .modal-body').height('150px');
+        $('#elementsCountHiddenField_popup').val('0');  
+    }
+
+
+}
+
+function searchTableOnChangeHandler()
+{
+    if($('#searchTable_dropdown option:selected').attr('id')=='0')
     {
         $('#addInputFieldsWrapper').hide();
-        $('#vc_Popup .modal-body').height('300px');
-        $('#elementsCountHiddenField_popup').val(0);
+        $('#addSearchFieldsWrapper').hide();
+        $('#vc_Popup .modal-body').height('150px');
+        $('#elementsCountHiddenField_popup').val('0');
     }
+
+    else 
+    {
+        $('#addInputFieldsWrapper').show();
+        $('#addSearchFieldsWrapper').show();
+        $('#vc_Popup .modal-body').height('300px'); 
+        $('#addInputFieldsWrapper tbody').empty();
+        appendNewInputFieldRow();
+        countTr = $('#addInputFieldsWrapper tbody tr').length;
+        $('#elementsCountHiddenField_popup').val(countTr);               
+    } 
 }
 
 function removeCurrentInputFieldRow(target)
@@ -338,17 +396,19 @@ function appendNewInputFieldRow()
         </td>\
         <td class="col-md-1"> <label class="control-label" name="type_'+countTr+'" style="text-align: left; font-weight: normal;" >Type</label></td>\
         <td class="col-md-3">\
-        <select class="form-control col-md-12" name="table_'+countTr+'" style="display: inline-block;" >\
+        <select class="form-control col-md-12" id="table_'+countTr+'" name="table_'+countTr+'" onchange="onTableChange(this);" style="display: inline-block;" >\
         <option id="user_tbl_opt">User</option>\
         <option id="group_tbl_opt">Group</option>\
         <option id="asset_tbl_opt">Asset</option>\
+        <option id="addNew_tbl_opt">Add New</option>\
         </select>\
         </td>\
         <td class="col-md-3">\
-        <select class="form-control col-md-12"  name="field_1" style="display: inline-block;" >\
+        <select class="form-control col-md-12" id="field_'+countTr+'"  name="field_'+countTr+'" onchange="onFieldChange(this);" style="display: inline-block;" >\
         <option id="name_field_opt">Name</option>\
         <option id="age_field_opt">Age</option>\
         <option id="email_field_opt">Email</option>\
+        <option id="addNew_field_opt">Add New</option>\
         </select>\
         </td>\
         <td class="col-md-2">\
@@ -358,7 +418,53 @@ function appendNewInputFieldRow()
         </tr>'); 
 }
 
+
 function popUpFormSubmit(id)
 {
     alert(id);
+}
+
+function onTableChange(target)
+{
+    g_tableId=$(target).attr('id');   
+    if($('#'+g_tableId + ' option:selected').val() =='Add New')
+    {
+        $('#vc_addNewTable').modal({backdrop: 'static',keyboard: false,'show':true});
+        $('#projectIdHiddenField_addNewTable').val(g_projectId);
+        var  formId = $($($('.outer-tabs > li.active>a').attr('href')).find('.nav-tabs>li.active>a').attr('href')).find('form').attr('id');
+        $('#submitButton_addNewTable').attr('onClick','popUpAddNewTableSubmit(\''+formId+'\')');
+    }
+
+}
+
+function popUpAddNewTableSubmit(formId)
+{
+    alert('form Id = '+formId);
+    var tableName=$('#tableName_addNewTable').val()
+    tableName_joiner=tableName.split(' ').join('_');
+    $('#'+g_tableId).prepend('<option id="'+tableName_joiner+'" value="'+tableName_joiner+'" >'+tableName+'</option>');
+    $('#'+g_tableId).val(tableName_joiner);
+    $('#vc_addNewTable').modal('hide');
+}
+
+function onFieldChange(target)
+{
+    g_fieldId=$(target).attr('id');   
+    if($('#'+g_fieldId + ' option:selected').val() =='Add New')
+    {
+        $('#vc_addNewField').modal({backdrop: 'static',keyboard: false,'show':true});
+        $('#projectIdHiddenField_addNewField').val(g_projectId);
+        var  formId = $($($('.outer-tabs > li.active>a').attr('href')).find('.nav-tabs>li.active>a').attr('href')).find('form').attr('id');
+        $('#submitButton_addNewField').attr('onClick','popUpAddNewFieldSubmit(\''+formId+'\')');
+    }
+}
+
+function popUpAddNewFieldSubmit(formId)
+{
+    alert('form Id = '+formId);
+    var fieldName=$('#fieldName_addNewField').val()
+    fieldName_joiner=fieldName.split(' ').join('_');
+    $('#'+g_fieldId).prepend('<option id="'+fieldName_joiner+'" value="'+fieldName_joiner+'" >'+fieldName+'</option>');
+    $('#'+g_fieldId).val(fieldName_joiner);
+    $('#vc_addNewField').modal('hide');
 }

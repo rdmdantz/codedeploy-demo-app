@@ -1,4 +1,4 @@
-<?php if(isset($_GET['p'])){$project	=	$_GET['p'];
+<?php if(isset($_GET['p'])){$project = $_GET['p'];
 
         $servername = "localhost";
         $username = "root";
@@ -8,66 +8,73 @@
             die("Connection failed: " . $conn->connect_error);
         }
         //GET the current project ID to get its respective data from the database
-        $select			=		"SELECT PROJECT_ID FROM `CMS`.`projects` WHERE PROJECT_NAME =	'$project'";
-        $result				=		$conn->query($select);
+        $select   =  "SELECT PROJECT_ID FROM `CMS`.`projects` WHERE PROJECT_NAME = '$project'";
+        $result    =  $conn->query($select);
 
         while($row=mysqli_fetch_assoc($result)){
-            $ID	=	$row['PROJECT_ID'];//ID contains the current project ID
-      
+            $ID = $row['PROJECT_ID'];//ID contains the current project ID
 
-        //Get the project data against its ID in the database 
-        $select			=		"SELECT * FROM `CMS`.`pages` WHERE PROJECT_ID =	$ID";
-        $result				=		$conn->query($select);
-		
 
-        $page_data	=	array();
-		$elements	=	array();
-		$counter	=	0;
-        while($row=mysqli_fetch_assoc($result)){  
-            $PAGE_TITLE	=	$row['PAGE_TITLE'];
-            $NEXT_PAGE	=	$row['NEXT_PAGE'];
-            $PROJECT_ID	=	$row['PROJECT_ID'];
-            $PAGE_ID	=	$row['PAGE_ID'];
-		$select_element			=		"SELECT * FROM `CMS`.`html_css` WHERE PAGE_ID =	$PAGE_ID";
-        $result_select_element				=		$conn->query($select_element);
-		$array=NULL;
-			 while($row_element=mysqli_fetch_assoc($result_select_element)){
-				 $array_ele	=	array(
-				 						$row_element['NAME'],
-										$row_element['ID'],
-										$row_element['CSS'],
-										$row_element['HTML'],
-										$row_element['PAGE_ID'],
-										$row_element['CLASS']
-										);
-				 //array_push($elements,$array_ele);
-				 $array[$counter]	=	$array_ele;
-				 $counter++;
-				 //echo '<pre>';
-					 
-				 }
-				  array_push($elements,$array);
-				 
-				
-           	$array	=	array($PAGE_ID,$PAGE_TITLE,$NEXT_PAGE,$PROJECT_ID,$elements);
-            array_push($page_data,$array); $counter	=0;
-        	//$counter++;
+            //Get the project data against its ID in the database 
+            $select   =  "SELECT * FROM `CMS`.`pages` WHERE PROJECT_ID = $ID";
+            $result    =  $conn->query($select);
 
-		}//echo '<pre>';//print_r($elements);
 
-	   ////////////////////
-	    $size	= count($page_data);
-		//use this page_data to populate the dynamic tabs for pages and elements
-		/*echo '<pre>';
-		print_r($page_data);*/
-}/*
-		echo '<pre>';
-		print_r($page_data);*/
+            $page_data = array();
+            $elements = array();
+            $counter = 0;
+            while($row=mysqli_fetch_assoc($result)){  
+                $PAGE_TITLE = $row['PAGE_TITLE'];
+                $NEXT_PAGE = $row['NEXT_PAGE'];
+                $PROJECT_ID = $row['PROJECT_ID'];
+                $PAGE_ID = $row['PAGE_ID'];
+                $select_element   =  "SELECT * FROM `CMS`.`html_css` WHERE PAGE_ID = $PAGE_ID";
+                $result_select_element    =  $conn->query($select_element);
+                $array=NULL;
+                while($row_element=mysqli_fetch_assoc($result_select_element)){
+                    $array_ele = array(
+                        $row_element['ID'],
+                        $row_element['NAME'],//label                        
+                        $row_element['CSS'],//
+                        $row_element['HTML'],
+                        $row_element['PAGE_ID'],
+                        $row_element['CLASS']
+                    );
+                    //array_push($elements,$array_ele);
+                    $array[$counter] = $array_ele;
+                    $counter++;
+                    //echo '<pre>';
 
+
+                }
+                array_push($elements,$array);
+
+
+                $array = array($PAGE_ID,$PAGE_TITLE,$NEXT_PAGE,$PROJECT_ID,$elements);
+                array_push($page_data,$array); $counter =0;
+                //$counter++;
+
+            }//echo '<pre>';//print_r($elements);
+
+            ////////////////////
+            $size = count($page_data);
+            //use this page_data to populate the dynamic tabs for pages and elements
+			
+          /* 
+            print_r($page_data);*/
+        } 
+		//echo '<pre>';
         //print_r($page_data);//$page_data contains all the data of the current page
+		 $page_data[0][4][0][0][3];
+		  echo $variable	=  htmlspecialchars_decode('{"LABEL":"","ELEMENT":"text_area","VARIABLE":"1","VALUE":"","ID":"1","DIV":"","HTML":"<label></label><textarea name="1" id="1"></textarea>"}');
+		 $t	= json_decode($variable );
+		print_r($t);
+		//echo $variable->{'VARIABLE'};
+		//print_r($variable);
+		 //$variable['VARIABLE'];
 
-}
-    
+    }
+
 ?>
 
 
@@ -153,9 +160,9 @@
 
             });	
         });
-		function popUpFormSubmit(targetFormId){
-			alert(targetFormId);
-			 $.ajax({
+        function popUpFormSubmit(targetFormId){
+            alert(targetFormId);
+            $.ajax({
                 type:'POST', 
                 url: 'db_pages.php', 
                 data:  $("#"+targetFormId).serialize(), 
@@ -174,7 +181,7 @@
                 }
 
             });
-			}
+        }
         function form_submit(targetFormId){
 
             // alert(targetFormId); 
@@ -239,149 +246,11 @@
         <div class="tab-content outer-tab-content">
             <div id="tab_1" class="tab-pane active" >
                 <div class="container">
-                    <ul class="nav nav-tabs">
-                        <li class="active"><a href="#tab_1_1" data-toggle="tab">Tab 1.1</a><span>x</span></li>                        
+                    <ul class="nav nav-tabs">                                                
                         <li><a href="#" class="add-inner-tab" data-toggle="tab">+ Add Tab</a></li>
                     </ul>
                     <div class="tab-content inner-tab-content">
-                        <div id="tab_1_1" class="tab-pane active" > 
-                            <form class="elements_form" method="post" action="">
-                                <!--<label>Select DIV:</label>
-                                <select name="div_load" id="div_load">
-                                <?php echo $dropdown;?>
-                                </select>-->
 
-
-                                <h2>HTML Attributes</h2>
-                                <label>Enter variable name:</label>
-                                <input type="text" name="var_name" id="var_name"/><br/>
-
-                                <label>Enter Label:</label>
-                                <input type="text" name="label" id="label"/><br/>
-
-                                <label>Select HTML Element:</label>
-                                <select name="html_element" id="html_element">
-                                    <option value="text_area">Text Area</option>
-                                    <option value="text">Text</option>
-                                    <option value="password">Password</option>
-                                    <option value="Submit">Submit</option>
-                                    <option value="radio">Radio</option>
-                                    <option value="checkbox">Checkbox</option>
-                                    <option value="button">Button</option>
-                                    <option value="select">Select</option>
-                                    <option value="file_html">File</option>
-                                    <option value="hidden">Hidden</option>
-                                    <option value="label">Label</option>
-                                    <option value="table">Table</option>
-                                    <option value="list">List</option>
-                                    <option value="form">Form</option>
-                                    <option value="image">Image</option>
-                                    <option value="fieldset">Filedset</option>
-                                    <option value="table_row">Table row</option>
-                                    <option value="table_data">Table data</option>
-                                    <option value="href">Href</option>
-                                </select><br/>
-                                <span id="radio" style="display:none;">
-                                    <label>Enter Radio button option 1:</label>
-                                    <input type="text" name="radio1" />
-
-                                    <label>Enter Radio button option 2:</label>
-                                    <input type="text" name="radio2"/>
-                                </span>
-
-                                <span id="checkbox" style="display:none;">
-                                    <label>Enter checkbox value 1:</label>
-                                    <input type="text" name="checkbox1" />
-
-                                    <label>Enter checkbox value 2:</label>
-                                    <input type="text" name="checkbox2" />
-
-                                    <label>Enter checkbox value 3:</label>
-                                    <input type="text" name="checkbox3" />
-
-                                    <label>Enter checkbox value 4:</label>
-                                    <input type="text" name="checkbox4" />
-
-                                    <label>Enter checkbox value 5:</label>
-                                    <input type="text" name="checkbox5" />
-                                </span>
-
-
-                                <span id="select" style="display:none;">
-                                    <label>Enter dropdown value 1:</label>
-                                    <input type="text" name="select1" />
-
-                                    <label>Enter dropdown value 2:</label>
-                                    <input type="text" name="select2" />
-
-                                    <label>Enter dropdown value 3:</label>
-                                    <input type="text" name="select3" />
-
-                                    <label>Enter dropdown value 4:</label>
-                                    <input type="text" name="select4" />
-
-                                    <label>Enter dropdown value 5:</label>
-                                    <input type="text" name="select5" />
-                                </span>
-
-                                <span id="list" style="display:none;">
-                                    <label>Enter list value 1:</label>
-                                    <input type="text" name="list1" />
-
-                                    <label>Enter list value 2:</label>
-                                    <input type="text" name="list2" />
-
-                                    <label>Enter list value 3:</label>
-                                    <input type="text" name="list3" />
-
-                                    <label>Enter list value 4:</label>
-                                    <input type="text" name="list4" />
-
-                                    <label>Enter list value 5:</label>
-                                    <input type="text" name="list5" />
-                                </span>
-
-                                <!--<label>Enter DIV's class and ID Name:</label>
-                                <input type="text" name="div_name" /><br/>-->
-
-                                <h2>CSS Attributes</h2>
-                                <label>Background Color:</label>
-                                <input type="color" name="color" value="#FFFFFF" id="color"/><br/>
-
-                                <label>Font Color:</label>
-                                <input type="color" name="font_color" value="#FFFFFF" id="font_color"/><br/>
-
-                                <label>Font Size:</label>
-                                <input type="text" name="font_size" id="font_size"/><br/>
-
-
-                                <!--<label>Position:</label>
-                                <input type="text" name="position" />px<br/>-->
-
-                                <label>Height:</label>
-                                <input type="text" name="height" id="height"/>px<br/>
-
-                                <label>Width:</label>
-                                <input type="text" name="width" id="width"/>px<br/>
-
-                                <label>X-position:</label>
-                                <input type="text" name="x_position" id="x_position"/>px<br/>
-
-                                <label>Y-position:</label>
-                                <input type="text" name="y_position" id="y_position"/>px<br/>
-
-                                <label>Z-index:</label>
-                                <input type="text" name="z_index" id="z_index"/><br/>
-
-                                <input id="pageIdHiddenField" type="hidden" name="pageId" value="0" />
-                                <input id="elementIdHiddenField" type="hidden" name="elementId" value="0" />
-
-                                <input id="submit_button" type="button" name="submit" value="save element"  onclick="form_submit();preview();" />
-                                <input type="hidden" name="update" id="update" value="false">
-                                <input type="hidden" name="update_id" id="update_id" value="0"> 
-                            </form>
-
-                        </div>                        
                     </div>
                     <div class="preview" style="border:1px solid #999; width:500px; height:300px;">
                     </div>
@@ -405,40 +274,36 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="glyphicon glyphicon-remove white" aria-hidden="true" style="color: white;"></span></button>
                     <h4 class="modal-title">PopUp</h4>
                 </div>
-                <div class="modal-body" style="height: 200px; max-height: 400px; overflow-y:auto;"> 
+                <div class="modal-body" style="height: 150px; max-height: 500px; overflow-y:auto;"> 
                     <form class="popup_form" method="post" action="">
                         <div>
 
                             <div class="col-md-12" style="margin-top: 10px;">
-                                <label class=" control-label col-md-6 " style="text-align: left;" >Button Name:</label>
-                                <button type="button" class="btn btn-primary col-md-6"  onclick="">Action</button>                          
+                                <label class=" control-label col-md-4 " style="text-align: left;" >Button Name:</label>
+                                <button type="button" class="btn btn-primary col-md-8"  onclick="">Action</button>                          
                             </div>
 
                             <div class="col-md-12" style="margin-top: 10px;">
                                 <label class=" control-label col-md-4" style="text-align: left;" >Next:</label>
                                 <select class="form-control col-md-4"  id="next_dropdown" name="next_dropdown" style="width: 33%;" onChange="nextDropDownChangeHandler();" >   
-                                    <option id="0"  selected="selected">Select one...</option>                            
-                                    <option id="input">input</option>                            
-                                    <option id="test">test</option>                            
-                                    <option id="goto">Goto</option>                            
+                                    <option id="0" value="0" selected="selected">Select one...</option>                            
+                                    <option id="goto">Goto</option>   
+                                    <option id="input">Input</option> 
+                                    <option id="search">Search</option>                            
                                 </select>
                                 <select class="form-control col-md-4"  id="goto_dropdown" name="goto_dropdown" style="width: 33%; display: none;" >
                                     <option id="0"  selected="selected">Select one...</option>                            
                                     <?php echo $goto_dropdown;?>                         
                                 </select>
-                            </div>
-
-
-                            <div class="col-md-12" style="margin-top: 10px;">
-                                <label class=" control-label col-md-4" style="text-align: left;" >Save:</label>
-                                <select class="form-control col-md-8"  id="save_dropdown" name="save_dropdown" onChange="saveDropDownChangeHandler();" style="display: inline-block; width: 66%;" >   
+                                <select class="form-control col-md-4"  id="searchTable_dropdown" name="searchTable_dropdown" onChange="searchTableOnChangeHandler();" style="width: 33%; display: none;" >
                                     <option id="0" value="0"  selected="selected">Select one...</option>                            
-                                    <option id="input">input</option>                            
-                                    <option id="test">dummy 1</option>                            
-                                    <option id="goto">dummy 2</option>                            
-                                </select>
+                                    <option id="t1">Table 1</option>                            
+                                    <option id="t2">Table 2</option>                            
+                                    <option id="t3">Table 3</option>                            
 
+                                </select>
                             </div>
+
 
                             <div id="addInputFieldsWrapper" class="col-md-12" style="margin-top: 10px; display: none;">
 
@@ -465,18 +330,25 @@
                                             </td>
                                             <td class="col-md-1"> <label class=" control-label" name="type_1" style="text-align: left; font-weight: normal;" >Type</label></td>
                                             <td class="col-md-3">
-                                                <select class="form-control col-md-12" name="table_1" style="display: inline-block;" >   
+                                                <select class="form-control col-md-12" id="table_1" name="table_1" onChange="onTableChange(this);" style="display: inline-block;" >   
 
                                                     <option id="user_tbl_opt">User</option>                            
                                                     <option id="group_tbl_opt">Group</option>                            
                                                     <option id="asset_tbl_opt">Asset</option>                                                                        
+                                                    <option id="addNew_tbl_opt">Add New</option>                                                                        
                                                 </select>
                                             </td>
                                             <td class="col-md-3">
+<<<<<<< HEAD
                                                 <select class="form-control col-md-12"  name="field_1" style="display: inline-block;" >   
                                                     <option id="name_field_opt">sss</option>                            
+=======
+                                                <select class="form-control col-md-12" id="field_1"  name="field_1" onchange="onFieldChange(this);" style="display: inline-block;" >   
+                                                    <option id="name_field_opt">Name</option>                            
+>>>>>>> cc6e351554e9694266c50ec0b1489ec412ae2cc5
                                                     <option id="age_field_opt">Age</option>                            
                                                     <option id="email_field_opt">Email</option>                                                                        
+                                                    <option id="addNew_field_opt">Add New</option>                                                                        
                                                 </select>                                                
                                             </td>
                                             <td class="col-md-2"> 
@@ -489,6 +361,45 @@
 
                                 </table>
                             </div>
+
+
+                            <div id="addSearchFieldsWrapper" class="col-md-12" style="margin-top: 10px; display: none;">
+
+                                <table style="width: 100%;">
+
+                                    <thead>
+                                        <tr class="col-md-12" style="width: 100%;">
+                                            <td class="col-md-3" > <label class=" control-label col-md-12" style="text-align: left;" >Output Label</label></td>
+                                            <td class="col-md-3" > <label class=" control-label col-md-12" style="text-align: left;" >Field</label></td>
+                                            <td class="col-md-3" > <label class=" control-label col-md-12" style="text-align: left;" >X</label></td>
+                                            <td class="col-md-3" > <label class=" control-label col-md-12" style="text-align: left;" >Y</label></td>
+                                            <td class="col-md-3" > <label class=" control-label col-md-12" style="text-align: left;" ></label></td>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr class="col-md-12" style="width: 100%;">
+                                            <td class="col-md-2"> <label class=" control-label" name="col_1" style="text-align: left; font-weight: normal;" >Column1</label></td>
+                                            <td class="col-md-3" >
+                                                <select class="form-control col-md-12"  name="col_dropdown_1" style="display: inline-block;" >   
+                                                    <option id="name_field_opt">Name</option>                            
+                                                    <option id="age_field_opt">Age</option>                            
+                                                    <option id="email_field_opt">Email</option>                                                                        
+                                                </select>
+                                            </td>
+
+                                            <td class="col-md-2"> 
+                                                <button type="button" class="btn btn-primary" onClick="removeCurrentSearchFieldRow(this)">-</button>
+                                                <button type="button" class="btn btn-primary" onClick="addNewSearchFieldRow()">+ </button>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+
+                                </table>
+                            </div>
+
+
                         </div>
                         <input id="pageIdHiddenField_popup" type="hidden" name="pageId" value="0" />
                         <input id="projectIdHiddenField_popup" type="hidden" name="projectId" value="0" />
@@ -500,6 +411,87 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>                          
                     <button id="submitButton_popup" type="submit" onClick="popUpFormSubmit();" class="btn btn-primary" >OK</button>                          
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="vc_addNewTable" class="modal fade" style="display: none;">
+        <div class="modal-dialog" style="width: 500px; margin-top: 60px; ">
+            <div class="modal-content">
+                <div style="background: black; color: gray;" class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="glyphicon glyphicon-remove white" aria-hidden="true" style="color: white;"></span></button>
+                    <h4 class="modal-title">Add New Table</h4>
+                </div>
+                <div class="modal-body" style="height: 100px; max-height: 100px; overflow-y:auto;"> 
+                    <form class="popup_addNewTableform" method="post" action="">
+                        <div>
+
+                            <div class="col-md-12" style="margin-top: 10px;">
+                                <label class="control-label col-md-6" style="text-align: left;" >Table Name:</label>
+                                <input id="tableName_addNewTable" name="tableName_addNewTable" class="col-md-6"  />
+                                <input id="projectIdHiddenField_addNewTable" type="hidden" name="projectId" value="0" />
+                            </div>
+
+
+                        </div>
+
+                    </form>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>                          
+                    <button id="submitButton_addNewTable" type="submit" onClick="popUpAddNewTableSubmit();" class="btn btn-primary" >OK</button>                          
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="vc_addNewField" class="modal fade" style="display: none;">
+        <div class="modal-dialog" style="width: 500px; margin-top: 60px; ">
+            <div class="modal-content">
+                <div style="background: black; color: gray;" class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="glyphicon glyphicon-remove white" aria-hidden="true" style="color: white;"></span></button>
+                    <h4 class="modal-title">Add New Field</h4>
+                </div>
+                <div class="modal-body" style="height: 200px; max-height: 200px; overflow-y:auto;"> 
+                    <form class="popup_addNewTableform" method="post" action="">
+                        <div>
+
+                            <div class="col-md-12" style="margin-top: 10px;">
+                                <label class="control-label col-md-6" style="text-align: left;" >Field Name:</label>
+                                <input id="fieldName_addNewField" name="fieldName_addNewField" class="col-md-6"  />
+
+                            </div>
+
+                            <div class="col-md-12" style="margin-top: 10px;">
+                                <label class=" control-label col-md-6" style="text-align: left;" >Field Type:</label>
+                                <select class="form-control col-md-6"  id="fieldType_addNewField" name="fieldType_addNewField" style="display: inline-block; width: 50%;" >   
+                                    <option id="0" value="0"  selected="selected">Select one...</option>                            
+                                    <option id="intType">Int</option>                            
+                                    <option id="varcharType">Varchar</option>                            
+                                    <option id="doubleType">Double</option>                            
+                                </select>
+
+                            </div>
+
+                            <div class="col-md-12" style="margin-top: 10px;">
+                                <label class="control-label col-md-6" style="text-align: left;" >Field Length:</label>
+                                <input id="fieldLength_addNewField" name="fieldLength_addNewField" class="col-md-6"  />
+
+                            </div>
+
+                            <input id="projectIdHiddenField_addNewField" type="hidden" name="projectId" value="0" />
+                        </div>
+
+                    </form>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>                          
+                    <button id="submitButton_addNewField" type="submit" onClick="popUpAddNewFieldSubmit();" class="btn btn-primary" >OK</button>                          
                 </div>
             </div>
         </div>

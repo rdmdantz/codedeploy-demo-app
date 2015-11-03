@@ -17,7 +17,7 @@
 			'DIV'	=>	$div_name,
 			'HTML'	=>	$output
 			);
-			$data	=	json_encode($output_json);
+			$data	=	utf8_encode($output_json);
             return $data;
         }
         public function text_area($name,$label,$value,$div_name){
@@ -34,7 +34,7 @@
 			'DIV'	=>	$div_name,
 			'HTML'	=>	$output
 			);
-			$data	=	json_encode($output_json);
+			$data	=	utf8_encode($output_json);
             return $data;
         }
         public function password($name,$label,$value,$div_name){
@@ -52,7 +52,7 @@
 			'DIV'	=>	$div_name,
 			'HTML'	=>	$output
 			);
-			$data	=	json_encode($output_json);
+			$data	=	utf8_encode($output_json);
             return $data;
         }
         public function submit($name,$label,$value,$div_name){
@@ -68,7 +68,7 @@
 			'DIV'	=>	$div_name,
 			'HTML'	=>	$output
 			);
-			$data	=	json_encode($output_json);
+			$data	=	utf8_encode($output_json);
             return $data;
         }
         public function radio($name,$label,$value,$div_name){
@@ -86,7 +86,7 @@
 			'DIV'	=>	$div_name,
 			'HTML'	=>	$output
 			);
-			$data	=	json_encode($output_json);
+			$data	=	utf8_encode($output_json);
             return $data;
 
            
@@ -110,7 +110,7 @@
 			'DIV'	=>	$div_name,
 			'HTML'	=>	$output
 			);
-			$data	=	json_encode($output_json);
+			$data	=	utf8_encode($output_json);
             return $data;
 
         }
@@ -129,7 +129,7 @@
 			'DIV'	=>	$div_name,
 			'HTML'	=>	$output
 			);
-			$data	=	json_encode($output_json);
+			$data	=	utf8_encode($output_json);
             return $data;
 
         }
@@ -152,7 +152,7 @@
 			'DIV'	=>	$div_name,
 			'HTML'	=>	$output
 			);
-			$data	=	json_encode($output_json);
+			$data	=	utf8_encode($output_json);
             return $data;
         }
         public function file_html($name,$label,$value,$div_name){
@@ -169,7 +169,7 @@
 			'DIV'	=>	$div_name,
 			'HTML'	=>	$output
 			);
-			$data	=	json_encode($output_json);
+			$data	=	utf8_encode($output_json);
             return $data;
         }
         public function hidden($name,$label,$value,$div_name){
@@ -184,7 +184,7 @@
 			'DIV'	=>	$div_name,
 			'HTML'	=>	$output
 			);
-			$data	=	json_encode($output_json);
+			$data	=	utf8_encode($output_json);
             return $data;
         }
 
@@ -202,7 +202,7 @@
 			'DIV'	=>	$div_name,
 			'HTML'	=>	$output
 			);
-			$data	=	json_encode($output_json);
+			$data	=	utf8_encode($output_json);
             return $data;
         }
         public function table($name,$label,$value,$div_name){
@@ -219,7 +219,7 @@
 			'DIV'	=>	$div_name,
 			'HTML'	=>	$output
 			);
-			$data	=	json_encode($output_json);
+			$data	=	utf8_encode($output_json);
             return $data;
         }
         public function list_html($name,$label,$value,$div_name){
@@ -240,7 +240,7 @@
 			'DIV'	=>	$div_name,
 			'HTML'	=>	$output
 			);
-			$data	=	json_encode($output_json);
+			$data	=	utf8_encode($output_json);
             return $data;
         }
         public function form($name,$label,$value,$div_name){
@@ -257,7 +257,7 @@
 			'DIV'	=>	$div_name,
 			'HTML'	=>	$output
 			);
-			$data	=	json_encode($output_json);
+			$data	=	utf8_encode($output_json);
             return $data;
         }
         public function image($name,$label,$value,$div_name){
@@ -273,7 +273,7 @@
 			'DIV'	=>	$div_name,
 			'HTML'	=>	$output
 			);
-			$data	=	json_encode($output_json);
+			$data	=	utf8_encode($output_json);
             return $data;
         }
         public function fieldset($name,$label,$value,$div_name){
@@ -289,7 +289,7 @@
 			'DIV'	=>	$div_name,
 			'HTML'	=>	$output
 			);
-			$data	=	json_encode($output_json);
+			$data	=	utf8_encode($output_json);
             return $data;
         }
         public function table_row($name,$label,$value,$div_name){
@@ -304,7 +304,7 @@
 			'DIV'	=>	$div_name,
 			'HTML'	=>	$output
 			);
-			$data	=	json_encode($output_json);
+			$data	=	utf8_encode($output_json);
             return $data;
         }
         public function table_data($name,$label,$value,$div_name){
@@ -318,7 +318,7 @@
 			'DIV'	=>	$div_name,
 			'HTML'	=>	$output
 			);
-			$data	=	json_encode($output_json);
+			$data	=	utf8_encode($output_json);
             return $data;
         }
         public function href($name,$label,$value,$div_name){
@@ -334,7 +334,7 @@
 			'DIV'	=>	$div_name,
 			'HTML'	=>	$output
 			);
-			$data	=	json_encode($output_json);
+			$data	=	utf8_encode($output_json);
             return $data;
         }
         function write_to_file($data,$html_file_name,$css_file_name,$data_css)
