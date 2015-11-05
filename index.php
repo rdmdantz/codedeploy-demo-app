@@ -73,6 +73,7 @@
         //print_r($variable);
         //$variable['VARIABLE'];
 
+
     }
 
 ?>
@@ -102,6 +103,7 @@
 
             $("#html_element").change(function(){
                 var selected = $('#html_element option:selected').val();
+
                 if(selected    ==    'radio'){$("#radio").show('slow');}
                 if(selected    ==    'checkbox'){$("#checkbox").show('slow');}
                 if(selected    ==    'select'){$("#select").show('slow');}
@@ -110,11 +112,13 @@
 
             $( "#div_load" ).change(function() {
                 var e                        =         $('#div_load').val();
+
                 $.ajax({ 
 
                     type: "POST",  
                     url: "load_element.php",  
                     data: {REQUEST: "SEARCH_NAME", ID: e},  
+
                     success: function(dataString) {        // alert(dataString); 
 
                         var json = jQuery.parseJSON(dataString);
@@ -131,9 +135,11 @@
                         $('#var_name').val(variableName);
                         $('#label').val(lableName);
                         if(elementName    ==    'textarea')
+
                             $('#html_element').val('text_area');
                         else
                             $('#html_element').val(elementName);
+
 
                         var backgroundColor    =    CSS.substring(CSS.indexOf('background-color')+17, CSS.indexOf('width:')-1);
                         var fontColor    =    CSS.substring(CSS.indexOf(';color:')+7, CSS.indexOf(';position:')-1);
@@ -143,6 +149,7 @@
                         var zIndex    =    CSS.substring(CSS.indexOf(';z-index:')+9, CSS.indexOf(';font-size:'));
                         var xPos    =    CSS.substring(CSS.indexOf(';margin-top:')+12, CSS.indexOf(';margin-bottom:')-2);
                         var yPos    =    CSS.substring(CSS.indexOf(';margin-bottom:')+15, CSS.indexOf(';z-index:')-2); 
+
                         $('#color').val(backgroundColor);
                         $('#font_color').val(fontColor);
                         $('#font_size').val(fontSize);
@@ -158,7 +165,9 @@
                 });
 
 
+
             });    
+
         });
         function popUpFormSubmit(targetFormId){
             alert(targetFormId);
@@ -190,7 +199,7 @@
                 url: 'db_elements.php', 
                 data:  $("#"+targetFormId).serialize(), 
                 success: function(dataString) {
-                    //alert(dataString);
+
 
                     var json = jQuery.parseJSON(dataString);
                     var json1 = jQuery.parseJSON(json.HTML);
@@ -219,13 +228,15 @@
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }
-        $select_div                =        'SELECT * FROM `CMS`.`divs`';
-        $result_div                =        $conn->query($select_div);
-        $dropdown=    '';
+
+        $select_div				=		'SELECT * FROM `CMS`.`divs`';
+        $result_div				=		$conn->query($select_div);
+        $dropdown=	'';
         while($row=mysqli_fetch_assoc($result_div)){
-            $data             =         $row['NAME'];
-            $ID                =        $row['HTML_CSS_ID'];
-            $dropdown.=        '<option value="'.$ID.'">'.$data.'</option>';
+            $data	 		= 		$row['NAME'];
+            $ID				=		$row['HTML_CSS_ID'];
+            $dropdown.=		'<option value="'.$ID.'">'.$data.'</option>';
+
         }
         $select_div             =       'SELECT PAGE_ID,PAGE_TITLE FROM `CMS`.`pages`';
         $result_div             =       $conn->query($select_div);
