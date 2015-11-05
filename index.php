@@ -65,13 +65,10 @@
         } 
 		//echo '<pre>';
         //print_r($page_data);//$page_data contains all the data of the current page
-		 $page_data[0][4][0][0][3];
-		  echo $variable	=  htmlspecialchars_decode('{"LABEL":"","ELEMENT":"text_area","VARIABLE":"1","VALUE":"","ID":"1","DIV":"","HTML":"<label></label><textarea name="1" id="1"></textarea>"}');
-		 $t	= json_decode($variable );
-		print_r($t);
-		//echo $variable->{'VARIABLE'};
-		//print_r($variable);
-		 //$variable['VARIABLE'];
+		$HTML	=	$page_data[0][4][0][0][3];
+		$h	=	json_decode($HTML);
+		echo $h->{'HTML'};
+		 
 
     }
 
@@ -190,7 +187,7 @@
                 url: 'db_elements.php', 
                 data:  $("#"+targetFormId).serialize(), 
                 success: function(dataString) {
-                    //alert(dataString);
+                    alert(dataString);
 
                     var json = jQuery.parseJSON(dataString);
                     var json1 = jQuery.parseJSON(json.HTML);
@@ -340,13 +337,10 @@
                                             </td>
                                             <td class="col-md-3">
 <<<<<<< HEAD
-                                                <select class="form-control col-md-12"  name="field_1" style="display: inline-block;" >   
-                                                    <option id="name_field_opt">sss</option>                            
-=======
-                                                <select class="form-control col-md-12" id="field_1"  name="field_1" onchange="onFieldChange(this);" style="display: inline-block;" >   
+                                            
+                                                <select class="form-control col-md-12" id="field_1"  name="field_1" onChange="onFieldChange(this);" style="display: inline-block;" >   
                                                     <option id="name_field_opt">Name</option>                            
->>>>>>> cc6e351554e9694266c50ec0b1489ec412ae2cc5
-                                                    <option id="age_field_opt">Age</option>                            
+<option id="age_field_opt">Age</option>                            
                                                     <option id="email_field_opt">Email</option>                                                                        
                                                     <option id="addNew_field_opt">Add New</option>                                                                        
                                                 </select>                                                
