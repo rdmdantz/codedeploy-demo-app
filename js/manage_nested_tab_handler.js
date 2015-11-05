@@ -171,14 +171,7 @@ function bindOuterTabsClick()
             <div class="tab-content inner-tab-content">\
             </div>\
             </div>');
-        /*var formId = 'formId_'+g_formIdCounter;     
-        $($('#tab_'+id + ' .elements_form')[0]).attr('id',formId);
-        $('#' +formId + ' #pageIdHiddenField').val('0');
-        $('#' +formId + ' #elementIdHiddenField').val('0'); 
-        $('#' +formId + ' #submit_button').attr('onClick','form_submit(\''+formId+'\')');
 
-
-        g_formIdCounter++;   */
 
         bindTabsClick();
         bindOuterTabsClick();
@@ -212,8 +205,6 @@ function bindInnerTabsClick()
 
 function setPreAddedFormsId()
 {
-    console.log('calllled');
-
     var allForms = $('.elements_form');
     $.each(allForms,function(index,form)
         {
@@ -230,15 +221,18 @@ function setPreAddedFormsId()
 function init_outerTabs()
 {
     for(var i=1; i<g_outerTabsList.length; i++)
-        $('.add-outer-tab').click();
+        $('.add-outer-tab').click();  
 
 
-
+     var formIdIndex=0;
     $.each(g_outerTabsList,function(index,tab)
         {
+            
             var allOuterTabs=$('.outer-tabs>li'); 
             $(allOuterTabs[index]).find('a').eq(0).text(tab[1]); 
             $(allOuterTabs[index]).find('a').eq(0).attr('id',tab[0]); 
+
+
             if(tab[4][index] != null)
             {
                 $.each(tab[4][index],function(i,innerTab)
@@ -250,23 +244,36 @@ function init_outerTabs()
                             $('#tab_'+targetIndex).find('.add-inner-tab').click();
                             $($('#tab_'+targetIndex +' .tab_buttons')[i]).attr('id',innerTab[0]);
                             $($('#tab_'+targetIndex +' .tab_buttons')[i]).text(innerTab[1]);
+                            
+
+                            var allForms = $('.elements_form');                                  
+                            $($(allForms[formIdIndex]).find('#pageIdHiddenField').eq(0)).val(tab[0]);
+                            $($(allForms[formIdIndex]).find('#elementIdHiddenField').eq(0)).val(tab[0]); 
+                            var formId=$(allForms[formIdIndex]).attr('id');         
+                            $($(allForms[formIdIndex]).find('#submit_button').eq(0)).attr('onClick','form_submit(\''+formId+'\')');
+                            console.log(formId);
+                            $('#'+formId +' #var_name').val(innerTab[0]);
+                            $('#'+formId +' #label').val(innerTab[1]);
+                            formIdIndex++;
+
+
                         }
-
-
                 });     
             }
-            var allForms = $('.elements_form');                                  
-            $($(allForms[index]).find('#pageIdHiddenField').eq(0)).val(tab[0]);
-            $($(allForms[index]).find('#elementIdHiddenField').eq(0)).val(tab[0]); 
-            var formId=$(allForms[index]).attr('id');         
-            $($(allForms[index]).find('#submit_button').eq(0)).attr('onClick','form_submit(\''+formId+'\')');  
 
 
+
+
+
+            // $('#var_name').val(tab[4][index][innerTabIndex])
     });
+
+
 
 
     $('a[href="#tab_1"]').click();
     $('a[href="#tab_1_1"]').click();
+
 }
 
 function openPopUp()
@@ -429,7 +436,7 @@ function removeCurrentSearchFieldRow(target)
             appendNewSearchFieldRow(); 
         else
             $('#addSearchFieldsWrapper tbody tr:last td:last button:last').css('visibility','visible');
-        
+
 
     });
 }
@@ -445,19 +452,19 @@ function appendNewSearchFieldRow()
     countTr++;    
 
     $('#addSearchFieldsWrapper tbody').append(' <tr class="col-md-12" style="width: 100%;">\
-    <td class="col-md-2"> <label class=" control-label" name="col_'+countTr+'" style="text-align: left; font-weight: normal;" >Column'+countTr+'</label></td>\
-    <td class="col-md-3" >\
-    <select class="form-control col-md-12"  name="col_dropdown_'+countTr+'" style="display: inline-block;" >\
-    <option id="name_field_opt">Name</option>\
-    <option id="age_field_opt">Age</option>\
-    <option id="email_field_opt">Email</option>\
-    </select>\
-    </td>\
-    <td class="col-md-2">\
-    <button type="button" class="btn btn-primary" onClick="removeCurrentSearchFieldRow(this)">-</button>\
-    <button type="button" class="btn btn-primary" onClick="addNewSearchFieldRow()">+ </button>\
-    </td>\
-    </tr>'); 
+        <td class="col-md-2"> <label class=" control-label" name="col_'+countTr+'" style="text-align: left; font-weight: normal;" >Column'+countTr+'</label></td>\
+        <td class="col-md-3" >\
+        <select class="form-control col-md-12"  name="col_dropdown_'+countTr+'" style="display: inline-block;" >\
+        <option id="name_field_opt">Name</option>\
+        <option id="age_field_opt">Age</option>\
+        <option id="email_field_opt">Email</option>\
+        </select>\
+        </td>\
+        <td class="col-md-2">\
+        <button type="button" class="btn btn-primary" onClick="removeCurrentSearchFieldRow(this)">-</button>\
+        <button type="button" class="btn btn-primary" onClick="addNewSearchFieldRow()">+ </button>\
+        </td>\
+        </tr>'); 
 }
 
 
