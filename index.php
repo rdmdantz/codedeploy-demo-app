@@ -62,6 +62,7 @@
 			
           /* 
             print_r($page_data);*/
+
         }
 		 $No_of_elements = count($page_data[0][4][0]); 
 		 
@@ -116,6 +117,7 @@
 
    //echo '<pre>'; 
 //print_r($element_array);
+
 ?>
 
 
@@ -312,10 +314,7 @@
 
 
 
-    </div>
-
-
-
+    </div> 
 
 
     <div id="vc_Popup" class="modal fade" style="display: none;">
@@ -381,7 +380,7 @@
                                             </td>
                                             <td class="col-md-1"> <label class="control-label" name="type_1" style="text-align: left; font-weight: normal;" >Type</label></td>
                                             <td class="col-md-3">
-                                                <select class="form-control col-md-12" id="table_1" name="table_1" onchange="onTableChange(this);" style="display: inline-block;" >
+                                                <select class="form-control col-md-12" id="table_1" name="table_1" onChange="onTableChange(this);" style="display: inline-block;" >
                                                     <option id="user_tbl_opt">User</option>
                                                     <option id="group_tbl_opt">Group</option>
                                                     <option id="asset_tbl_opt">Asset</option>
@@ -389,7 +388,7 @@
                                                 </select>
                                             </td>
                                             <td class="col-md-3">
-                                                <select class="form-control col-md-12" id="field_1"  name="field_1" onchange="onFieldChange(this);" style="display: inline-block;" >\
+                                                <select class="form-control col-md-12" id="field_1"  name="field_1" onChange="onFieldChange(this);" style="display: inline-block;" >
                                                     <option id="name_field_opt">Name</option>
                                                     <option id="age_field_opt">Age</option>
                                                     <option id="email_field_opt">Email</option>
@@ -397,8 +396,8 @@
                                                 </select>
                                             </td>
                                             <td class="col-md-2">
-                                                <button type="button" class="btn btn-primary" onclick="removeCurrentInputFieldRow(this)">-</button>
-                                                <button type="button" class="btn btn-primary" onclick="addNewInputFieldRow()">+ </button>
+                                                <button type="button" class="btn btn-primary" onClick="removeCurrentInputFieldRow(this)">-</button>
+                                                <button type="button" class="btn btn-primary" onClick="addNewInputFieldRow()">+ </button>
                                             </td>
                                         </tr>
 
