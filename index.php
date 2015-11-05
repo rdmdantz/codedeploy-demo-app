@@ -1,4 +1,4 @@
-<?php if(isset($_GET['p'])){$project = $_GET['p'];
+<?php $project = $_GET['p'];
 
         $servername = "localhost";
         $username = "root";
@@ -59,23 +59,63 @@
             ////////////////////
             $size = count($page_data);
             //use this page_data to populate the dynamic tabs for pages and elements
-
-            /* 
+			
+          /* 
             print_r($page_data);*/
-        } 
-        //echo '<pre>';
-        //print_r($page_data);//$page_data contains all the data of the current page
-        $page_data[0][4][0][0][3];
-         $variable    =  htmlspecialchars_decode('{"LABEL":"","ELEMENT":"text_area","VARIABLE":"1","VALUE":"","ID":"1","DIV":"","HTML":"<label></label><textarea name="1" id="1"></textarea>"}');
-        $t    = json_decode($variable );
-        
-        //echo $variable->{'VARIABLE'};
-        //print_r($variable);
-        //$variable['VARIABLE'];
+        }
+		 $No_of_elements = count($page_data[0][4][0]); 
+		 
+		/*echo '<pre>';
+        print_r($page_data);
+		*/
+		
+		//$page_data contains all the data of the current page
+		$counter_tab	=	0;
+		$element_array	=array();
+		while($counter_tab< $No_of_elements)
+		{
+			$HTML	=	$page_data[0][4][0][$counter_tab][3];
+			$CSS	=	$page_data[0][4][0][$counter_tab][2];
+			$c	=	json_decode($CSS);
+			$h	=	json_decode($HTML);
+			
+			
+			
+		/*	echo $h->{'VARIABLE'}.'<br/>';
+			echo $h->{'LABEL'}.'<br/>';
+			echo $h->{'ELEMENT'}.'<br/>';
+			
+			echo $c->{'BACKGROUND_COLOR'}.'<br/>';
+			echo $c->{'FONT_COLOR'}.'<br/>';
+			echo $c->{'FONT_SIZE'}.'<br/>';
+			echo $c->{'HEIGHT'}.'<br/>';
+			echo $c->{'Y_POS'}.'<br/>';
+			echo $c->{'X_POS'}.'<br/>';
+			echo $c->{'WIDTH'}.'<br/>';
+			echo $c->{'Z_INDEX'}.'<br/>';
+			
+			echo '***<br/>';*/
+			$ele	=	array(
+					'VARIABLE'	=>	$h->{'VARIABLE'},
+					'LABEL'	=>	$h->{'LABEL'},
+					'ELEMENT'	=>	$h->{'ELEMENT'},
+					'BACKGROUND_COLOR'	=>	$c->{'BACKGROUND_COLOR'},
+					'FONT_COLOR'	=>	$c->{'FONT_COLOR'},
+					'FONT_SIZE'	=>	$c->{'FONT_SIZE'},
+					'HEIGHT'	=>	$c->{'HEIGHT'},
+					'Y_POS'	=>	$c->{'Y_POS'},
+					'X_POS'	=>	$c->{'X_POS'},
+					'WIDTH'	=>	$c->{'WIDTH'},
+					'Z_INDEX'	=>	$c->{'Z_INDEX'}
+			
+				);
+			$counter_tab++;
+			array_push($element_array,$ele);
+			$ele	=	NULL;
+		}
 
-
-    }
-
+   //echo '<pre>'; 
+//print_r($element_array);
 ?>
 
 
