@@ -66,9 +66,9 @@
         //echo '<pre>';
         //print_r($page_data);//$page_data contains all the data of the current page
         $page_data[0][4][0][0][3];
-         $variable    =  htmlspecialchars_decode('{"LABEL":"","ELEMENT":"text_area","VARIABLE":"1","VALUE":"","ID":"1","DIV":"","HTML":"<label></label><textarea name="1" id="1"></textarea>"}');
+        $variable    =  htmlspecialchars_decode('{"LABEL":"","ELEMENT":"text_area","VARIABLE":"1","VALUE":"","ID":"1","DIV":"","HTML":"<label></label><textarea name="1" id="1"></textarea>"}');
         $t    = json_decode($variable );
-        
+
         //echo $variable->{'VARIABLE'};
         //print_r($variable);
         //$variable['VARIABLE'];
@@ -261,10 +261,7 @@
 
 
 
-    </div>
-
-
-
+    </div> 
 
 
     <div id="vc_Popup" class="modal fade" style="display: none;">

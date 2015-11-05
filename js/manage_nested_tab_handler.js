@@ -248,7 +248,7 @@ function init_outerTabs()
 
                             var allForms = $('.elements_form');                                  
                             $($(allForms[formIdIndex]).find('#pageIdHiddenField').eq(0)).val(tab[0]);
-                            $($(allForms[formIdIndex]).find('#elementIdHiddenField').eq(0)).val(tab[0]); 
+                            $($(allForms[formIdIndex]).find('#elementIdHiddenField').eq(0)).val(i+1); 
                             var formId=$(allForms[formIdIndex]).attr('id');         
                             $($(allForms[formIdIndex]).find('#submit_button').eq(0)).attr('onClick','form_submit(\''+formId+'\')');
                             console.log(formId);
