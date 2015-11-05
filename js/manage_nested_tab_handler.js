@@ -419,6 +419,48 @@ function appendNewInputFieldRow()
 }
 
 
+function removeCurrentSearchFieldRow(target)
+{
+    var targetRow=$(target).parent().parent();
+    $(targetRow).delay(300).fadeOut(300, function(){
+        $(targetRow).remove();
+
+        if($('#addSearchFieldsWrapper tbody tr').length==0)
+            appendNewSearchFieldRow(); 
+        else
+            $('#addSearchFieldsWrapper tbody tr:last td:last button:last').css('visibility','visible');
+        
+
+    });
+}
+function addNewSearchFieldRow()
+{
+    $('#addSearchFieldsWrapper tbody tr:last td:last button:last').css('visibility','hidden');
+    appendNewSearchFieldRow();                        
+}
+
+function appendNewSearchFieldRow()
+{
+    countTr = $('#addSearchFieldsWrapper tbody tr').length;
+    countTr++;    
+
+    $('#addSearchFieldsWrapper tbody').append(' <tr class="col-md-12" style="width: 100%;">\
+    <td class="col-md-2"> <label class=" control-label" name="col_'+countTr+'" style="text-align: left; font-weight: normal;" >Column'+countTr+'</label></td>\
+    <td class="col-md-3" >\
+    <select class="form-control col-md-12"  name="col_dropdown_'+countTr+'" style="display: inline-block;" >\
+    <option id="name_field_opt">Name</option>\
+    <option id="age_field_opt">Age</option>\
+    <option id="email_field_opt">Email</option>\
+    </select>\
+    </td>\
+    <td class="col-md-2">\
+    <button type="button" class="btn btn-primary" onClick="removeCurrentSearchFieldRow(this)">-</button>\
+    <button type="button" class="btn btn-primary" onClick="addNewSearchFieldRow()">+ </button>\
+    </td>\
+    </tr>'); 
+}
+
+
 function popUpFormSubmit(id)
 {
     alert(id);
@@ -439,31 +481,31 @@ function onTableChange(target)
 
 function popUpAddNewTableSubmit(formId)
 {
-  //  alert('form Id = '+formId);
-	$.ajax({
-                type:'POST', 
-                url: 'db_tables_columns.php?table=0', 
-                data:  $("#popup_addNewTableform_tablename").serialize(), 
-                success: function(dataString) {
-                    alert(dataString);
+    //  alert('form Id = '+formId);
+    $.ajax({
+        type:'POST', 
+        url: 'db_tables_columns.php?table=0', 
+        data:  $("#popup_addNewTableform_tablename").serialize(), 
+        success: function(dataString) {
+            alert(dataString);
 
-    var tableName=$('#tableName_addNewTable').val()
-    tableName_joiner=tableName.split(' ').join('_');
-    $('#'+g_tableId).prepend('<option id="'+tableName_joiner+'" value="'+dataString+'" >'+tableName+'</option>');
-    $('#'+g_tableId).val(tableName_joiner);
-    $('#vc_addNewTable').modal('hide');
-                    //var json = jQuery.parseJSON(dataString);
-                    //var json1 = jQuery.parseJSON(json.HTML);
-                    //$('.preview').append(json1.HTML);
-                    //alert(json1.HTML);
-                },
-                error: function()
-                {
-                    alert('err');
-                    console.log(arguments);
-                }
+            var tableName=$('#tableName_addNewTable').val()
+            tableName_joiner=tableName.split(' ').join('_');
+            $('#'+g_tableId).prepend('<option id="'+tableName_joiner+'" value="'+dataString+'" >'+tableName+'</option>');
+            $('#'+g_tableId).val(tableName_joiner);
+            $('#vc_addNewTable').modal('hide');
+            //var json = jQuery.parseJSON(dataString);
+            //var json1 = jQuery.parseJSON(json.HTML);
+            //$('.preview').append(json1.HTML);
+            //alert(json1.HTML);
+        },
+        error: function()
+        {
+            alert('err');
+            console.log(arguments);
+        }
 
-            });
+    });
 }
 
 function onFieldChange(target)
@@ -480,25 +522,25 @@ function onFieldChange(target)
 
 function popUpAddNewFieldSubmit(formId)
 {
-   // alert('form Id = '+formId);
-	$.ajax({
-                type:'POST', 
-                url: 'db_tables_columns.php?column='+$('#table_1').val(), 
-                data:  $("#popup_addNewTableform_field").serialize(), 
-                success: function(dataString) {
-                    //alert(dataString); 
-                   
-    var fieldName=$('#fieldName_addNewField').val()
-    fieldName_joiner=fieldName.split(' ').join('_');
-    $('#'+g_fieldId).prepend('<option id="'+fieldName_joiner+'" value="'+dataString+'" >'+fieldName+'</option>');
-    $('#'+g_fieldId).val(fieldName_joiner);
-    $('#vc_addNewField').modal('hide');
-                },
-                error: function()
-                {
-                    alert('err');
-                    console.log(arguments);
-                }
+    // alert('form Id = '+formId);
+    $.ajax({
+        type:'POST', 
+        url: 'db_tables_columns.php?column='+$('#table_1').val(), 
+        data:  $("#popup_addNewTableform_field").serialize(), 
+        success: function(dataString) {
+            //alert(dataString); 
 
-            });
+            var fieldName=$('#fieldName_addNewField').val()
+            fieldName_joiner=fieldName.split(' ').join('_');
+            $('#'+g_fieldId).prepend('<option id="'+fieldName_joiner+'" value="'+dataString+'" >'+fieldName+'</option>');
+            $('#'+g_fieldId).val(fieldName_joiner);
+            $('#vc_addNewField').modal('hide');
+        },
+        error: function()
+        {
+            alert('err');
+            console.log(arguments);
+        }
+
+    });
 }

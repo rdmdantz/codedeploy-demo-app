@@ -59,19 +59,19 @@
             ////////////////////
             $size = count($page_data);
             //use this page_data to populate the dynamic tabs for pages and elements
-			
-          /* 
+
+            /* 
             print_r($page_data);*/
         } 
-		//echo '<pre>';
+        //echo '<pre>';
         //print_r($page_data);//$page_data contains all the data of the current page
-		 $page_data[0][4][0][0][3];
-		  echo $variable	=  htmlspecialchars_decode('{"LABEL":"","ELEMENT":"text_area","VARIABLE":"1","VALUE":"","ID":"1","DIV":"","HTML":"<label></label><textarea name="1" id="1"></textarea>"}');
-		 $t	= json_decode($variable );
-		print_r($t);
-		//echo $variable->{'VARIABLE'};
-		//print_r($variable);
-		 //$variable['VARIABLE'];
+        $page_data[0][4][0][0][3];
+         $variable    =  htmlspecialchars_decode('{"LABEL":"","ELEMENT":"text_area","VARIABLE":"1","VALUE":"","ID":"1","DIV":"","HTML":"<label></label><textarea name="1" id="1"></textarea>"}');
+        $t    = json_decode($variable );
+        
+        //echo $variable->{'VARIABLE'};
+        //print_r($variable);
+        //$variable['VARIABLE'];
 
     }
 
@@ -102,47 +102,47 @@
 
             $("#html_element").change(function(){
                 var selected = $('#html_element option:selected').val();
-                if(selected	==	'radio'){$("#radio").show('slow');}
-                if(selected	==	'checkbox'){$("#checkbox").show('slow');}
-                if(selected	==	'select'){$("#select").show('slow');}
-                if(selected	==	'list'){$("#list").show('slow');}	
+                if(selected    ==    'radio'){$("#radio").show('slow');}
+                if(selected    ==    'checkbox'){$("#checkbox").show('slow');}
+                if(selected    ==    'select'){$("#select").show('slow');}
+                if(selected    ==    'list'){$("#list").show('slow');}    
             });
 
             $( "#div_load" ).change(function() {
-                var e						= 		$('#div_load').val();
+                var e                        =         $('#div_load').val();
                 $.ajax({ 
 
                     type: "POST",  
                     url: "load_element.php",  
                     data: {REQUEST: "SEARCH_NAME", ID: e},  
-                    success: function(dataString) {    	// alert(dataString); 
+                    success: function(dataString) {        // alert(dataString); 
 
                         var json = jQuery.parseJSON(dataString);
-                        var HTML	=	json.data.HTML;//alert(HTML);
-                        var CSS	=	json.data.CSS; // alert(CSS); 
-                        var lableName	=	json.data.NAME;
-                        var update_id	=	json.data.ID;
-                        var variableName	=	HTML.substring(HTML.indexOf(' name="')+7, HTML.indexOf(' id="')-1);
-                        var elementName	=	HTML.substring(HTML.indexOf('</label><')+9, HTML.indexOf(' name="'));
-                        if(elementName	!=	'textarea'){
-                            elementName	=	HTML.substring(HTML.indexOf('type="')+6, HTML.indexOf(' name="')-1);
-                            variableName	=	HTML.substring(HTML.indexOf(' name="')+7, HTML.indexOf(' value="')-1);
+                        var HTML    =    json.data.HTML;//alert(HTML);
+                        var CSS    =    json.data.CSS; // alert(CSS); 
+                        var lableName    =    json.data.NAME;
+                        var update_id    =    json.data.ID;
+                        var variableName    =    HTML.substring(HTML.indexOf(' name="')+7, HTML.indexOf(' id="')-1);
+                        var elementName    =    HTML.substring(HTML.indexOf('</label><')+9, HTML.indexOf(' name="'));
+                        if(elementName    !=    'textarea'){
+                            elementName    =    HTML.substring(HTML.indexOf('type="')+6, HTML.indexOf(' name="')-1);
+                            variableName    =    HTML.substring(HTML.indexOf(' name="')+7, HTML.indexOf(' value="')-1);
                         }
                         $('#var_name').val(variableName);
                         $('#label').val(lableName);
-                        if(elementName	==	'textarea')
+                        if(elementName    ==    'textarea')
                             $('#html_element').val('text_area');
                         else
                             $('#html_element').val(elementName);
 
-                        var backgroundColor	=	CSS.substring(CSS.indexOf('background-color')+17, CSS.indexOf('width:')-1);
-                        var fontColor	=	CSS.substring(CSS.indexOf(';color:')+7, CSS.indexOf(';position:')-1);
-                        var fontSize	=	CSS.substring(CSS.indexOf(';font-size:')+11, CSS.indexOf(';color:'));
-                        var height	=	CSS.substring(CSS.indexOf(';height:')+8, CSS.indexOf(';margin-top:')-2);
-                        var width	=	CSS.substring(CSS.indexOf(';width:')+7, CSS.indexOf(';height:')-2);
-                        var zIndex	=	CSS.substring(CSS.indexOf(';z-index:')+9, CSS.indexOf(';font-size:'));
-                        var xPos	=	CSS.substring(CSS.indexOf(';margin-top:')+12, CSS.indexOf(';margin-bottom:')-2);
-                        var yPos	=	CSS.substring(CSS.indexOf(';margin-bottom:')+15, CSS.indexOf(';z-index:')-2); 
+                        var backgroundColor    =    CSS.substring(CSS.indexOf('background-color')+17, CSS.indexOf('width:')-1);
+                        var fontColor    =    CSS.substring(CSS.indexOf(';color:')+7, CSS.indexOf(';position:')-1);
+                        var fontSize    =    CSS.substring(CSS.indexOf(';font-size:')+11, CSS.indexOf(';color:'));
+                        var height    =    CSS.substring(CSS.indexOf(';height:')+8, CSS.indexOf(';margin-top:')-2);
+                        var width    =    CSS.substring(CSS.indexOf(';width:')+7, CSS.indexOf(';height:')-2);
+                        var zIndex    =    CSS.substring(CSS.indexOf(';z-index:')+9, CSS.indexOf(';font-size:'));
+                        var xPos    =    CSS.substring(CSS.indexOf(';margin-top:')+12, CSS.indexOf(';margin-bottom:')-2);
+                        var yPos    =    CSS.substring(CSS.indexOf(';margin-bottom:')+15, CSS.indexOf(';z-index:')-2); 
                         $('#color').val(backgroundColor);
                         $('#font_color').val(fontColor);
                         $('#font_size').val(fontSize);
@@ -158,7 +158,7 @@
                 });
 
 
-            });	
+            });    
         });
         function popUpFormSubmit(targetFormId){
             alert(targetFormId);
@@ -219,13 +219,13 @@
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }
-        $select_div				=		'SELECT * FROM `CMS`.`divs`';
-        $result_div				=		$conn->query($select_div);
-        $dropdown=	'';
+        $select_div                =        'SELECT * FROM `CMS`.`divs`';
+        $result_div                =        $conn->query($select_div);
+        $dropdown=    '';
         while($row=mysqli_fetch_assoc($result_div)){
-            $data	 		= 		$row['NAME'];
-            $ID				=		$row['HTML_CSS_ID'];
-            $dropdown.=		'<option value="'.$ID.'">'.$data.'</option>';
+            $data             =         $row['NAME'];
+            $ID                =        $row['HTML_CSS_ID'];
+            $dropdown.=        '<option value="'.$ID.'">'.$data.'</option>';
         }
         $select_div             =       'SELECT PAGE_ID,PAGE_TITLE FROM `CMS`.`pages`';
         $result_div             =       $conn->query($select_div);
@@ -322,38 +322,32 @@
                                     <tbody>
                                         <tr class="col-md-12" style="width: 100%;">
                                             <td class="col-md-3" >
-                                                <select class="form-control col-md-12"  name="label_1" style="display: inline-block;" >   
-                                                    <option id="name_field_opt">Name</option>                            
-                                                    <option id="age_field_opt">Age</option>                            
-                                                    <option id="email_field_opt">Email</option>                                                                        
+                                                <select class="form-control col-md-12" name="label_1"  style="display: inline-block;" >
+                                                    <option id="name_field_opt">Name</option>
+                                                    <option id="age_field_opt">Age</option>
+                                                    <option id="email_field_opt">Email</option>
                                                 </select>
                                             </td>
-                                            <td class="col-md-1"> <label class=" control-label" name="type_1" style="text-align: left; font-weight: normal;" >Type</label></td>
+                                            <td class="col-md-1"> <label class="control-label" name="type_1" style="text-align: left; font-weight: normal;" >Type</label></td>
                                             <td class="col-md-3">
-                                                <select class="form-control col-md-12" id="table_1" name="table_1" onChange="onTableChange(this);" style="display: inline-block;" >   
-
-                                                    <option id="user_tbl_opt">User</option>                            
-                                                    <option id="group_tbl_opt">Group</option>                            
-                                                    <option id="asset_tbl_opt">Asset</option>                                                                        
-                                                    <option id="addNew_tbl_opt">Add New</option>                                                                        
+                                                <select class="form-control col-md-12" id="table_1" name="table_1" onchange="onTableChange(this);" style="display: inline-block;" >
+                                                    <option id="user_tbl_opt">User</option>
+                                                    <option id="group_tbl_opt">Group</option>
+                                                    <option id="asset_tbl_opt">Asset</option>
+                                                    <option id="addNew_tbl_opt">Add New</option>
                                                 </select>
                                             </td>
                                             <td class="col-md-3">
-<<<<<<< HEAD
-                                                <select class="form-control col-md-12"  name="field_1" style="display: inline-block;" >   
-                                                    <option id="name_field_opt">sss</option>                            
-=======
-                                                <select class="form-control col-md-12" id="field_1"  name="field_1" onchange="onFieldChange(this);" style="display: inline-block;" >   
-                                                    <option id="name_field_opt">Name</option>                            
->>>>>>> cc6e351554e9694266c50ec0b1489ec412ae2cc5
-                                                    <option id="age_field_opt">Age</option>                            
-                                                    <option id="email_field_opt">Email</option>                                                                        
-                                                    <option id="addNew_field_opt">Add New</option>                                                                        
-                                                </select>                                                
+                                                <select class="form-control col-md-12" id="field_1"  name="field_1" onchange="onFieldChange(this);" style="display: inline-block;" >\
+                                                    <option id="name_field_opt">Name</option>
+                                                    <option id="age_field_opt">Age</option>
+                                                    <option id="email_field_opt">Email</option>
+                                                    <option id="addNew_field_opt">Add New</option>
+                                                </select>
                                             </td>
-                                            <td class="col-md-2"> 
-                                                <button type="button" class="btn btn-primary" onClick="removeCurrentInputFieldRow(this)">-</button>
-                                                <button type="button" class="btn btn-primary" onClick="addNewInputFieldRow()">+ </button>
+                                            <td class="col-md-2">
+                                                <button type="button" class="btn btn-primary" onclick="removeCurrentInputFieldRow(this)">-</button>
+                                                <button type="button" class="btn btn-primary" onclick="addNewInputFieldRow()">+ </button>
                                             </td>
                                         </tr>
 
