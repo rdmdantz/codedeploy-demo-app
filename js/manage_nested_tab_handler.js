@@ -224,10 +224,10 @@ function init_outerTabs()
         $('.add-outer-tab').click();  
 
 
-     var formIdIndex=0;
+    var formIdIndex=0;
     $.each(g_outerTabsList,function(index,tab)
         {
-            
+
             var allOuterTabs=$('.outer-tabs>li'); 
             $(allOuterTabs[index]).find('a').eq(0).text(tab[1]); 
             $(allOuterTabs[index]).find('a').eq(0).attr('id',tab[0]); 
@@ -244,7 +244,7 @@ function init_outerTabs()
                             $('#tab_'+targetIndex).find('.add-inner-tab').click();
                             $($('#tab_'+targetIndex +' .tab_buttons')[i]).attr('id',innerTab[0]);
                             $($('#tab_'+targetIndex +' .tab_buttons')[i]).text(innerTab[1]);
-                            
+
 
                             var allForms = $('.elements_form');                                  
                             $($(allForms[formIdIndex]).find('#pageIdHiddenField').eq(0)).val(tab[0]);
@@ -294,7 +294,19 @@ function openPopUp()
     $($('.popup_form')[0]).attr('id',popUpFormId);    
     $('#submitButton_popup').attr('onClick','popUpFormSubmit(\''+popUpFormId+'\')');
     $('#next_dropdown').val(0);
-    $('#addInputFieldsWrapper tbody').empty();
+
+    $('#addInputFieldsWrapper').hide();
+    $('#goto_dropdown').hide();
+    $('#searchTable_dropdown').hide();
+    $('#addInputFieldsWrapper tbody').empty(); 
+    $('#label_1').empty();
+
+    var allInnerTabsName=$($('.outer-tabs > li.active>a').attr('href')).find('.nav-tabs>li>a.tab_buttons');
+    $.each(allInnerTabsName,function(index,tab)
+        {
+            $('#label_1').append('<option>'+$(tab).text()+'</option>');
+
+    });
 
 }
 
@@ -395,7 +407,7 @@ function appendNewInputFieldRow()
 
     $('#addInputFieldsWrapper tbody').append('<tr class="col-md-12" style="width: 100%;">\
         <td class="col-md-3" >\
-        <select class="form-control name="label_'+countTr+'" col-md-12" style="display: inline-block;" >\
+        <select class="form-control col-md-12" id="label_'+countTr+'" name="label_'+countTr+'" style="display: inline-block;" >\
         <option id="name_field_opt">Name</option>\
         <option id="age_field_opt">Age</option>\
         <option id="email_field_opt">Email</option>\
@@ -423,6 +435,15 @@ function appendNewInputFieldRow()
         <button type="button" class="btn btn-primary" onclick="addNewInputFieldRow()">+ </button>\
         </td>\
         </tr>'); 
+
+    $('#label_'+countTr).empty();
+
+    var allInnerTabsName=$($('.outer-tabs > li.active>a').attr('href')).find('.nav-tabs>li>a.tab_buttons');
+    $.each(allInnerTabsName,function(index,tab)
+        {
+            $('#label_'+countTr).append('<option>'+$(tab).text()+'</option>');
+
+    });
 }
 
 
@@ -483,6 +504,13 @@ function onTableChange(target)
         var  formId = $($($('.outer-tabs > li.active>a').attr('href')).find('.nav-tabs>li.active>a').attr('href')).find('form').attr('id');
         $('#submitButton_addNewTable').attr('onClick','popUpAddNewTableSubmit(\''+formId+'\')');
     }
+    var id = 'field_'+g_tableId.split('_')[1];
+    $('#'+id).empty();
+    $('#'+id).append('<option>Table Field 1</option>');
+    $('#'+id).append('<option>Table Field 2</option>');
+    $('#'+id).append('<option>Table Field 3</option>');
+    $('#'+id).append('<option id="addNew_field_opt">Add New</option>');
+    
 
 }
 

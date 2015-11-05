@@ -330,10 +330,8 @@
                                     <tbody>
                                         <tr class="col-md-12" style="width: 100%;">
                                             <td class="col-md-3" >
-                                                <select class="form-control col-md-12" name="label_1"  style="display: inline-block;" >
-                                                    <option id="name_field_opt">Name</option>
-                                                    <option id="age_field_opt">Age</option>
-                                                    <option id="email_field_opt">Email</option>
+                                                <select class="form-control col-md-12" id="label_1" name="label_1"  style="display: inline-block;" >
+                                                    
                                                 </select>
                                             </td>
                                             <td class="col-md-1"> <label class="control-label" name="type_1" style="text-align: left; font-weight: normal;" >Type</label></td>
