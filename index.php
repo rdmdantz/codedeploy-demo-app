@@ -60,63 +60,74 @@
             $size = count($page_data);
             //use this page_data to populate the dynamic tabs for pages and elements
 			
-          /* 
-            print_r($page_data);*/
+           
+           
 
         }
-		 $No_of_elements = count($page_data[0][4][0]); 
-		 
-		/*echo '<pre>';
-        print_r($page_data);
-		*/
+		 $No_of_pages = count($page_data); 
+		 $No_of_elements = count($page_data[0][4][0]);
+		 /*echo '<pre>'; 
+		  print_r($page_data);*/
 		
 		//$page_data contains all the data of the current page
 		$counter_tab	=	0;
 		$element_array	=array();
-		while($counter_tab< $No_of_elements)
-		{
-			$HTML	=	$page_data[0][4][0][$counter_tab][3];
-			$CSS	=	$page_data[0][4][0][$counter_tab][2];
-			$c	=	json_decode($CSS);
-			$h	=	json_decode($HTML);
-			
-			
-			
-		/*	echo $h->{'VARIABLE'}.'<br/>';
-			echo $h->{'LABEL'}.'<br/>';
-			echo $h->{'ELEMENT'}.'<br/>';
-			
-			echo $c->{'BACKGROUND_COLOR'}.'<br/>';
-			echo $c->{'FONT_COLOR'}.'<br/>';
-			echo $c->{'FONT_SIZE'}.'<br/>';
-			echo $c->{'HEIGHT'}.'<br/>';
-			echo $c->{'Y_POS'}.'<br/>';
-			echo $c->{'X_POS'}.'<br/>';
-			echo $c->{'WIDTH'}.'<br/>';
-			echo $c->{'Z_INDEX'}.'<br/>';
-			
-			echo '***<br/>';*/
-			$ele	=	array(
-					'VARIABLE'	=>	$h->{'VARIABLE'},
-					'LABEL'	=>	$h->{'LABEL'},
-					'ELEMENT'	=>	$h->{'ELEMENT'},
-					'BACKGROUND_COLOR'	=>	$c->{'BACKGROUND_COLOR'},
-					'FONT_COLOR'	=>	$c->{'FONT_COLOR'},
-					'FONT_SIZE'	=>	$c->{'FONT_SIZE'},
-					'HEIGHT'	=>	$c->{'HEIGHT'},
-					'Y_POS'	=>	$c->{'Y_POS'},
-					'X_POS'	=>	$c->{'X_POS'},
-					'WIDTH'	=>	$c->{'WIDTH'},
-					'Z_INDEX'	=>	$c->{'Z_INDEX'}
-			
-				);
-			$counter_tab++;
-			array_push($element_array,$ele);
-			$ele	=	NULL;
-		}
+		$page_counter	=	0;
+		$PAGES=	array();
+		while($page_counter < $No_of_pages){
+			while($counter_tab< $No_of_elements)
+			{
+				$HTML	=	$page_data[0][4][0][$counter_tab][3];
+				$CSS	=	$page_data[0][4][0][$counter_tab][2];
+				$c	=	json_decode($CSS);
+				$h	=	json_decode($HTML);
+				
+				
+				
+			/*	echo $h->{'VARIABLE'}.'<br/>';
+				echo $h->{'LABEL'}.'<br/>';
+				echo $h->{'ELEMENT'}.'<br/>';
+				
+				echo $c->{'BACKGROUND_COLOR'}.'<br/>';
+				echo $c->{'FONT_COLOR'}.'<br/>';
+				echo $c->{'FONT_SIZE'}.'<br/>';
+				echo $c->{'HEIGHT'}.'<br/>';
+				echo $c->{'Y_POS'}.'<br/>';
+				echo $c->{'X_POS'}.'<br/>';
+				echo $c->{'WIDTH'}.'<br/>';
+				echo $c->{'Z_INDEX'}.'<br/>';
+				
+				echo '***<br/>';*/
+				$ele	=	array(
+						'VARIABLE'	=>	$h->{'VARIABLE'},
+						'LABEL'	=>	$h->{'LABEL'},
+						'ELEMENT'	=>	$h->{'ELEMENT'},
+						'BACKGROUND_COLOR'	=>	$c->{'BACKGROUND_COLOR'},
+						'FONT_COLOR'	=>	$c->{'FONT_COLOR'},
+						'FONT_SIZE'	=>	$c->{'FONT_SIZE'},
+						'HEIGHT'	=>	$c->{'HEIGHT'},
+						'Y_POS'	=>	$c->{'Y_POS'},
+						'X_POS'	=>	$c->{'X_POS'},
+						'WIDTH'	=>	$c->{'WIDTH'},
+						'Z_INDEX'	=>	$c->{'Z_INDEX'}
+				
+					);
+				$counter_tab++;
+				array_push($element_array,$ele);
+				$ele	=	NULL;
+			}//end while for elements
+			$arr	=	array(
+				'PAGE_INDEX'	=>	$page_counter,
+				'ELEMENTS'	=>	$element_array
+			);
+			array_push($PAGES,$arr);
+			$arr	=	NULL;
+			$page_counter++;
+	}//end while for pages
+	 echo '<pre>';	
+print_r($PAGES);
+   
 
-   //echo '<pre>'; 
-//print_r($element_array);
 
 ?>
 
