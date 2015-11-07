@@ -124,8 +124,8 @@
 			$arr	=	NULL;
 			$page_counter++;
 	}//end while for pages
-	 echo '<pre>';	
-print_r($PAGES);
+	 /*echo '<pre>';	
+print_r($PAGES);*/
    
 
 
