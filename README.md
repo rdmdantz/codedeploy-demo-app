@@ -1,0 +1,2 @@
+# vc
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/42e3a24ad8ba4948aac75195f8f9b572)](https://www.codacy.com/app/waqas-sajid29/vc?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=rdmdantz/vc&amp;utm_campaign=badger)
